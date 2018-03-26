@@ -4,6 +4,6 @@ Project done in the Web Engineering course, in the Master in Informatics Enginee
 Setup:
 - Clone repository
 
-- ``` bash cd ESS ```
-- ``` bash npm install ```
-- ``` bash npm start ```
+- ```$ cd ESS ```
+- ```$ npm install ```
+- ```$ npm start ```
