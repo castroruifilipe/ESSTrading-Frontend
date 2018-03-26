@@ -3,8 +3,8 @@ import NavBar from '../../components/NavBar/';
 
 class Home extends Component {
 
-  render(){
-    return(
+  render() {
+    return (
       <NavBar />
     );
   }

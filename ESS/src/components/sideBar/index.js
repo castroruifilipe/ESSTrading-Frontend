@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-class SideBar extends Component{
-  render(){
-    return(
+class SideBar extends Component {
+  render() {
+    return (
   
     );
   }

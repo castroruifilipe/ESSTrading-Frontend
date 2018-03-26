@@ -6,12 +6,12 @@ import Login from './scenes/Login'
 class App extends Component {
   render() {
     return (
-  <BrowserRouter>
-    <Switch>
-      <Route exact path="/" component={Home}/>
-      <Route path="/login" component={Login}/>
-     </Switch>
-  </BrowserRouter>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/login" component={Login} />
+        </Switch>
+      </BrowserRouter>
 
     );
   }
