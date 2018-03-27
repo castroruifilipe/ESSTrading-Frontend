@@ -28,7 +28,9 @@ class NavBar extends Component {
 							<Link to={routes.REGISTAR} className="nav-link">Registar</Link>
 						</li>
 					</ul>
+
 				</div>
+
 			</nav>
 		);
 	}
