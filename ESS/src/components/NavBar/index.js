@@ -16,10 +16,7 @@ class NavBar extends Component {
 				<div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 					<ul className="nav navbar-nav navbar-right">
 						<li>
-							<form className="form-inline my-2 my-lg-0">
-								<input className="form-control mr-sm-2" type="search" placeholder="procurar" aria-label="Search" />
-								<button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-							</form>
+							<input className="form-control mr-sm-2" id="search"  placeholder="procurar" aria-label="Search" />
 						</li>
 						<li className="nav-item ">
 							<Link to={routes.SOBRE} className="nav-link">Sobre</Link>
