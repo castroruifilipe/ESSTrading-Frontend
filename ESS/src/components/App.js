@@ -19,7 +19,7 @@ class App extends Component {
 				<div className="wrapper">
 					<div className="content">
 						<NavBar/>
-						<hr class="mt-0 mb-0 separadorInicial" />
+						<hr className="mt-0 mb-0 separadorInicial" />
 
 						<Route exact path={routes.HOME} component={Home}/>
 						<Route exact path={routes.LOGIN} component={Login}/>
