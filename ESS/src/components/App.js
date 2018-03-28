@@ -18,18 +18,17 @@ class App extends Component {
 			<Router >
 				<div className="wrapper">
 					<div className="content">
-						<NavBar />
-						<hr class="mt-0 mb-0" />
+						<NavBar/>
+						<hr class="mt-0 mb-0 separadorInicial" />
 
 						<Route exact path={routes.HOME} component={Home}/>
 						<Route exact path={routes.LOGIN} component={Login}/>
 						<Route exact path={routes.REGISTAR} component={Registar}/>
 						<Route exact path={routes.SOBRE} component={Sobre}/>
 					</div>
-					
-					<div className="footer">
-						<Footer />
-					</div>
+
+					<Footer />
+
 				</div>
 
 			</Router>

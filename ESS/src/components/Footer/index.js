@@ -8,8 +8,9 @@ class Footer extends Component {
 
 	render() {
 		return (
-			<footer	class="mt-1 text-center">
-				<hr class="mt-0 mb-0" />
+			<footer	class="footer mt-1 text-center">
+				<hr class="mt-0 mb-0 separadorFooter" />
+				<br />
         © ESS Trading - 2018
 			</footer>
 		);
