@@ -7,7 +7,7 @@ import Home from '../scenes/Home';
 import Login from '../scenes/Login';
 import Registar from '../scenes/Registar';
 import Sobre from '../scenes/Sobre';
-
+import './style.css';
 import * as routes from '../constants/routes';
 
 
@@ -16,8 +16,8 @@ class App extends Component {
 	render() {
 		return (
 			<Router >
-				<div id="wrapper">
-					<div id="content">
+				<div className="wrapper">
+					<div className="content">
 						<NavBar />
 						<hr class="mt-0 mb-0" />
 
@@ -26,7 +26,8 @@ class App extends Component {
 						<Route exact path={routes.REGISTAR} component={Registar}/>
 						<Route exact path={routes.SOBRE} component={Sobre}/>
 					</div>
-					<div id="footer">
+					
+					<div className="footer">
 						<Footer />
 					</div>
 				</div>
