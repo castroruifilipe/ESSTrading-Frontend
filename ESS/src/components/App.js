@@ -17,8 +17,10 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
+
 		this.state = {
 			authUser: null,
+			loadUser:false,
 		};
 	}
 
@@ -27,30 +29,39 @@ class App extends Component {
 			authUser
 				? this.setState(() => ({ authUser }))
 				: this.setState(() => ({ authUser: null }));
+				this.setState({loadUser:true});
 		})
 	}
 
 	render() {
-		return (
-			<Router >
-				<div className="wrapper">
-					<div className="content">
-						<NavBar authUser={this.state.authUser}/>
-						<hr className="mt-0 mb-0 separadorInicial" />
+		if(!this.state.loadUser) return null;
 
-						<Route exact path={routes.HOME} component={Home}/>
-						<Route exact path={routes.LOGIN} component={Login}/>
-						<Route exact path={routes.REGISTAR} component={Registar}/>
-						<Route exact path={routes.SOBRE} component={Sobre}/>
+			return (
+				<Router >
+					<div className="wrapper">
+						<div className="content">
+							<NavBar authUser={this.state.authUser}/>
+							<hr className="mt-0 mb-0 separadorInicial" />
+
+							<Route exact path={routes.HOME} component={Home}/>
+							<Route exact path={routes.LOGIN} component={Login}/>
+							<Route exact path={routes.REGISTAR} component={Registar}/>
+							<Route exact path={routes.SOBRE} component={Sobre}/>
+						</div>
+
+						<Footer />
+
 					</div>
 
-					<Footer />
+				</Router>
 
-				</div>
+			);
 
-			</Router>
-		);
-	}
+
+		}
+
+
+
 }
 
 
