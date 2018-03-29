@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { firebase } from '../firebase';
 
 import NavBar from './NavBar';
 import Footer from './Footer';
@@ -13,12 +14,28 @@ import * as routes from '../constants/routes';
 
 class App extends Component {
 
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			authUser: null,
+		};
+	}
+
+	componentDidMount() {
+		firebase.auth.onAuthStateChanged(authUser => {
+			authUser
+				? this.setState(() => ({ authUser }))
+				: this.setState(() => ({ authUser: null }));
+		})
+	}
+
 	render() {
 		return (
 			<Router >
 				<div className="wrapper">
 					<div className="content">
-						<NavBar/>
+						<NavBar authUser={this.state.authUser}/>
 						<hr className="mt-0 mb-0 separadorInicial" />
 
 						<Route exact path={routes.HOME} component={Home}/>

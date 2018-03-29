@@ -1,7 +1,46 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import LogoutButton from '../LogoutButton';
+
 import * as routes from '../../constants/routes';
+
+const NavBarNonAuth = () =>
+	<ul className="nav navbar-nav navbar-right">
+		<li>
+			<input className="form-control mr-sm-2" id="search" placeholder="procurar" aria-label="Search" />
+		</li>
+		<li className="nav-item " style={{margin:"0 5px"}}>
+			<Link to={routes.SOBRE}>
+				<button type="button" class="btn btn-light">Sobre</button>
+			</Link>
+		</li>
+		<li className="nav-item " style={{margin:"0 5px"}}>
+			<Link to={routes.LOGIN}>
+				<button type="button" class="btn btn-light">Login</button>
+			</Link>
+		</li>
+		<li className="nav-item " style={{margin:"0 5px"}}>
+			<Link to={routes.REGISTAR}>
+				<button type="button" class="btn btn-outline-success">Registar</button>
+			</Link>
+		</li>
+	</ul>
+
+const NavBarAuth = () =>
+	<ul className="nav navbar-nav navbar-right">
+		<li>
+			<input className="form-control mr-sm-2" id="search" placeholder="procurar" aria-label="Search" />
+		</li>
+		<li className="nav-item " style={{margin:"0 5px"}}>
+			<Link to={routes.SOBRE}>
+				<button type="button" class="btn btn-light">Sobre</button>
+			</Link>
+		</li>
+		<li className="nav-item">
+			<LogoutButton />
+		</li>
+	</ul>
 
 
 class NavBar extends Component {
@@ -14,23 +53,13 @@ class NavBar extends Component {
 					<span className="navbar-toggler-icon"></span>
 				</button>
 				<div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-					<ul className="nav navbar-nav navbar-right">
-						<li>
-							<input className="form-control mr-sm-2" id="search"  placeholder="procurar" aria-label="Search" />
-						</li>
-						<li className="nav-item ">
-							<Link to={routes.SOBRE} className="nav-link">Sobre</Link>
-						</li>
-						<li className="nav-item ">
-							<Link to={routes.LOGIN} className="nav-link">Login</Link>
-						</li>
-						<li className="nav-item ">
-							<Link to={routes.REGISTAR} className="nav-link">Registar</Link>
-						</li>
-					</ul>
+				
+				{ this.props.authUser
+					? <NavBarAuth />
+					: <NavBarNonAuth />
+				}
 
 				</div>
-
 			</nav>
 		);
 	}
