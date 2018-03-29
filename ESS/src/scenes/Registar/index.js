@@ -65,8 +65,7 @@ class Registar extends Component {
 			last_name === '' ||
 			username === '' ||
 			email === '' ||
-			password_one === '' ||
-			contacto === '';
+			password_one === '';
 
 		return (
 			<div>
