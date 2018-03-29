@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
-import * as routes from '../../constants/routes';
 
 
 class Footer extends Component {

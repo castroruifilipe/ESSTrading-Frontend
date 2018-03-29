@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { auth } from '../../firebase';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import Modal from '../../components/Modal';
 
 import * as routes from '../../constants/routes';
 
@@ -8,6 +9,7 @@ import './style.css';
 
 
 const INITIAL_STATE = {
+	showModal: false,
 	first_name: '',
 	last_name: '',
 	username: '',
@@ -26,6 +28,16 @@ class Registar extends Component {
 	}
 
 
+	onClickModal = () => {
+		this.props.history.push(routes.HOME);
+	}
+
+	toggleModal = () => {
+		this.setState({
+			showModal: !this.state.showModal
+		});
+	}
+
 	onSubmit = (event) => {
 		const {
 			username,
@@ -36,7 +48,13 @@ class Registar extends Component {
 		auth.doCreateUserWithEmailAndPassword(email, password_one)
 			.then(authUser => {
 				this.setState(() => ({ ...INITIAL_STATE }));
-				this.props.history.push(routes.HOME);
+				auth.sendEmailVerification().then(() => {
+					this.toggleModal();
+				}).catch(error => {
+					this.setState({
+						'error': error
+					});
+				})
 			})
 			.catch(error => {
 				this.setState({
@@ -46,6 +64,8 @@ class Registar extends Component {
 
 		event.preventDefault();
 	}
+
+
 
 	render() {
 		const {
@@ -140,6 +160,10 @@ class Registar extends Component {
                 	</button>
 
 					{error && <p>{error.message}</p>}
+
+					<Modal body="Enviamos-lhe um email de confimação. Por favor consulte a sua caixa de correio." buttonText="OK"
+						show={this.state.showModal} onButtonClick={this.onClickModal} title="Email de confirmação" />
+
 				</form >
 			</div>
 		);

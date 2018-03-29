@@ -7,7 +7,7 @@ class LogoutButton extends Component {
 
     render() {
         return (
-            <button type="button" class="btn btn-outline-danger" onClick={auth.doSignOut}>
+            <button type="button" className="btn btn-outline-danger" onClick={auth.doSignOut}>
                 Logout
             </button>
         )

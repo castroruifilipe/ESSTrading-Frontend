@@ -10,6 +10,7 @@ import Registar from '../scenes/Registar';
 import Sobre from '../scenes/Sobre';
 import './style.css';
 import * as routes from '../constants/routes';
+import Modal from '../components/Modal';
 
 
 class App extends Component {
@@ -20,45 +21,45 @@ class App extends Component {
 
 		this.state = {
 			authUser: null,
-			loadUser:false,
+			loadUser: false,
 		};
 	}
-
+	
 	componentDidMount() {
 		firebase.auth.onAuthStateChanged(authUser => {
 			authUser
 				? this.setState(() => ({ authUser }))
 				: this.setState(() => ({ authUser: null }));
-				this.setState({loadUser:true});
+			this.setState({ loadUser: true });
 		})
 	}
 
 	render() {
-		if(!this.state.loadUser) return null;
+		if (!this.state.loadUser) return null;
 
-			return (
-				<Router >
-					<div className="wrapper">
-						<div className="content">
-							<NavBar authUser={this.state.authUser}/>
-							<hr className="mt-0 mb-0 separadorInicial" />
+		return (
+			<Router >
+				<div className="wrapper">
+					<div className="content">
+						<NavBar authUser={this.state.authUser} />
+						<hr className="mt-0 mb-0 separadorInicial" />
 
-							<Route exact path={routes.HOME} component={Home}/>
-							<Route exact path={routes.LOGIN} component={Login}/>
-							<Route exact path={routes.REGISTAR} component={Registar}/>
-							<Route exact path={routes.SOBRE} component={Sobre}/>
-						</div>
-
-						<Footer />
-
+						<Route exact path={routes.HOME} component={Home} />
+						<Route exact path={routes.LOGIN} component={Login} />
+						<Route exact path={routes.REGISTAR} component={Registar} />
+						<Route exact path={routes.SOBRE} component={Sobre} />
 					</div>
 
-				</Router>
+					<Footer />
 
-			);
+				</div>
+
+			</Router>
+
+		);
 
 
-		}
+	}
 
 
 

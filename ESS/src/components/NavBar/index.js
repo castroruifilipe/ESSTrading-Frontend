@@ -12,17 +12,17 @@ const NavBarNonAuth = () =>
 		</li>
 		<li className="nav-item " style={{margin:"0 5px"}}>
 			<Link to={routes.SOBRE}>
-				<button type="button" class="btn btn-light">Sobre</button>
+				<button type="button" className="btn btn-light">Sobre</button>
 			</Link>
 		</li>
 		<li className="nav-item " style={{margin:"0 5px"}}>
 			<Link to={routes.LOGIN}>
-				<button type="button" class="btn btn-light">Login</button>
+				<button type="button" className="btn btn-light">Login</button>
 			</Link>
 		</li>
 		<li className="nav-item " style={{margin:"0 5px"}}>
 			<Link to={routes.REGISTAR}>
-				<button type="button" class="btn btn-outline-success">Registar</button>
+				<button type="button" className="btn btn-outline-success">Registar</button>
 			</Link>
 		</li>
 	</ul>
@@ -34,7 +34,7 @@ const NavBarAuth = () =>
 		</li>
 		<li className="nav-item " style={{margin:"0 5px"}}>
 			<Link to={routes.SOBRE}>
-				<button type="button" class="btn btn-light">Sobre</button>
+				<button type="button" className="btn btn-light">Sobre</button>
 			</Link>
 		</li>
 		<li className="nav-item">
