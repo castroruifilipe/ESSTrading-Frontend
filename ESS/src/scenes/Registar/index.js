@@ -134,7 +134,7 @@ class Registar extends Component {
 						})}
 						type="tel"
 						placeholder="Contacto"
-						className="form-control" required
+						className="form-control"
 					/>
 					<button className="btn btn-lg btn-primary btn-block" disabled={isInvalid} type="submit">
 						Criar conta
