@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { auth } from '../../firebase';
 import { withRouter } from 'react-router-dom';
 import Modal from '../../components/Modal';
+import Alert from '../../components/Alert';
 
 import * as routes from '../../constants/routes';
 
@@ -29,7 +30,7 @@ class Registar extends Component {
 
 
 	onClickModal = () => {
-		this.props.history.push(routes.HOME);
+		this.props.history.push(routes.LOGIN);
 	}
 
 	toggleModal = () => {
@@ -55,6 +56,7 @@ class Registar extends Component {
 						'error': error
 					});
 				})
+				auth.doSignOut();
 			})
 			.catch(error => {
 				this.setState({
@@ -64,8 +66,6 @@ class Registar extends Component {
 
 		event.preventDefault();
 	}
-
-
 
 	render() {
 		const {
@@ -159,7 +159,7 @@ class Registar extends Component {
 						Criar conta
                 	</button>
 
-					{error && <p>{error.message}</p>}
+					{error && <Alert alertType="danger" message={error.message} />}
 
 					<Modal body="Enviamos-lhe um email de confimação. Por favor consulte a sua caixa de correio." buttonText="OK"
 						show={this.state.showModal} onButtonClick={this.onClickModal} title="Email de confirmação" />

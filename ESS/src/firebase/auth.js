@@ -9,6 +9,10 @@ export const doCreateUserWithEmailAndPassword = (email, password) =>
 export const sendEmailVerification = () =>
 	auth.currentUser.sendEmailVerification();
 
+// Email verified
+export const emailVerified = () =>
+	auth.currentUser.emailVerified;
+
 // Sign In
 export const doSignInWithEmailAndPassword = (email, password) =>
 	auth.signInWithEmailAndPassword(email, password);

@@ -10,7 +10,6 @@ import Registar from '../scenes/Registar';
 import Sobre from '../scenes/Sobre';
 import './style.css';
 import * as routes from '../constants/routes';
-import Modal from '../components/Modal';
 
 
 class App extends Component {
