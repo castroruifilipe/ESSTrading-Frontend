@@ -5,10 +5,15 @@ class Footer extends Component {
 
 	render() {
 		return (
-			<footer	className="footer mt-1 text-center">
-				<hr className="mt-0 mb-0 separadorFooter" />
-				<br />
-        © ESS Trading - 2018
+
+			<footer class="footer font-small stylish-color-dark pt-4 mt-4">
+				<div class="container text-center text-md-left">
+					<hr />
+					<p class="text-center text-md-left grey-text">
+						© 2018 Copyright: <strong>ESS Trading</strong>
+					</p>
+				</div>
+
 			</footer>
 		);
 	}

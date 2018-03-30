@@ -27,7 +27,7 @@
 #sidebar.active ul li a {
     padding: 20px 10px;
     text-align: center;
-    font-size: 0.85em;
+    font-size: 0.75em;
 }
 
 #sidebar.active ul li a i {
@@ -89,7 +89,7 @@
     MEDIAQUERIES
 ----------------------------------------------------- */
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     #sidebar {
         min-width: 80px;
         max-width: 80px;
@@ -105,10 +105,10 @@
     #sidebar ul li a {
         padding: 20px 10px;
         text-align: center;
-        font-size: 0.85em;
+        font-size: 0.75em;
     }
     #sidebar ul li a span {
-        font-size: 0.85em;
+        font-size: 0.75em;
     }
     #sidebar ul li a i {
         margin-right: 0;

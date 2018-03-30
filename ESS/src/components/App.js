@@ -39,10 +39,9 @@ class App extends Component {
 
 		return (
 			<Router >
-				
 				<div className="wrapper">
+					<NavBar authUser={this.state.authUser} />
 					<div className="content">
-						<NavBar authUser={this.state.authUser} />
 					
 						<hr className="mt-0 mb-0 separadorInicial" />
 

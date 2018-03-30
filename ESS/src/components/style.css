@@ -18,8 +18,7 @@ html, body {
   position: absolute;
   bottom: 0;
   left: 0;
-  background-color: #E64A19;
-  color: white;
+  margin-bottom: 30px;
 }
 
 .separadorInicial {

@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import { Button } from 'reactstrap';
 import HideIcon from 'react-icons/lib/fa/angle-left';
 import ShowIcon from 'react-icons/lib/fa/angle-right';
-import { Button } from 'reactstrap';
+import EyeIcon from 'react-icons/lib/md/remove-red-eye';
+import BookIcon from 'react-icons/lib/fa/book';
+import HistoryIcon from 'react-icons/lib/md/history';
+import CreditCardIcon from 'react-icons/lib/md/credit-card';
+import SettingsIcon from 'react-icons/lib/md/settings';
 
 import * as routes from '../../constants/routes';
 
@@ -14,14 +19,34 @@ class Sidebar extends Component {
 
         this.state = {
             active: false,
+            hidded: false
         };
 
-        this.hide = this.hide.bind(this);
+        this.toggle = this.toggle.bind(this);
     }
 
-    hide() {
+    updateDimensions() {
+        if (!this.state.hidded) {
+            if (window.innerWidth <= 1000) {
+                this.setState({
+                    active: true
+                });
+            } else {
+                this.setState({
+                    active: false
+                });
+            }
+        }
+    }
+    componentDidMount() {
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions.bind(this));
+    }
+
+    toggle() {
         this.setState({
-            active: !this.state.active
+            active: !this.state.active,
+            hidded: !this.state.hidded
         });
     }
 
@@ -29,56 +54,41 @@ class Sidebar extends Component {
         return (
             <nav id="sidebar" className={this.state.active ? "active" : ""}>
                 <div className="sidebar-header">
-                    <h3>Bootstrap Sidebar</h3>
-                    <strong>BS</strong>
+                    user
                 </div>
-
 
                 <ul className="list-unstyled components">
                     <li className="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i className="glyphicon glyphicon-home"></i>
-                            Home
-                                </a>
-                        <ul className="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="#">Home 1</a></li>
-                            <li><a href="#">Home 2</a></li>
-                            <li><a href="#">Home 3</a></li>
+                        <a href="#">
+                            <i><EyeIcon /> </i>Watchlist
+                         </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i><BookIcon /> </i>Portefólio
+                         </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i><HistoryIcon /> </i>Histórico
+                         </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i><CreditCardIcon /> </i>Levantar plafond
+                         </a>
+                    </li>
+                    <li>
+                        <a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i><SettingsIcon /> </i>Definições
+                        </a>
+                        <ul className="collapse list-unstyled" id="settingsSubmenu">
+                            <li><a href="#">Geral</a></li>
+                            <li><a href="#">Conta</a></li>
+                            <li><a href="#">Notificações</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i className="glyphicon glyphicon-briefcase"></i>
-                            About
-                                </a>
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i className="glyphicon glyphicon-duplicate"></i>
-                            Pages
-                                </a>
-                        <ul className="collapse list-unstyled" id="pageSubmenu">
-                            <li><a href="#">Page 1</a></li>
-                            <li><a href="#">Page 2</a></li>
-                            <li><a href="#">Page 3</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i className="glyphicon glyphicon-link"></i>
-                            Portfolio
-                                </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i className="glyphicon glyphicon-paperclip"></i>
-                            FAQ
-                                </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i className="glyphicon glyphicon-send"></i>
-                            Contact
-                                </a>
-                    </li>
+
                 </ul>
 
                 <ul className="list-unstyled CTAs">
@@ -87,10 +97,10 @@ class Sidebar extends Component {
                 </ul>
 
                 <ul className="list-unstyled">
-                    <li onClick={this.hide}>
-                        {this.state.active ? 
-                            <a> <ShowIcon /> </a>:
-                            <a> <HideIcon /> <small>Esconder</small> </a> }
+                    <li onClick={this.toggle}>
+                        {this.state.active ?
+                            <a> <ShowIcon /> </a> :
+                            <a> <HideIcon /> <small>Esconder</small> </a>}
                     </li>
                 </ul>
             </nav>
