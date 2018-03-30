@@ -78,7 +78,7 @@ class Login extends Component {
 							'email': event.target.value
 						})}
 					/>
-					<Input required value={password} placeholder="Password" type="email" class="form-control"
+					<Input required value={password} placeholder="Password" type="password" class="form-control"
 						onChange={event => this.setState({
 							'password': event.target.value
 						})}

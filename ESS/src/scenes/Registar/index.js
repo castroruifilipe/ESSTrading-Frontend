@@ -112,12 +112,12 @@ class Registar extends Component {
 							'email': event.target.value
 						})}
 					/>
-					<Input required value={password_one} placeholder="Password" type="email" class="form-control"
+					<Input required value={password_one} placeholder="Password" type="password" class="form-control"
 						onChange={event => this.setState({
 							'password_one': event.target.value
 						})}
 					/>
-					<Input required value={password_two} placeholder="Confirmar password" type="email" class="form-control"
+					<Input required value={password_two} placeholder="Confirmar password" type="password" class="form-control"
 						onChange={event => this.setState({
 							'password_two': event.target.value
 						})}

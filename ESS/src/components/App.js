@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { firebase } from '../firebase';
+import SideNav, { Nav, NavIcon, NavText } from 'react-sidenav';
 
 import NavBar from './NavBar';
 import Footer from './Footer';
@@ -10,6 +11,7 @@ import Registar from '../scenes/Registar';
 import Sobre from '../scenes/Sobre';
 import './style.css';
 import * as routes from '../constants/routes';
+import Watchlist from '../scenes/Watchlist';
 
 
 class App extends Component {
@@ -23,7 +25,7 @@ class App extends Component {
 			loadUser: false,
 		};
 	}
-	
+
 	componentDidMount() {
 		firebase.auth.onAuthStateChanged(authUser => {
 			authUser
@@ -38,15 +40,19 @@ class App extends Component {
 
 		return (
 			<Router >
+				
 				<div className="wrapper">
 					<div className="content">
 						<NavBar authUser={this.state.authUser} />
+					
 						<hr className="mt-0 mb-0 separadorInicial" />
 
 						<Route exact path={routes.HOME} component={Home} />
 						<Route exact path={routes.LOGIN} component={Login} />
 						<Route exact path={routes.REGISTAR} component={Registar} />
 						<Route exact path={routes.SOBRE} component={Sobre} />
+						<Route exact path={routes.WATCHLIST} component={Watchlist} />
+
 					</div>
 
 					<Footer />
