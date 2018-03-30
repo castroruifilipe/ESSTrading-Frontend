@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { firebase } from '../firebase';
-import SideNav, { Nav, NavIcon, NavText } from 'react-sidenav';
 
 import NavBar from './NavBar';
 import Footer from './Footer';
