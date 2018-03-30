@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { auth } from '../../firebase';
-import Alert from '../../components/Alert';
-import Modal from '../../components/Modal';
+import { Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
 
 import * as routes from '../../constants/routes';
 
@@ -10,7 +9,7 @@ import './style.css';
 
 
 const INITIAL_STATE = {
-	showModal: false,
+	modal: false,
 	email: '',
 	password: '',
 	error: null,
@@ -21,12 +20,13 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { ...INITIAL_STATE };
+
+		this.toggle = this.toggle.bind(this);
 	}
 
-
-	toggleModal = () => {
+	toggle() {
 		this.setState({
-			showModal: !this.state.showModal
+			modal: !this.state.modal
 		});
 	}
 
@@ -43,7 +43,7 @@ class Login extends Component {
 					this.props.history.push(routes.HOME);
 				} else {
 					auth.doSignOut();
-					this.toggleModal();
+					this.toggle();
 				}
 
 			})
@@ -69,38 +69,36 @@ class Login extends Component {
 
 		return (
 			<div>
-				<form className="form-signin" onSubmit={this.onSubmit}>
+				<Form className="form-signin" onSubmit={this.onSubmit}>
 
 					<h1 className="h3 mb-3 font-weight-normal">Iniciar sessão</h1>
 
-					<input
-						value={email}
+					<Input required value={email} placeholder="Email" type="email" class="form-control"
 						onChange={event => this.setState({
 							'email': event.target.value
 						})}
-						type="email"
-						placeholder="Email"
-						className="form-control" required
 					/>
-					<input
-						value={password}
+					<Input required value={password} placeholder="Password" type="email" class="form-control"
 						onChange={event => this.setState({
 							'password': event.target.value
 						})}
-						type="password"
-						placeholder="Password"
-						className="form-control" required
 					/>
-					<button className="btn btn-lg btn-primary btn-block" disabled={isInvalid} type="submit">
-						Login
-                	</button>
-					
-					{error && <Alert alertType="danger" message={error.message} />}
 
-					<Modal body="O seu email ainda não está verificado. Por favor consulte a sua caixa de correio e valide a sua conta." buttonText="OK"
-						show={this.state.showModal} onButtonClick={this.toggleModal} title="Email de confirmação" />
-					
-				</form >
+					<Button color="primary" disabled={isInvalid} type="submit" block="true" size="lg">Login</Button>
+
+					{error && <Alert color="danger">{error.message}</Alert>}
+
+					<Modal isOpen={this.state.modal} toggle={this.toggle}>
+						<ModalHeader toggle={this.toggle}>Email de confirmação</ModalHeader>
+						<ModalBody>
+							O seu email ainda não está verificado. Por favor consulte a sua caixa de correio e valide a sua conta.
+          				</ModalBody>
+						<ModalFooter>
+							<Button color="primary" onClick={this.toggle}>OK</Button>
+						</ModalFooter>
+					</Modal>
+
+				</Form >
 			</div>
 		);
 	}
