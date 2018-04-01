@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavItem, Button } from 'reactstrap';
 import Sidebar from '../../components/Sidebar';
 
-import * as routes from '../../constants/routes';
 
 import './style.css';
 
