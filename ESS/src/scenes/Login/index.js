@@ -40,7 +40,7 @@ class Login extends Component {
 			.then(() => {
 				if (auth.emailVerified()) {
 					this.setState(() => ({ ...INITIAL_STATE }));
-					this.props.history.push(routes.HOME);
+					this.props.history.push(routes.WATCHLIST);
 				} else {
 					auth.doSignOut();
 					this.toggle();

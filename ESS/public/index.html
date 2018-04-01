@@ -20,8 +20,10 @@
 </head>
 
 <body>
-  <div id="root"></div>
-  <!--
+  <div id='procura'>
+    <div id="root"></div>
+	</div>
+<!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -40,8 +42,7 @@
     crossorigin="anonymous"></script>
   <script>
     $(document).ready(function () {
-
-      $("#search").keyup(function () {
+      $("#procura").on('keyup','#search',function () {
         var value = $(this).val().toLowerCase();
         $("#table tr").filter(function () {
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
