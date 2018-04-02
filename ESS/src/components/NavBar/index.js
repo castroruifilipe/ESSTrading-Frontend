@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import AuthUserContext from '../AuthUserContext';
 import LogoutButton from '../LogoutButton';
 
 import * as routes from '../../constants/routes';
@@ -54,10 +55,12 @@ class NavBar extends Component {
 				</button>
 				<div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 				
-				{ this.props.authUser
-					? <NavBarAuth />
-					: <NavBarNonAuth />
-				}
+				<AuthUserContext.Consumer>
+					{ authUser => authUser
+						? <NavBarAuth />
+						: <NavBarNonAuth />
+					}
+				</AuthUserContext.Consumer>
 
 				</div>
 			</nav>

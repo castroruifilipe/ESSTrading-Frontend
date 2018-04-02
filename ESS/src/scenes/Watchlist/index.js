@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Sidebar from '../../components/Sidebar';
-
+import withAuthorization from '../../components/withAuthorization';
 
 import './style.css';
 
@@ -49,5 +49,5 @@ class Watchlist extends Component {
 
 }
 
-
-export default Watchlist;
+const authCondition = (authUser) => !!authUser;
+export default withAuthorization(authCondition)(Watchlist);

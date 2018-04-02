@@ -1,33 +1,37 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { firebase } from '../firebase';
-import withAuthentication from './withAuthentication';
 
-import NavBar from './NavBar';
-import Footer from './Footer';
-import Home from '../scenes/Home';
-import Login from '../scenes/Login';
-import Registar from '../scenes/Registar';
-import Sobre from '../scenes/Sobre';
-import './style.css';
-import * as routes from '../constants/routes';
-import Watchlist from '../scenes/Watchlist';
 
 
 class App extends Component {
 
 	constructor(props) {
 		super(props);
+
+
+		this.state = {
+			authUser: null,
+			loadUser: false,
+		};
 	}
 
+	componentDidMount() {
+		firebase.auth.onAuthStateChanged(authUser => {
+			authUser
+				? this.setState(() => ({ authUser }))
+				: this.setState(() => ({ authUser: null }));
+			this.setState({ loadUser: true });
+		})
+	}
 
 	render() {
-		//if (!this.state.loadUser) return null;
+		if (!this.state.loadUser) return null;
 
 		return (
 			<Router >
 				<div className="wrapper">
-					<NavBar />
+					<NavBar authUser={this.state.authUser} />
 					<div className="content">
 					
 						<hr className="mt-0 mb-0 separadorInicial" />
@@ -47,7 +51,13 @@ class App extends Component {
 			</Router>
 
 		);
+
+
 	}
+
+
+
 }
 
-export default withAuthentication(App);
+
+export default App;

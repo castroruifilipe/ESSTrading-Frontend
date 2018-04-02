@@ -122,7 +122,7 @@ class Registar extends Component {
 							'password_two': event.target.value
 						})}
 					/>
-					<Input required value={contacto} placeholder="Contacto" type="tel" class="form-control"
+					<Input value={contacto} placeholder="Contacto" type="tel" class="form-control"
 						onChange={event => this.setState({
 							'contacto': event.target.value
 						})}
