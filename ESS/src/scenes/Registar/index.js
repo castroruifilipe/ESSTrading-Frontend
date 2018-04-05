@@ -48,7 +48,6 @@ class Registar extends Component {
 
 		auth.doCreateUserWithEmailAndPassword(email, password_one)
 			.then(authUser => {
-				this.setState(() => ({ ...INITIAL_STATE }));
 				auth.sendEmailVerification().then(() => {
 					this.toggle();
 				}).catch(error => {
