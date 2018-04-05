@@ -1,61 +1,49 @@
 import React, { Component } from 'react';
-import Table from '../Table'
-import ButaoVariacao from './components/ButaoVariacao'
+import { Table } from 'reactstrap';
+import ButaoVariacao from './components/ButaoVariacao';
+import AtivosContext from '../../contexts/AtivosContext';
+import withAtivos from '../../higher-order_components/withAtivos';
+
+
+const header = ['Ativo',
+	<ButaoVariacao onChangeVariacao={(variacao) => this.changeVariacao(variacao)} />,
+	'Venda($)',
+	'Compra($)'
+];
+
 
 class HomeTable extends Component {
-	constructor(props){
-		super(props);
-		this.state={
-			header: ['Ativo',
-				<ButaoVariacao  onChangeVariacao={(variacao)=> this.changeVariacao(variacao)} />,
-				'Venda($)',
-				'Compra($)'
-			],
-			rows: {'AMZN':{ativo: 'AMZN',variacao: '0.48%', venda: 1542.61, compra: 1545.74},
-						 'AAPL':{ativo: 'AAPL', variacao: '-0.93%', venda: 174.67, compra: 175.01}
-					 },
-			activos: ["AMZN"],
-		};
 
-
-	}
-
-	changeVariacao(variacao){
-		console.log(variacao +' from HomeTable');
-	}
-	updateRows(){
-		for(let i =0;i<this.state.activos.length;i++){
-			fetch("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=AMZN&apikey=63X9ZZK87B22O14G")
-			.then(res => res.json())
-      .then(
-        (result) => {
-          let n =result["Meta Data"]["1. Information"];
-					let newState = Object.assign({},this.state.rows);
-					this.setState({
-						rows:{'AMZN':{ativo: n, variacao: n, venda: 174.67, compra: 175.01}},
-					});
-
-					alert(n);
-        },
-        (error) => {
-          alert("error");
-        }
-      )
-		}
-
+	getColumns(ativos, symbol) {
+		return Object.values(ativos[symbol]).map((lm, i) => <td key={i} >{lm}</td>)
 	}
 
 	render() {
-		setTimeout(this.updateRows(),3000);
-
 		return (
-			<Table
-				header={this.state.header}
-				rows={this.state.rows}
-				/>
+			<AtivosContext.Consumer >
+				{ativos => (
+					<Table striped hover bordered responsive className="text-center">
+						<thead className="thead-light">
+							<tr>
+								{header.map((elem, i) => <th key={i}>{elem}</th>)}
+							</tr>
+						</thead>
+						<tbody id="table">
+							{Object.keys(ativos).map((symbol) => 
+								<tr key={symbol}>
+									<td key={0}>{symbol}</td>
+									<td key={1}>{ativos[symbol]['variacao']}</td>
+									<td key={1}>{ativos[symbol]['venda']}</td>
+									<td key={1}>{ativos[symbol]['compra']}</td>
+								</tr>
+							)}
+						</tbody>
+					</Table>
+				)}
+			</AtivosContext.Consumer >
 		);
 	}
 }
 
 
-export default HomeTable;
+export default withAtivos(HomeTable);

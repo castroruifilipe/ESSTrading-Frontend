@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AuthUserContext from './AuthUserContext';
+import AuthUserContext from '../contexts/AuthUserContext';
 import { firebase } from '../firebase';
 
 const withAuthentication = (Component) => {
@@ -13,7 +13,7 @@ const withAuthentication = (Component) => {
             };
         }
 
-        componentDidMount() {
+        componentWillMount() {
             firebase.auth.onAuthStateChanged(authUser => {
                 authUser
                     ? this.setState(() => ({ authUser }))
