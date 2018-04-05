@@ -9,6 +9,7 @@ class LogoutButton extends Component {
         return (
             <button type="button" className="btn btn-outline-danger" onClick={auth.doSignOut}>
                 Logout
+                
             </button>
         )
     }

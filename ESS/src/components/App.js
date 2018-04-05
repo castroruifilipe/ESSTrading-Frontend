@@ -12,7 +12,7 @@ import Sobre from '../scenes/Sobre';
 import './style.css';
 import * as routes from '../constants/routes';
 import Watchlist from '../scenes/Watchlist';
-
+import HomeUser from './HomeUser';
 
 class App extends Component {
 
@@ -29,14 +29,14 @@ class App extends Component {
 				<div className="wrapper">
 					<NavBar />
 					<div className="content">
-					
+
 						<hr className="mt-0 mb-0 separadorInicial" />
 
 						<Route exact path={routes.HOME} component={Home} />
 						<Route exact path={routes.LOGIN} component={Login} />
 						<Route exact path={routes.REGISTAR} component={Registar} />
 						<Route exact path={routes.SOBRE} component={Sobre} />
-						<Route exact path={routes.WATCHLIST} component={Watchlist} />
+						<Route path={"/auth"} component={HomeUser} />
 
 					</div>
 
