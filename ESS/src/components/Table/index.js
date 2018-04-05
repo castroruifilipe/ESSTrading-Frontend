@@ -4,11 +4,13 @@ import React, { Component } from 'react';
 
 class Table extends Component {
 
-	getRows(row){
-		return Object.values(row).map((elem,i) => <td key={i}>{elem}</td>);
+	getColumns(key){
+		return Object.values(this.props.rows[key]).map((lm,i)=><td key={i} >{lm}</td>)
+
 	}
 
 	render() {
+
 		return (
 			<table className="table table-striped table-bordered">
 			  <thead className="thead-light">
@@ -17,7 +19,7 @@ class Table extends Component {
 			    </tr>
 			  </thead>
 			  <tbody id="table">
-					{this.props.rows.map((row,i) => <tr key={i}>{this.getRows(row)}</tr>)}
+					{Object.keys(this.props.rows).map((key,i) => <tr key={i}>{this.getColumns(key)}</tr>)}
 			  </tbody>
 			</table>
 		);

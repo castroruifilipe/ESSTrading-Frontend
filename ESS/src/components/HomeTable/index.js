@@ -11,22 +11,43 @@ class HomeTable extends Component {
 				'Venda($)',
 				'Compra($)'
 			],
-			rows: [{ativo: 'AMZN',variacao: '0.48%', venda: 1542.61, compra: 1545.74},
-						 {ativo: 'AAPL', variacao: '-0.93%', venda: 174.67, compra: 175.01}
-					 ]
+			rows: {'AMZN':{ativo: 'AMZN',variacao: '0.48%', venda: 1542.61, compra: 1545.74},
+						 'AAPL':{ativo: 'AAPL', variacao: '-0.93%', venda: 174.67, compra: 175.01}
+					 },
+			activos: ["AMZN"],
 		};
+
 
 	}
 
 	changeVariacao(variacao){
 		console.log(variacao +' from HomeTable');
 	}
-
 	updateRows(){
-		this.setState();
+		for(let i =0;i<this.state.activos.length;i++){
+			fetch("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=AMZN&apikey=63X9ZZK87B22O14G")
+			.then(res => res.json())
+      .then(
+        (result) => {
+          let n =result["Meta Data"]["1. Information"];
+					let newState = Object.assign({},this.state.rows);
+					this.setState({
+						rows:{'AMZN':{ativo: n, variacao: n, venda: 174.67, compra: 175.01}},
+					});
+
+					alert(n);
+        },
+        (error) => {
+          alert("error");
+        }
+      )
+		}
+
 	}
 
 	render() {
+		setTimeout(this.updateRows(),3000);
+
 		return (
 			<Table
 				header={this.state.header}
