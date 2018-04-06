@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom'
 
-import withAtivos from '../higher-order_components/withAtivos';
 import Watchlist from '../scenes/Watchlist';
 import Sidebar from './Sidebar';
 import * as routes from '../constants/routes';

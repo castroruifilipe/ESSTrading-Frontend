@@ -33,8 +33,8 @@ class HomeTable extends Component {
 								<tr key={symbol}>
 									<td key={0}>{symbol}</td>
 									<td key={1}>{ativos[symbol]['variacao']}</td>
-									<td key={1}>{ativos[symbol]['venda']}</td>
-									<td key={1}>{ativos[symbol]['compra']}</td>
+									<td key={2}>{ativos[symbol]['venda']}</td>
+									<td key={3}>{ativos[symbol]['compra']}</td>
 								</tr>
 							)}
 						</tbody>

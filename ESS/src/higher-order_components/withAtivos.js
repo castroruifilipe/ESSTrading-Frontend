@@ -1,13 +1,18 @@
 import React from 'react';
+import { IEXClient } from 'iex-api';
 
 import AtivosContext from '../contexts/AtivosContext';
-import { firebase } from '../firebase';
-
 
 const ativos = {
     'AMZN': { variacao: '0.48%', venda: 1542.61, compra: 1545.74 },
-	'AAPL': { variacao: '-0.93%', venda: 174.67, compra: 175.01 },
+    'AAPL': { variacao: '-0.93%', venda: 174.67, compra: 175.01 },
 }
+
+const fetch = window.fetch.bind(window);
+const iex = new IEXClient(fetch);
+
+const symbols = ['AMZN', 'AAPL', 'FB', 'GOOG', 'TSLA', 'DBX', 'EA', 'HPQ', 'IBM', 'MSFT', 'MSI', 'NOK', 'NVDA', 'ORCL', 'SNAP', 'SPOT', 'TRIP'];
+
 
 const withAtivos = (Component) => {
     class WithAtivos extends React.Component {
@@ -20,27 +25,55 @@ const withAtivos = (Component) => {
             };
         }
 
-        updateAtivos() {
-            for (let ativo in ativos) {
-                fetch("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + ativo + "&interval=1min$&apikey=63X9ZZK87B22O14G")
-                    .then(res => res.json())
-                    .then(result => {
-                        let venda = result['Meta Data']['1. Information'];
-                        this.setState(prevState => ({
-                            ativos: {
-                                ...prevState.ativos,
-                                [ativo]: {variacao: "n", venda: 174.67, compra: 175.01 }
-                            }
-                        }));
-                    }, error => {
-                    });
-            }
+        componentWillMount() {
+            this.updateAtivos();
         }
 
-        
-        render() {
-            setTimeout(() => this.updateAtivos(), 3000);
+        updateAtivos() {
+            console.log("AQUI");
+            const prevAtivos = this.state.ativos;
+            symbols.forEach(symbol => {
+                iex.stockQuote(symbol)
+                    .then(quote => {
+                        prevAtivos[symbol] = {
+                            variacao: quote.changePercent,
+                            venda: quote.iexBidPrice,
+                            compra: quote.iexAskPrice
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            });
 
+            this.setState({
+                ativos: prevAtivos
+            });
+
+
+
+            // fetch(`https://api.iextrading.com/1.0/stock/market/batch?symbols=${symbols_join}types=change,ask,bid`)
+            //     .then(res => res.json())
+            //     .then(result => {
+            //         console.log(result);
+
+
+
+
+            //         // let venda = result['Meta Data']['1. Information'];
+            //         // this.setState(prevState => ({
+            //         //     ativos: {
+            //         //         ...prevState.ativos,
+            //         //         [ativo]: {variacao: "n", venda: 174.67, compra: 175.01 }
+            //         //     }
+            //         // }));
+            //     }, error => {
+            //     });
+            // });
+        }
+
+        render() {
+            console.log(this.state.ativos);
             return (
                 <AtivosContext.Provider value={this.state.ativos}>
                     <Component />
