@@ -51,11 +51,6 @@ const NavBarAuth = () =>
 						<button type="button" className="btn btn-light">Sobre</button>
 					</Link>
 				</li>
-				<li className="nav-item " style={{ margin: "0 5px" }}>
-					<Link to={routes.WATCHLIST}>
-						<button type="button" className="btn btn-light">Watchlist</button>
-					</Link>
-				</li>
 				<li className="nav-item">
 					<button type="button" className="btn btn-outline-danger" onClick={auth.doSignOut}>
 						Logout
