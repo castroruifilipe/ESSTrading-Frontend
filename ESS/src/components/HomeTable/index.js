@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
+import withAtivos from '../../higher-order_components/withAtivos';
+
 import ButaoVariacao from './components/ButaoVariacao';
 import AtivosContext from '../../contexts/AtivosContext';
-import withAtivos from '../../higher-order_components/withAtivos';
 
 
 const header = ['Ativo',
@@ -11,14 +12,10 @@ const header = ['Ativo',
 	'Compra($)'
 ];
 
-
 class HomeTable extends Component {
 
-	getColumns(ativos, symbol) {
-		return Object.values(ativos[symbol]).map((lm, i) => <td key={i} >{lm}</td>)
-	}
-
 	render() {
+		console.log("RENDER - HomeTable");
 		return (
 			<AtivosContext.Consumer >
 				{ativos => (
@@ -44,6 +41,5 @@ class HomeTable extends Component {
 		);
 	}
 }
-
 
 export default withAtivos(HomeTable);

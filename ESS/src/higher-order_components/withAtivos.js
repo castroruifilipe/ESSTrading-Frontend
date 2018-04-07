@@ -1,17 +1,7 @@
 import React from 'react';
-import { IEXClient } from 'iex-api';
+import { iex } from '../IEXClient';
 
 import AtivosContext from '../contexts/AtivosContext';
-
-const ativos = {
-    'AMZN': { variacao: '0.48%', venda: 1542.61, compra: 1545.74 },
-    'AAPL': { variacao: '-0.93%', venda: 174.67, compra: 175.01 },
-}
-
-const fetch = window.fetch.bind(window);
-const iex = new IEXClient(fetch);
-
-const symbols = ['AMZN', 'AAPL', 'FB', 'GOOG', 'TSLA', 'DBX', 'EA', 'HPQ', 'IBM', 'MSFT', 'MSI', 'NOK', 'NVDA', 'ORCL', 'SNAP', 'SPOT', 'TRIP'];
 
 
 const withAtivos = (Component) => {
@@ -19,20 +9,36 @@ const withAtivos = (Component) => {
 
         constructor(props) {
             super(props);
-
             this.state = {
-                ativos: ativos,
+                ativos: {
+                    'AMZN' : {},
+                    'AAPL' : {},
+                    'FB' : {},
+                    'GOOG' : {},
+                    'TSLA' : {},
+                    'DBX' : {},
+                    'EA' : {},
+                    'HPQ' : {},
+                    'IBM' : {},
+                    'MSFT' : {},
+                    'MSI' : {},
+                    'NOK' : {},
+                    'NVDA' : {},
+                    'ORCL' : {},
+                    'SNAP' : {},
+                    'SPOT' : {},
+                    'TRIP' : {},
+                }
             };
         }
 
-        componentWillMount() {
-            this.updateAtivos();
+        componentDidMount() {
+            setInterval(this.updateAtivos, 3000);
         }
 
-        updateAtivos() {
-            console.log("AQUI");
+        updateAtivos = () => {
             const prevAtivos = this.state.ativos;
-            symbols.forEach(symbol => {
+            Object.keys(this.state.ativos).forEach(symbol => {
                 iex.stockQuote(symbol)
                     .then(quote => {
                         prevAtivos[symbol] = {
@@ -49,31 +55,10 @@ const withAtivos = (Component) => {
             this.setState({
                 ativos: prevAtivos
             });
-
-
-
-            // fetch(`https://api.iextrading.com/1.0/stock/market/batch?symbols=${symbols_join}types=change,ask,bid`)
-            //     .then(res => res.json())
-            //     .then(result => {
-            //         console.log(result);
-
-
-
-
-            //         // let venda = result['Meta Data']['1. Information'];
-            //         // this.setState(prevState => ({
-            //         //     ativos: {
-            //         //         ...prevState.ativos,
-            //         //         [ativo]: {variacao: "n", venda: 174.67, compra: 175.01 }
-            //         //     }
-            //         // }));
-            //     }, error => {
-            //     });
-            // });
+            console.log(this.state.ativos);
         }
 
         render() {
-            console.log(this.state.ativos);
             return (
                 <AtivosContext.Provider value={this.state.ativos}>
                     <Component />

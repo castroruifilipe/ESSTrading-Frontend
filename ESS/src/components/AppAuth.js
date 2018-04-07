@@ -16,7 +16,7 @@ class AppAuth extends Component {
 			<div className="wrapper2">
 				<Sidebar />
 
-				<div id="content" class="container-fluid">
+				<div id="content" className="container-fluid">
 					<Redirect to={routes.WATCHLIST}/>
 					<Route exact path={routes.WATCHLIST} component={Watchlist} />
 				</div>
