@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom'
 
 import Watchlist from '../scenes/Watchlist';
+import AbrirCFD from '../scenes/AbrirCFD';
 import Sidebar from './Sidebar';
 import * as routes from '../constants/routes';
 import './style.css';
@@ -19,6 +20,7 @@ class AppAuth extends Component {
 				<div id="content" className="container-fluid">
 					<Redirect to={routes.WATCHLIST}/>
 					<Route exact path={routes.WATCHLIST} component={Watchlist} />
+					<Route exact path={routes.ABRIR_CFD} component={AbrirCFD} />
 				</div>
 			</div>
 

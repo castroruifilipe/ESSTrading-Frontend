@@ -9,7 +9,6 @@ import Login from '../scenes/Login';
 import Registar from '../scenes/Registar';
 import Sobre from '../scenes/Sobre';
 import AppAuth from './AppAuth';
-import withAtivos from '../higher-order_components/withAtivos';
 import * as routes from '../constants/routes';
 import './style.css';
 

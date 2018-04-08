@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import HideIcon from 'react-icons/lib/fa/angle-left';
 import ShowIcon from 'react-icons/lib/fa/angle-right';
 import EyeIcon from 'react-icons/lib/md/remove-red-eye';
@@ -6,6 +7,7 @@ import BookIcon from 'react-icons/lib/fa/book';
 import HistoryIcon from 'react-icons/lib/md/history';
 import CreditCardIcon from 'react-icons/lib/md/credit-card';
 import SettingsIcon from 'react-icons/lib/md/settings';
+import * as routes from '../../constants/routes';
 
 
 import './style.css';
@@ -57,33 +59,33 @@ class Sidebar extends Component {
 
                 <ul className="list-unstyled components">
                     <li className="active">
-                        <a href="#">
+                        <Link to={routes.WATCHLIST}>
                             <i><EyeIcon /> </i>Watchlist
-                         </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#">
+                        <Link to={routes.WATCHLIST}>
                             <i><BookIcon /> </i>Portefólio
-                         </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#">
+                        <Link to={routes.WATCHLIST}>
                             <i><HistoryIcon /> </i>Histórico
-                         </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#">
+                        <Link to={routes.WATCHLIST}>
                             <i><CreditCardIcon /> </i>Levantar plafond
-                         </a>
+                        </Link>
                     </li>
                     <li>
                         <a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false">
                             <i><SettingsIcon /> </i>Definições
                         </a>
                         <ul className="collapse list-unstyled" id="settingsSubmenu">
-                            <li><a href="#">Geral</a></li>
-                            <li><a href="#">Conta</a></li>
-                            <li><a href="#">Notificações</a></li>
+                            <li><Link to={routes.WATCHLIST}>Geral</Link></li>
+                            <li><Link to={routes.WATCHLIST}>Conta</Link></li>
+                            <li><Link to={routes.WATCHLIST}>Notificações</Link></li>
                         </ul>
                     </li>
 

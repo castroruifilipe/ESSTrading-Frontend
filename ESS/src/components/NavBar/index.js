@@ -59,10 +59,10 @@ const NavBarAuth = () =>
 			</ul>
 		</div>
 	</nav>
+	
 class NavBar extends Component {
 
 	render() {
-		console.log("RENDER - NavBar");
 		return (
 			<AuthUserContext.Consumer>
 				{authUser => authUser

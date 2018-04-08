@@ -42,7 +42,8 @@ const withAtivos = (Component) => {
                 iex.stockQuote(symbol)
                     .then(quote => {
                         prevAtivos[symbol] = {
-                            variacao: quote.changePercent,
+                            symbol: symbol,
+                            change: quote.changePercent,
                             venda: quote.iexBidPrice,
                             compra: quote.iexAskPrice
                         }
@@ -55,7 +56,6 @@ const withAtivos = (Component) => {
             this.setState({
                 ativos: prevAtivos
             });
-            console.log(this.state.ativos);
         }
 
         render() {
