@@ -41,12 +41,7 @@ const withAtivos = (Component) => {
             Object.keys(this.state.ativos).forEach(symbol => {
                 iex.stockQuote(symbol)
                     .then(quote => {
-                        prevAtivos[symbol] = {
-                            symbol: symbol,
-                            change: quote.changePercent,
-                            venda: quote.iexBidPrice,
-                            compra: quote.iexAskPrice
-                        }
+                        prevAtivos[symbol] = quote
                     })
                     .catch(error => {
                         console.log(error);
