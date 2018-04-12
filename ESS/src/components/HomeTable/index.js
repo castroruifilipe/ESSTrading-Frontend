@@ -6,7 +6,6 @@ import withAtivos from '../../higher-order_components/withAtivos';
 import ButaoVariacao from './components/ButaoVariacao';
 import AtivosContext from '../../contexts/AtivosContext';
 import AbrirCFD from '../../scenes/Watchlist/components/AbrirCFD';
-import * as routes from '../../constants/routes';
 import cfdEnum from '../../constants/cfdEnum';
 import './style.css';
 
@@ -32,7 +31,7 @@ class HomeTable extends Component {
 	}
 
 	toggle = () => {
-		if (this.state.modal == true) {
+		if (this.state.modal === true) {
 			this.setState({
 				ativoSelected: undefined,
 				modal: !this.state.modal,

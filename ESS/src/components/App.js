@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
+import { firebase } from '../firebase';
 import withAuthentication from '../higher-order_components/withAuthentication';
 import NavBar from './NavBar';
 import Footer from './Footer';
@@ -14,8 +15,34 @@ import './style.css';
 
 class App extends Component {
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			authenticated: undefined
+		};
+	}
+
+
+	componentDidMount() {
+		firebase.auth.onAuthStateChanged(authUser => {
+			if (!authUser) {
+				this.setState({ authenticated: false });
+			} else {
+				this.setState({ authenticated: true });
+			}
+		});
+	}
+
+
 	render() {
-		//if (!this.state.loadUser) return null;
+		if (this.state.authenticated === undefined) return null;
+
+		let homeRoute = undefined;
+		if (this.state.authenticated === false) {
+			homeRoute = <Route exact path={routes.HOME} component={Home} />;
+		} else {
+			homeRoute = <Route exact path={routes.HOME} component={AppAuth} />;
+		}
 
 		return (
 			<Router >
@@ -26,7 +53,7 @@ class App extends Component {
 						<hr className="mt-0 mb-0 separadorInicial" />
 
 						<Switch>
-							<Route exact path={routes.HOME} component={Home} />
+							{homeRoute}
 							<Route exact path={routes.LOGIN} component={Login} />
 							<Route exact path={routes.REGISTAR} component={Registar} />
 							<Route exact path={routes.SOBRE} component={Sobre} />

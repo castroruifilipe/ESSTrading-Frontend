@@ -3,6 +3,7 @@ import { iex } from '../IEXClient';
 
 import AtivosContext from '../contexts/AtivosContext';
 
+let _timeout = undefined;
 
 const withAtivos = (Component) => {
     class WithAtivos extends React.Component {
@@ -33,7 +34,12 @@ const withAtivos = (Component) => {
         }
 
         componentDidMount() {
-            setInterval(this.updateAtivos, 3000);
+            this.updateAtivos();
+            _timeout = setInterval(this.updateAtivos, 1000);
+        }
+
+        componentWillUnmount() {
+            clearTimeout(_timeout);
         }
 
         updateAtivos = () => {
@@ -41,10 +47,10 @@ const withAtivos = (Component) => {
             Object.keys(this.state.ativos).forEach(symbol => {
                 iex.stockQuote(symbol)
                     .then(quote => {
-                        prevAtivos[symbol] = quote
+                        prevAtivos[symbol] = quote;
                     })
                     .catch(error => {
-                        console.log(error);
+                        console.error(error);
                     });
             });
 
