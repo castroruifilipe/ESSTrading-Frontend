@@ -14,23 +14,17 @@ const withAtivos = (Component) => {
             super(props);
             this.state = {
                 ativos: {},
-                dataLoad: false,
             };
         }
 
         componentDidMount() {
-            console.log("componentDidMount");
             this.getLogos();
             this.updateAtivos();
             _timeout = setInterval(this.updateAtivos, 1000);
         }
         
         componentWillUnmount() {
-            console.log("componentWillUnmount");
             clearTimeout(_timeout);
-            this.setState({
-                dataLoad: false,
-            })
         }
 
         updateAtivos = () => {
@@ -47,7 +41,6 @@ const withAtivos = (Component) => {
 
             this.setState({
                 ativos: prevAtivos,
-                dataLoad: true,
             });
         }
 
@@ -67,11 +60,9 @@ const withAtivos = (Component) => {
                 ativos: prevAtivos
             })
         }
+        
 
         render() {
-            if (!this.state.dataLoad) {
-                return null;
-            }
             return (
                 <AtivosContext.Provider value={this.state.ativos}>
                     <Component />
