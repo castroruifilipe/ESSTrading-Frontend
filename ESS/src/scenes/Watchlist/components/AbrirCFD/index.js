@@ -67,11 +67,11 @@ class AbrirCFD extends Component {
 
         return (
             <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
-                <ModalBody style={{margin: '0px 5px'}}>
+                <ModalBody style={{margin: '8px 5px'}}>
                     <div className="text-center">
                         {buttonGroup}
                     </div>
-                    <hr />
+                    <hr style={{padding: '3px'}}/>
                     <Media>
                         <Media left className="imgContainer">
                             <Media className="logo" object src={this.props.ativo.logo} />
@@ -86,7 +86,7 @@ class AbrirCFD extends Component {
                             </div>
                         </Media>
                     </Media>
-                    <hr />
+                    <hr style={{padding: '7px'}}/>
 
                     <Spinner preco={preco}/>
 

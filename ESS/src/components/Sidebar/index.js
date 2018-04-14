@@ -54,6 +54,7 @@ class Sidebar extends Component {
     }
 
     render() {
+
         return (
             <nav id="sidebar" className={this.state.active ? "active" : ""}>
                 <div className="sidebar-header">
@@ -61,9 +62,11 @@ class Sidebar extends Component {
                         {authUser =>
                             <Media>
                                 <Media left className="imgContainer">
-                                    <Media className="logo" object src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png" />
+                                    <Media className="userimg" object src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png" />
                                 </Media>
-                                <Media body>
+                                <Media body className="hideOnActive">
+                                    <span>{authUser.displayName}</span>
+                                    <small>{authUser.email}</small>
                                 </Media>
                             </Media>
                         }

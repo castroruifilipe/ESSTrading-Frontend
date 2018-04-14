@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { auth } from '../../firebase';
 import { withRouter } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert, Form, Input } from 'reactstrap';
 
+import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 
 import './style.css';
@@ -48,7 +48,7 @@ class Registar extends Component {
 
 		auth.doCreateUserWithEmailAndPassword(email, password_one)
 			.then(authUser => {
-				auth.currentUser.updateProfile({
+				auth.currentUser().updateProfile({
 					displayName: this.state.first_name + " " + this.state.last_name,
 					photoURL: "http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png",
 				})

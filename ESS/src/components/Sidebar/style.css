@@ -12,7 +12,7 @@
     text-align: center;
 }
 
-#sidebar.active .sidebar-header h3, #sidebar.active .CTAs {
+#sidebar.active .sidebar-header h3, #sidebar.active .CTAs, #sidebar.active .hideOnActive {
     display: none;
 }
 
@@ -51,8 +51,19 @@
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
+    padding: 8px;
     background: #6d7fcc;
+}
+
+#sidebar.active .sidebar-header {
+    padding: 8px 0px 2px 8px;
+    background: #6d7fcc;
+}
+
+.userimg {
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
 }
 
 #sidebar .sidebar-header strong {
@@ -147,9 +158,11 @@ a.article, a.article:hover {
         text-align: center;
         margin-left: 0 !important;
     }
-    #sidebar .sidebar-header h3, #sidebar .CTAs {
+
+    #sidebar .sidebar-header h3, #sidebar .CTAs, #sidebar .hideOnActive {
         display: none;
     }
+
     #sidebar .sidebar-header strong {
         display: block;
     }
