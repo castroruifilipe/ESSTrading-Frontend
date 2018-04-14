@@ -64,8 +64,8 @@ class HomeTable extends Component {
 									<tr key={symbol}>
 										<td key={0} style={{ width: '25%', verticalAlign: 'middle' }}>
 											<Media>
-												<Media left style={{ margin: '5px 10px 5px 0px' }}>
-													<Media object src={ativos[symbol].logo} style={{ maxWith: '64px', maxHeight: '64px' }} />
+												<Media left className="imgContainer">
+													<Media className="logo" object src={ativos[symbol].logo} />
 												</Media>
 												<Media body>
 													<span className="lead">{symbol}</span>

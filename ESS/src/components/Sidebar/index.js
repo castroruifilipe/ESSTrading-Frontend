@@ -9,7 +9,6 @@ import CreditCardIcon from 'react-icons/lib/md/credit-card';
 import SettingsIcon from 'react-icons/lib/md/settings';
 import * as routes from '../../constants/routes';
 
-
 import './style.css';
 
 class Sidebar extends Component {
