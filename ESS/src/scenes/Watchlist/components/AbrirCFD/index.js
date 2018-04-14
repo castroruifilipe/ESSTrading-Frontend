@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Media, Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Media, Button, ButtonGroup, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
 import withAuthorization from '../../../../higher-order_components/withAuthorization';
 import * as routes from '../../../../constants/routes';
 import cfdEnum from '../../../../constants/cfdEnum';
-import { iex } from '../../../../IEXClient';
+import { formatterPrice, formatterPercent } from '../../../../constants/formatters';
 
 
 class AbrirCFD extends Component {
@@ -13,8 +13,27 @@ class AbrirCFD extends Component {
         super(props);
         this.state = {
             tipoCFD: props.tipoCFD,
-            logo: undefined,
+            precoVenda: props.ativo.quote.iexBidPrice,
+            precoCompra: props.ativo.quote.iexAskPrice,
+            changePercent: props.ativo.quote.changePercent,
+            change: props.ativo.quote.change,
         };
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.ativo.quote.iexBidPrice !== prevState.precoVenda ||
+            nextProps.ativo.quote.iexAskPrice !== prevState.precoCompra ||
+            nextProps.ativo.quote.changePercent !== prevState.changePercent ||
+            nextProps.ativo.quote.change !== prevState.change) {
+            return ({
+                precoVenda: nextProps.ativo.quote.iexBidPrice,
+                precoCompra: nextProps.ativo.quote.iexAskPrice,
+                changePercent: nextProps.ativo.quote.changePercent,
+                change: nextProps.ativo.quote.change,
+            });
+        } else {
+            return null;
+        }
     }
 
     onSwitchChange = () => {
@@ -23,20 +42,11 @@ class AbrirCFD extends Component {
         }));
     }
 
-    componentWillMount() {
-        iex.stockLogo(this.props.ativo.symbol)
-            .then(stockLogo => {
-                this.setState({
-                    logo: stockLogo.url,
-                });
-            });
-    }
-
-
 
     render() {
         let buttonGroup = undefined;
         let designacao = undefined;
+        let preco = undefined;
         if (this.state.tipoCFD === cfdEnum.COMPRAR) {
             buttonGroup =
                 <ButtonGroup className="btn-toggle">
@@ -44,7 +54,7 @@ class AbrirCFD extends Component {
                     <Button onClick={this.onSwitchChange}>VENDER</Button>
                 </ButtonGroup>;
             designacao = 'COMPRAR';
-
+            preco = this.state.precoCompra;
         } else {
             buttonGroup =
                 <ButtonGroup className="btn-toggle">
@@ -52,30 +62,36 @@ class AbrirCFD extends Component {
                     <Button onClick={this.onSwitchChange} className="btn-default" color="primary" active>VENDER</Button>
                 </ButtonGroup>;
             designacao = 'VENDER';
-        }
-        
-        let imgLogo = "";
-        if (this.state.logo) {
-            imgLogo = <Media object src={this.state.logo} style={{maxWith: '64px', maxHeight: '64px'}}/>;
+            preco = this.state.precoVenda;
         }
 
         return (
             <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
-                <ModalHeader >
-                    {buttonGroup}
-                </ModalHeader>
                 <ModalBody>
+                    <div className="text-center">
+                        {buttonGroup}
+                    </div>
+                    <hr />
                     <Media>
-                        <Media left style={{margin: '5px 10px 5px 0px'}}>
-                            {imgLogo}
+                        <Media left style={{ margin: '5px 10px 5px 0px' }}>
+                            <Media object src={this.props.ativo.logo} style={{ maxWith: '64px', maxHeight: '64px' }} />
                         </Media>
                         <Media body>
-                            <span className="text-secondary">{designacao}</span> <span className="text-primary">{this.props.ativo.symbol}</span>
+                            <span className="text-secondary">{designacao}</span>{' '}
+                            <span className="text-primary">{this.props.ativo.quote.symbol}</span>
+                            <span className="lead d-block">{formatterPrice.format(preco)}</span>
+                            <div className={this.state.changePercent < 0 ? "text-danger" : "text-success"}>
+                                {formatterPercent.format(this.state.changePercent)}{' '}
+                                <small>({formatterPrice.format(this.state.changePercent)})</small>
+                            </div>
                         </Media>
                     </Media>
+                    <hr/>
+
                 </ModalBody>
                 <ModalFooter>
-
+                    <Button block outline color="primary" size="lg" >Abrir posição</Button>
+                    <Button outline color="secondary" size="lg" onClick={this.props.toggle}>Cancelar</Button>
                 </ModalFooter>
             </Modal>
         );

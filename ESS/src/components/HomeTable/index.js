@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Badge } from 'reactstrap';
+import { Media, Table, Button, Badge } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 
 import withAtivos from '../../higher-order_components/withAtivos';
@@ -7,15 +7,9 @@ import ButaoVariacao from './components/ButaoVariacao';
 import AtivosContext from '../../contexts/AtivosContext';
 import AbrirCFD from '../../scenes/Watchlist/components/AbrirCFD';
 import cfdEnum from '../../constants/cfdEnum';
+import { formatterPercent, formatterPrice } from '../../constants/formatters';
 import './style.css';
 
-
-const header = [
-	'Ativo',
-	<ButaoVariacao onChangeVariacao={(variacao) => this.changeVariacao(variacao)} />,
-	'Vender',
-	'Comprar'
-];
 
 class HomeTable extends Component {
 
@@ -54,10 +48,13 @@ class HomeTable extends Component {
 	render() {
 		return (
 			<div>
-				<Table striped bordered responsive className="text-center">
+				<Table responsive >
 					<thead className="thead-light">
 						<tr>
-							{header.map((elem, i) => <th key={i}>{elem}</th>)}
+							<th key={0}>Mercados</th>
+							<th key={1}><ButaoVariacao onChangeVariacao={(variacao) => this.changeVariacao(variacao)} /></th>
+							<th key={2} className="text-center">Vender</th>
+							<th key={3} className="text-center">Comprar</th>
 						</tr>
 					</thead>
 					<AtivosContext.Consumer >
@@ -66,21 +63,38 @@ class HomeTable extends Component {
 								{Object.keys(ativos).map((symbol) =>
 									<tr key={symbol}>
 										<td key={0} style={{ width: '25%', verticalAlign: 'middle' }}>
-											{symbol}
+											<Media>
+												<Media left style={{ margin: '5px 10px 5px 0px' }}>
+													<Media object src={ativos[symbol].logo} style={{ maxWith: '64px', maxHeight: '64px' }} />
+												</Media>
+												<Media body>
+													<span className="lead">{symbol}</span>
+													<small className="d-block">{ativos[symbol].quote.companyName}</small>
+												</Media>
+											</Media>
 										</td>
-										<td key={1} style={{ width: '25%', verticalAlign: 'middle' }}>
-											{ativos[symbol].changePercent}
+
+										<td key={1} style={{ width: '25%', verticalAlign: 'middle' }}
+											className={(ativos[symbol].quote.changePercent < 0 ? "text-danger" : "text-success") + " text-center"}>
+											{formatterPercent.format(ativos[symbol].quote.changePercent)}
+											<small className="d-block">({formatterPrice.format(ativos[symbol].quote.change)})</small>
 										</td>
-										<td key={2} style={{ width: '25%', verticalAlign: 'middle' }}>
-											<Button color="light" type="button" className="btnprice" onClick={this.onClickRow(ativos[symbol])(cfdEnum.VENDER)}>
+
+										<td key={2} className="text-center" style={{ width: '25%', verticalAlign: 'middle' }}>
+											<Button color="light" type="button" className="btnprice"
+												onClick={this.onClickRow(ativos[symbol])(cfdEnum.VENDER)}
+												style={{ borderColor: '#e6e6e6' }}>
 												<Badge color="primary" className="price">V</Badge>
-												{ativos[symbol].iexBidPrice}
+												{formatterPrice.format(ativos[symbol].quote.iexBidPrice)}
 											</Button>
 										</td>
-										<td key={3} style={{ width: '25%', verticalAlign: 'middle' }}>
-											<Button color="light" type="button" className="btnprice" onClick={this.onClickRow(ativos[symbol])(cfdEnum.COMPRAR)}>
+
+										<td key={3} className="text-center" style={{ width: '25%', verticalAlign: 'middle' }}>
+											<Button color="light" type="button" className="btnprice"
+												onClick={this.onClickRow(ativos[symbol])(cfdEnum.COMPRAR)}
+												style={{ borderColor: '#e6e6e6' }}>
 												<Badge color="primary" className="price">C</Badge>
-												{ativos[symbol].iexAskPrice}
+												{formatterPrice.format(ativos[symbol].quote.iexAskPrice)}
 											</Button>
 										</td>
 									</tr>
