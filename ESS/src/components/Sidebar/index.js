@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Media } from 'reactstrap';
 import HideIcon from 'react-icons/lib/fa/angle-left';
 import ShowIcon from 'react-icons/lib/fa/angle-right';
@@ -55,6 +55,7 @@ class Sidebar extends Component {
 
     render() {
 
+
         return (
             <nav id="sidebar" className={this.state.active ? "active" : ""}>
                 <div className="sidebar-header">
@@ -74,34 +75,46 @@ class Sidebar extends Component {
                 </div>
 
                 <ul className="list-unstyled components">
-                    <li className="active">
-                        <Link to={routes.WATCHLIST}>
+                    <li >
+                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
                             <i><EyeIcon /> </i>Watchlist
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to={routes.WATCHLIST}>
+                        <NavLink to={routes.PORTEFOLIO} activeClassName="active" className="link">
                             <i><BookIcon /> </i>Portefólio
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to={routes.WATCHLIST}>
+                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
                             <i><HistoryIcon /> </i>Histórico
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to={routes.WATCHLIST}>
+                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
                             <i><CreditCardIcon /> </i>Levantar plafond
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
                         <a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false">
                             <i><SettingsIcon /> </i>Definições
                         </a>
                         <ul className="collapse list-unstyled" id="settingsSubmenu">
-                            <li><Link to={routes.WATCHLIST}>Geral</Link></li>
-                            <li><Link to={routes.WATCHLIST}>Conta</Link></li>
-                            <li><Link to={routes.WATCHLIST}>Notificações</Link></li>
+                            <li>
+                                <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                                    Geral
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                                    Conta
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                                    Notificações
+                                </NavLink>
+                            </li>
                         </ul>
                     </li>
 

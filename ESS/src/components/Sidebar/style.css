@@ -91,7 +91,7 @@
     margin-right: 10px;
 }
 
-#sidebar ul li.active>a, a[aria-expanded="true"] {
+#sidebar ul li .link.active, a[aria-expanded="true"] {
     color: #fff;
     background: #6d7fcc;
 }
