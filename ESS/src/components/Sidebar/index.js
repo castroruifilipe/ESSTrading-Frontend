@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Media } from 'reactstrap';
 import HideIcon from 'react-icons/lib/fa/angle-left';
 import ShowIcon from 'react-icons/lib/fa/angle-right';
 import EyeIcon from 'react-icons/lib/md/remove-red-eye';
@@ -7,9 +8,11 @@ import BookIcon from 'react-icons/lib/fa/book';
 import HistoryIcon from 'react-icons/lib/md/history';
 import CreditCardIcon from 'react-icons/lib/md/credit-card';
 import SettingsIcon from 'react-icons/lib/md/settings';
-import * as routes from '../../constants/routes';
 
+import AuthUserContext from '../../contexts/AuthUserContext';
+import * as routes from '../../constants/routes';
 import './style.css';
+
 
 class Sidebar extends Component {
 
@@ -37,6 +40,7 @@ class Sidebar extends Component {
             }
         }
     }
+
     componentDidMount() {
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions.bind(this));
@@ -53,7 +57,17 @@ class Sidebar extends Component {
         return (
             <nav id="sidebar" className={this.state.active ? "active" : ""}>
                 <div className="sidebar-header">
-                    user
+                    <AuthUserContext.Consumer>
+                        {authUser =>
+                            <Media>
+                                <Media left className="imgContainer">
+                                    <Media className="logo" object src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png" />
+                                </Media>
+                                <Media body>
+                                </Media>
+                            </Media>
+                        }
+                    </AuthUserContext.Consumer>
                 </div>
 
                 <ul className="list-unstyled components">
@@ -106,7 +120,6 @@ class Sidebar extends Component {
 
         );
     }
-
 }
 
 export default Sidebar;

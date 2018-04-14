@@ -88,7 +88,7 @@ class AbrirCFD extends Component {
                     </Media>
                     <hr />
 
-                    <Spinner/>
+                    <Spinner preco={preco}/>
 
                 </ModalBody>
                 <ModalFooter>

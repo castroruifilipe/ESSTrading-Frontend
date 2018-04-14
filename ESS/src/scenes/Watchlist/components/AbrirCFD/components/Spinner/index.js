@@ -16,7 +16,18 @@ class Spinner extends Component {
 
         this.state = {
             unidade: unidadeEnum.MONTANTE,
+            preco: props.preco,
         };
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.preco !== prevState.preco) {
+            return ({
+                preco: nextProps.preco,
+            });
+        } else {
+            return null;
+        }
     }
 
     onChange = (valueAsNumber, valueAsString, input) => {
@@ -28,11 +39,15 @@ class Spinner extends Component {
     }
 
     convertUnidades = () => {
-        let precoAtivo = 1.4239;
-        if (this.state.unidade === unidadeEnum.MONTANTE) {
-            unidades = montante / precoAtivo;
+        if (this.state.preco === null) {
+            unidades = 0;
+            montante = 0;
         } else {
-            montante = unidades * precoAtivo;
+            if (this.state.unidade === unidadeEnum.MONTANTE) {
+                unidades = montante / this.state.preco;
+            } else {
+                montante = unidades * this.state.preco;
+            }
         }
         this.setState(prevState => ({
             unidade: 1 - prevState.unidade,
@@ -43,7 +58,7 @@ class Spinner extends Component {
         let value = montante;
         let buttonText = "UNIDADES";
         let labelText = "MONTANTE";
-        if (this.state.unidade == unidadeEnum.UNIDADES) {
+        if (this.state.unidade === unidadeEnum.UNIDADES) {
             value = unidades;
             buttonText = "MONTANTE";
             labelText = "UNIDADES";

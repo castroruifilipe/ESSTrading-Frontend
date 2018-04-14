@@ -48,6 +48,10 @@ class Registar extends Component {
 
 		auth.doCreateUserWithEmailAndPassword(email, password_one)
 			.then(authUser => {
+				auth.currentUser.updateProfile({
+					displayName: this.state.first_name + " " + this.state.last_name,
+					photoURL: "http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png",
+				})
 				auth.sendEmailVerification().then(() => {
 					this.toggle();
 				}).catch(error => {
