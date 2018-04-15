@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 
 import { auth } from '../../firebase';
 import AuthUserContext from '../../contexts/AuthUserContext';
+import Logo from '../../images/logo.png';
 import * as routes from '../../constants/routes';
 
 const NavBarNonAuth = () =>
 	<nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ backgroundColor: "rgb(93, 109, 172)" }}>
-		<Link to={routes.HOME} className="navbar-brand">ESS Trading</Link>
+		<Link to={routes.HOME} className="navbar-brand">
+			<img src={Logo} width="190"  alt="" />
+		</Link>
 		<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span className="navbar-toggler-icon"></span>
 		</button>
@@ -59,7 +62,7 @@ const NavBarAuth = () =>
 			</ul>
 		</div>
 	</nav>
-	
+
 class NavBar extends Component {
 
 	render() {
