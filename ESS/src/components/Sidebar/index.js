@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { Media } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
+import { Media, Button } from 'reactstrap';
 import HideIcon from 'react-icons/lib/fa/angle-left';
 import ShowIcon from 'react-icons/lib/fa/angle-right';
 import EyeIcon from 'react-icons/lib/md/remove-red-eye';
@@ -9,6 +9,7 @@ import HistoryIcon from 'react-icons/lib/md/history';
 import CreditCardIcon from 'react-icons/lib/md/credit-card';
 import SettingsIcon from 'react-icons/lib/md/settings';
 
+import { db, auth } from '../../firebase';
 import AuthUserContext from '../../contexts/AuthUserContext';
 import * as routes from '../../constants/routes';
 import './style.css';
@@ -21,7 +22,8 @@ class Sidebar extends Component {
 
         this.state = {
             active: false,
-            hidded: false
+            hidded: false,
+            user: undefined,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -42,6 +44,12 @@ class Sidebar extends Component {
     }
 
     componentDidMount() {
+        db.onceGetUser(auth.currentUser().uid)
+            .then((snapshot => {
+                this.setState({
+                    user: snapshot.val(),
+                });
+            }));
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions.bind(this));
     }
@@ -57,19 +65,20 @@ class Sidebar extends Component {
         return (
             <nav id="sidebar" className={this.state.active ? "active" : ""}>
                 <div className="sidebar-header">
-                    <AuthUserContext.Consumer>
-                        {authUser =>
-                            <Media>
-                                <Media left className="imgContainer">
-                                    <Media className="userimg" object src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png" />
-                                </Media>
-                                <Media body className="hideOnActive">
-                                    <span>Rui Leite</span>
-                                    <small>ruicastro@outlook.com</small>
-                                </Media>
+                    {this.state.user ? (
+                        <Media>
+                            <Media left className="imgContainer">
+                                <Media className="userimg" object src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png" />
                             </Media>
-                        }
-                    </AuthUserContext.Consumer>
+                            <Media body className="hideOnActive">
+                                <span className="d-block" style={{marginBottom: '4px'}}>{this.state.user.first_name + " " + this.state.user.last_name}</span>
+                                <small className="d-block">{this.state.user.username}</small>
+                                <small>{auth.currentUser().email}</small>
+                            </Media>
+                        </Media>
+                    ) :
+                        null
+                    }
                 </div>
 
                 <ul className="list-unstyled components">
@@ -89,9 +98,9 @@ class Sidebar extends Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                        <a className="link" onClick={this.props.toggle}>
                             <i><CreditCardIcon /> </i>Levantar plafond
-                        </NavLink>
+                        </a>
                     </li>
                     <li>
                         <a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false">

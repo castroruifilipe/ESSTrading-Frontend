@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom'
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
 import Watchlist from '../scenes/Watchlist';
 import AbrirCFD from '../scenes/Watchlist/components/AbrirCFD';
 import Portefolio from '../scenes/Portefolio';
+import LevantarPlafond from '../scenes/LevantarPlafond';
 import Sidebar from './Sidebar';
 import * as routes from '../constants/routes';
 import './style.css';
@@ -11,19 +13,35 @@ import './style.css';
 
 class AppAuth extends Component {
 
-	render() {
-		//if (!this.state.loadUser) return null;
+	constructor(props) {
+		super(props);
 
+		this.state = {
+			modal: false,
+		};
+
+		this.toggle = this.toggle.bind(this);
+	}
+
+	toggle() {
+		this.setState({
+			modal: !this.state.modal
+		});
+	}
+
+	render() {
 		return (
 			<div className="wrapper2">
-				<Sidebar />
+				<Sidebar toggle={this.toggle}/>
 
 				<div id="content" className="container-fluid">
-					<Redirect to={routes.WATCHLIST}/>
+					<Redirect to={routes.WATCHLIST} />
 					<Route exact path={routes.WATCHLIST} component={Watchlist} />
 					<Route exact path={routes.ABRIR_CFD} component={AbrirCFD} />
 					<Route exact path={routes.PORTEFOLIO} component={Portefolio} />
 				</div>
+
+				<LevantarPlafond modal={this.state.modal} toggle={this.toggle}/>
 			</div>
 
 		);

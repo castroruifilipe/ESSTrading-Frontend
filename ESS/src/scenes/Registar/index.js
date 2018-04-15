@@ -42,28 +42,24 @@ class Registar extends Component {
 
 	onSubmit = (event) => {
 		const {
+			username,
+			first_name,
+			last_name,
 			email,
+			contacto,
 			password_one,
 		} = this.state;
 
 		auth.doCreateUserWithEmailAndPassword(email, password_one)
 			.then(authUser => {
-				db.doCreateUser(authUser.uid, this.state.username, this.state.email)
+				db.doCreateUser(authUser.uid, username, first_name, last_name, contacto)
 					.then(() => {
 						auth.sendEmailVerification()
 							.then(() => this.toggle())
-							.catch(error => {
-								this.setState({
-									'error': error
-								});
-							});
+							.catch(error => console.error(error));
 							auth.doSignOut();
 					})
-					.catch(error => {
-						this.setState({
-							'error': error,
-						});
-					});
+					.catch(error => console.error(error));
 			})
 			.catch(error => {
 				this.setState({
