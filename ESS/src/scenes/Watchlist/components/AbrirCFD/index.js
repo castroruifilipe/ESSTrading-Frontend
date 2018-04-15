@@ -5,7 +5,7 @@ import withAuthorization from '../../../../higher-order_components/withAuthoriza
 import * as routes from '../../../../constants/routes';
 import cfdEnum from '../../../../constants/cfdEnum';
 import { formatterPrice, formatterPercent } from '../../../../constants/formatters';
-
+import Spinner from './components/Spinner';
 
 class AbrirCFD extends Component {
 
@@ -67,14 +67,14 @@ class AbrirCFD extends Component {
 
         return (
             <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
-                <ModalBody>
+                <ModalBody style={{margin: '8px 5px'}}>
                     <div className="text-center">
                         {buttonGroup}
                     </div>
-                    <hr />
+                    <hr style={{padding: '3px'}}/>
                     <Media>
-                        <Media left style={{ margin: '5px 10px 5px 0px' }}>
-                            <Media object src={this.props.ativo.logo} style={{ maxWith: '64px', maxHeight: '64px' }} />
+                        <Media left className="imgContainer">
+                            <Media className="logo" object src={this.props.ativo.logo} />
                         </Media>
                         <Media body>
                             <span className="text-secondary">{designacao}</span>{' '}
@@ -86,7 +86,9 @@ class AbrirCFD extends Component {
                             </div>
                         </Media>
                     </Media>
-                    <hr/>
+                    <hr style={{padding: '7px'}}/>
+
+                    <Spinner preco={preco}/>
 
                 </ModalBody>
                 <ModalFooter>

@@ -73,18 +73,18 @@ class Login extends Component {
 
 					<h1 className="h3 mb-3 font-weight-normal">Iniciar sessão</h1>
 
-					<Input required value={email} placeholder="Email" type="email" class="form-control"
+					<Input required value={email} placeholder="Email" type="email" className="form-control"
 						onChange={event => this.setState({
 							'email': event.target.value
 						})}
 					/>
-					<Input required value={password} placeholder="Password" type="password" class="form-control"
+					<Input required value={password} placeholder="Password" type="password" className="form-control"
 						onChange={event => this.setState({
 							'password': event.target.value
 						})}
 					/>
 
-					<Button color="primary" disabled={isInvalid} type="submit" block="true" size="lg">Login</Button>
+					<Button color="primary" disabled={isInvalid} type="submit" block={true} size="lg">Login</Button>
 
 					{error && <Alert color="danger">{error.message}</Alert>}
 

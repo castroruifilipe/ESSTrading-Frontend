@@ -6,8 +6,10 @@ import HomeTable from '../../components/HomeTable'
 class Home extends Component {
 
 	componentDidMount() {
-		db.onceGetUsers().then(snapshot =>
-			console.log(snapshot.val()));
+		db.onceGetUsers()
+			.then(snapshot => console.log(snapshot.val()))
+			.catch(error => console.error(error));
+			
 	}
 
 	render() {

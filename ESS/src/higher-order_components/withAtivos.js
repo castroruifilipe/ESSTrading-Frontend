@@ -22,7 +22,7 @@ const withAtivos = (Component) => {
             this.updateAtivos();
             _timeout = setInterval(this.updateAtivos, 1000);
         }
-
+        
         componentWillUnmount() {
             clearTimeout(_timeout);
         }
@@ -40,7 +40,7 @@ const withAtivos = (Component) => {
             });
 
             this.setState({
-                ativos: prevAtivos
+                ativos: prevAtivos,
             });
         }
 
@@ -60,6 +60,7 @@ const withAtivos = (Component) => {
                 ativos: prevAtivos
             })
         }
+        
 
         render() {
             return (

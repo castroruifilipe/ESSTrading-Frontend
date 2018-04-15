@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { Media } from 'reactstrap';
 import HideIcon from 'react-icons/lib/fa/angle-left';
 import ShowIcon from 'react-icons/lib/fa/angle-right';
 import EyeIcon from 'react-icons/lib/md/remove-red-eye';
@@ -7,10 +8,11 @@ import BookIcon from 'react-icons/lib/fa/book';
 import HistoryIcon from 'react-icons/lib/md/history';
 import CreditCardIcon from 'react-icons/lib/md/credit-card';
 import SettingsIcon from 'react-icons/lib/md/settings';
+
+import AuthUserContext from '../../contexts/AuthUserContext';
 import * as routes from '../../constants/routes';
-
-
 import './style.css';
+
 
 class Sidebar extends Component {
 
@@ -38,6 +40,7 @@ class Sidebar extends Component {
             }
         }
     }
+
     componentDidMount() {
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions.bind(this));
@@ -54,38 +57,62 @@ class Sidebar extends Component {
         return (
             <nav id="sidebar" className={this.state.active ? "active" : ""}>
                 <div className="sidebar-header">
-                    user
+                    <AuthUserContext.Consumer>
+                        {authUser =>
+                            <Media>
+                                <Media left className="imgContainer">
+                                    <Media className="userimg" object src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png" />
+                                </Media>
+                                <Media body className="hideOnActive">
+                                    <span>Rui Leite</span>
+                                    <small>ruicastro@outlook.com</small>
+                                </Media>
+                            </Media>
+                        }
+                    </AuthUserContext.Consumer>
                 </div>
 
                 <ul className="list-unstyled components">
-                    <li className="active">
-                        <Link to={routes.WATCHLIST}>
+                    <li >
+                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
                             <i><EyeIcon /> </i>Watchlist
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to={routes.WATCHLIST}>
+                        <NavLink to={routes.PORTEFOLIO} activeClassName="active" className="link">
                             <i><BookIcon /> </i>Portefólio
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to={routes.WATCHLIST}>
+                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
                             <i><HistoryIcon /> </i>Histórico
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to={routes.WATCHLIST}>
+                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
                             <i><CreditCardIcon /> </i>Levantar plafond
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
                         <a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false">
                             <i><SettingsIcon /> </i>Definições
                         </a>
                         <ul className="collapse list-unstyled" id="settingsSubmenu">
-                            <li><Link to={routes.WATCHLIST}>Geral</Link></li>
-                            <li><Link to={routes.WATCHLIST}>Conta</Link></li>
-                            <li><Link to={routes.WATCHLIST}>Notificações</Link></li>
+                            <li>
+                                <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                                    Geral
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                                    Conta
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                                    Notificações
+                                </NavLink>
+                            </li>
                         </ul>
                     </li>
 
@@ -107,7 +134,6 @@ class Sidebar extends Component {
 
         );
     }
-
 }
 
 export default Sidebar;
