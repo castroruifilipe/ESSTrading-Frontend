@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import { withRouter } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert, Form, Input } from 'reactstrap';
 
@@ -48,14 +48,24 @@ class Registar extends Component {
 
 		auth.doCreateUserWithEmailAndPassword(email, password_one)
 			.then(authUser => {
-				auth.sendEmailVerification().then(() => {
-					this.toggle();
-				}).catch(error => {
-					this.setState({
-						'error': error
+				db.doCreateUser(authUser.uid, this.state.username, this.state.email).
+					then(() => {
+						auth.sendEmailVerification().then(() => {
+							this.toggle();
+						}).catch(error => {
+							this.setState({
+								'error': error
+							});
+						})
+					})
+					.catch(error => {
+						this.setState({
+							'error': error,
+						});
 					});
-				})
+
 				auth.doSignOut();
+
 			})
 			.catch(error => {
 				this.setState({
