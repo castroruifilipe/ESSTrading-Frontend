@@ -65,7 +65,7 @@ class Sidebar extends Component {
         return (
             <nav id="sidebar" className={this.state.active ? "active" : ""}>
                 <div className="sidebar-header">
-                    {this.state.user ? (
+                    {this.state.user && auth.currentUser() ? (
                         <Media>
                             <Media left className="imgContainer">
                                 <Media className="userimg" object src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png" />
