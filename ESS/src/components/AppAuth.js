@@ -5,6 +5,8 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import Watchlist from '../scenes/Watchlist';
 import AbrirCFD from '../scenes/Watchlist/components/AbrirCFD';
 import Portefolio from '../scenes/Portefolio';
+import Geral from '../scenes/Geral';
+import Conta from '../scenes/Conta';
 import LevantarPlafond from '../scenes/LevantarPlafond';
 import Sidebar from './Sidebar';
 import * as routes from '../constants/routes';
@@ -39,6 +41,8 @@ class AppAuth extends Component {
 					<Route exact path={routes.WATCHLIST} component={Watchlist} />
 					<Route exact path={routes.ABRIR_CFD} component={AbrirCFD} />
 					<Route exact path={routes.PORTEFOLIO} component={Portefolio} />
+					<Route exact path={routes.GERAL} component={Geral} />
+					<Route exact path={routes.CONTA} component={Conta} />
 				</div>
 
 				<LevantarPlafond modal={this.state.modal} toggle={this.toggle}/>

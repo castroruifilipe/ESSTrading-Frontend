@@ -108,12 +108,12 @@ class Sidebar extends Component {
                         </a>
                         <ul className="collapse list-unstyled" id="settingsSubmenu">
                             <li>
-                                <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                                <NavLink to={routes.GERAL} activeClassName="active" className="link">
                                     Geral
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                                <NavLink to={routes.CONTA} activeClassName="active" className="link">
                                     Conta
                                 </NavLink>
                             </li>
