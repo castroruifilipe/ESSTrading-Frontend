@@ -68,10 +68,10 @@ class Login extends Component {
 			email === '';
 
 		return (
-			<div>
+			<div class="container d-flex h-100">
 				<Form className="form-signin" onSubmit={this.onSubmit}>
 
-					<h1 className="h3 mb-3 font-weight-normal">Iniciar sessão</h1>
+					<h3 className="mb-3 font-weight-normal">Iniciar sessão</h3>
 
 					<Input required value={email} placeholder="Email" type="email" className="form-control"
 						onChange={event => this.setState({
