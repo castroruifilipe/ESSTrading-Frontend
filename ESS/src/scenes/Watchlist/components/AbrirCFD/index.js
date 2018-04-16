@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Media, Button, ButtonGroup, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { inject, observer } from 'mobx-react';
+import { compose } from 'recompose';
 
 import cfdEnum from '../../../../constants/cfdEnum';
 import { formatterPrice, formatterPercent } from '../../../../constants/formatters';
@@ -11,27 +13,7 @@ class AbrirCFD extends Component {
         super(props);
         this.state = {
             tipoCFD: props.tipoCFD,
-            precoVenda: props.ativo.quote.iexBidPrice,
-            precoCompra: props.ativo.quote.iexAskPrice,
-            changePercent: props.ativo.quote.changePercent,
-            change: props.ativo.quote.change,
         };
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.ativo.quote.iexBidPrice !== prevState.precoVenda ||
-            nextProps.ativo.quote.iexAskPrice !== prevState.precoCompra ||
-            nextProps.ativo.quote.changePercent !== prevState.changePercent ||
-            nextProps.ativo.quote.change !== prevState.change) {
-            return ({
-                precoVenda: nextProps.ativo.quote.iexBidPrice,
-                precoCompra: nextProps.ativo.quote.iexAskPrice,
-                changePercent: nextProps.ativo.quote.changePercent,
-                change: nextProps.ativo.quote.change,
-            });
-        } else {
-            return null;
-        }
     }
 
     onSwitchChange = () => {
@@ -42,6 +24,8 @@ class AbrirCFD extends Component {
 
 
     render() {
+        let quote = this.props.ativosStore.quotes.get(this.props.ativo);
+
         let buttonGroup = undefined;
         let designacao = undefined;
         let preco = undefined;
@@ -52,7 +36,7 @@ class AbrirCFD extends Component {
                     <Button onClick={this.onSwitchChange}>VENDER</Button>
                 </ButtonGroup>;
             designacao = 'COMPRAR';
-            preco = this.state.precoCompra;
+            preco = quote.iexAskPrice;
         } else {
             buttonGroup =
                 <ButtonGroup className="btn-toggle">
@@ -60,7 +44,7 @@ class AbrirCFD extends Component {
                     <Button onClick={this.onSwitchChange} className="btn-default" color="primary" active>VENDER</Button>
                 </ButtonGroup>;
             designacao = 'VENDER';
-            preco = this.state.precoVenda;
+            preco = quote.iexBidPrice;
         }
 
         return (
@@ -72,15 +56,15 @@ class AbrirCFD extends Component {
                     <hr style={{padding: '3px'}}/>
                     <Media>
                         <Media left className="imgContainer">
-                            <Media className="logo" object src={this.props.ativo.logo} />
+                            <Media className="logo" object src={this.props.ativosStore.logos.get(this.props.ativo)} />
                         </Media>
                         <Media body>
                             <span className="text-secondary">{designacao}</span>{' '}
-                            <span className="text-primary">{this.props.ativo.quote.symbol}</span>
+                            <span className="text-primary">{quote.symbol}</span>
                             <span className="lead d-block">{formatterPrice.format(preco)}</span>
-                            <div className={this.state.changePercent < 0 ? "text-danger" : "text-success"}>
-                                {formatterPercent.format(this.state.changePercent)}{' '}
-                                <small>({formatterPrice.format(this.state.changePercent)})</small>
+                            <div className={quote.changePercent < 0 ? "text-danger" : "text-success"}>
+                                {formatterPercent.format(quote.changePercent)}{' '}
+                                <small>({formatterPrice.format(quote.changePercent)})</small>
                             </div>
                         </Media>
                     </Media>
@@ -98,4 +82,7 @@ class AbrirCFD extends Component {
     }
 }
 
-export default AbrirCFD;
+export default compose(
+	inject('ativosStore'),
+	observer
+)(AbrirCFD);
