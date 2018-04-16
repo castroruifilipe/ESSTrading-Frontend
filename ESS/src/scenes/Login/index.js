@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Row, Col, Container, Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
+
 import { auth } from '../../firebase';
-import { Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
-
 import * as routes from '../../constants/routes';
-
-import './style.css';
 
 
 const INITIAL_STATE = {
@@ -68,38 +66,48 @@ class Login extends Component {
 			email === '';
 
 		return (
-			<div className="container d-flex h-100">
-				<Form className="form-signin" onSubmit={this.onSubmit}>
+			<Container>
+				<Row>
+					<Col md={{ size: 6, offset: 3 }}>
+						<h3 className="font-weight-normal mt-5 mb-3">Iniciar sessão</h3>
 
-					<h3 className="mb-3 font-weight-normal">Iniciar sessão</h3>
+						<Form className="form-sign" onSubmit={this.onSubmit}>
+							<div className="form-label-group">
+								<Input required value={email} placeholder="Email" type="email" className="form-control" id="inputEmail"
+									onChange={event => this.setState({
+										'email': event.target.value
+									})}
+								/>
+								<label for="inputEmail">Email</label>
+							</div>
 
-					<Input required value={email} placeholder="Email" type="email" className="form-control"
-						onChange={event => this.setState({
-							'email': event.target.value
-						})}
-					/>
-					<Input required value={password} placeholder="Password" type="password" className="form-control"
-						onChange={event => this.setState({
-							'password': event.target.value
-						})}
-					/>
+							<div className="form-label-group">
+								<Input required value={password} placeholder="Password" type="password" className="form-control" id="inputPassword"
+									onChange={event => this.setState({
+										'password': event.target.value
+									})}
+								/>
+								<label for="inputPassword">Password</label>
+							</div>
 
-					<Button color="primary" disabled={isInvalid} type="submit" block={true} size="lg">Login</Button>
+							<Button color="primary" disabled={isInvalid} type="submit" block={true} size="lg">Login</Button>
 
-					{error && <Alert color="danger">{error.message}</Alert>}
 
-					<Modal isOpen={this.state.modal} toggle={this.toggle}>
-						<ModalHeader toggle={this.toggle}>Email de confirmação</ModalHeader>
-						<ModalBody>
-							O seu email ainda não está verificado. Por favor consulte a sua caixa de correio e valide a sua conta.
-          				</ModalBody>
-						<ModalFooter>
-							<Button color="primary" onClick={this.toggle}>OK</Button>
-						</ModalFooter>
-					</Modal>
+							{error && <Alert color="danger">{error.message}</Alert>}
+							<Modal isOpen={this.state.modal} toggle={this.toggle}>
+								<ModalHeader toggle={this.toggle}>Email de confirmação</ModalHeader>
+								<ModalBody>
+									O seu email ainda não está verificado. Por favor consulte a sua caixa de correio e valide a sua conta.
+          							</ModalBody>
+								<ModalFooter>
+									<Button color="primary" onClick={this.toggle}>OK</Button>
+								</ModalFooter>
+							</Modal>
 
-				</Form >
-			</div>
+						</Form >
+					</Col>
+				</Row>
+			</Container>
 		);
 	}
 }

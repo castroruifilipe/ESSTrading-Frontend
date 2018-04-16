@@ -12,6 +12,7 @@ import Registar from '../scenes/Registar';
 import Sobre from '../scenes/Sobre';
 import AppAuth from './AppAuth';
 import * as routes from '../constants/routes';
+import './style.css';
 
 class App extends Component {
 

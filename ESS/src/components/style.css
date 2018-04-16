@@ -1,13 +1,23 @@
-.form-signin {
+html, body {
+    height: 100%;
+    /* important to vertically align the container */
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --input-padding-x: .75rem;
+    --input-padding-y: .75rem;
+}
+
+.form-sign {
     width: 100%;
     max-width: 420px;
-    padding: 15px;
-    margin: 0 auto;
 }
 
 .form-label-group {
     position: relative;
-    margin-bottom: 1rem;
+    margin-bottom: 9px;
 }
 
 .form-label-group>input, .form-label-group>label {
