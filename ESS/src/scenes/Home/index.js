@@ -36,7 +36,7 @@ class Home extends Component {
 					</div>
 				</section>
 				<div className="container">
-					<HomeTable />
+					<HomeTable openCFD={false}/>
 				</div>
 			</div>
 		);

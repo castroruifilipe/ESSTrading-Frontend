@@ -9,6 +9,7 @@ import AtivosContext from '../../contexts/AtivosContext';
 import AbrirCFD from '../../scenes/Watchlist/components/AbrirCFD';
 import cfdEnum from '../../constants/cfdEnum';
 import { formatterPercent, formatterPrice } from '../../constants/formatters';
+import * as routes from '../../constants/routes';
 import './style.css';
 
 
@@ -39,11 +40,16 @@ class HomeTable extends Component {
 	}
 
 	onClickRow = ativo => tipoCFD => event => {
-		this.setState({
-			ativoSelected: ativo,
-			tipoCFD: tipoCFD,
-		});
-		this.toggle();
+
+		if (this.props.openCFD) {
+			this.setState({
+				ativoSelected: ativo,
+				tipoCFD: tipoCFD,
+			});
+			this.toggle();
+		} else {
+			this.props.history.push(routes.LOGIN);
+		}
 	}
 
 	render() {

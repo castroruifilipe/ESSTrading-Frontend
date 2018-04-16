@@ -65,7 +65,7 @@ const withAtivos = (Component) => {
         render() {
             return (
                 <AtivosContext.Provider value={this.state.ativos}>
-                    <Component />
+                    <Component {...this.props} />
                 </AtivosContext.Provider>
             );
         }

@@ -19,7 +19,7 @@ class Watchlist extends Component {
 
     render() {
         return (
-            <HomeTable />
+            <HomeTable openCFD={true} />
         );
     }
 

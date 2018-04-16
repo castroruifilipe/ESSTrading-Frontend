@@ -68,7 +68,7 @@ class Login extends Component {
 			email === '';
 
 		return (
-			<div class="container d-flex h-100">
+			<div className="container d-flex h-100">
 				<Form className="form-signin" onSubmit={this.onSubmit}>
 
 					<h3 className="mb-3 font-weight-normal">Iniciar sessão</h3>

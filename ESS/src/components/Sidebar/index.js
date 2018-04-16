@@ -70,7 +70,7 @@ class Sidebar extends Component {
                                 <Media className="userimg" object src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png" />
                             </Media>
                             <Media body className="hideOnActive">
-                                <span className="d-block" style={{margin: '10px 0px 4px 0px'}}>{this.state.user.first_name + " " + this.state.user.last_name}</span>
+                                <span className="d-block" style={{ margin: '10px 0px 4px 0px' }}>{this.state.user.first_name + " " + this.state.user.last_name}</span>
                                 <small className="d-block">{this.state.user.username}</small>
                             </Media>
                         </Media>
