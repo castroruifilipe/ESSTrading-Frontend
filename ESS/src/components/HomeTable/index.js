@@ -59,6 +59,9 @@ class HomeTable extends Component {
 	render() {
 		return (
 			<div>
+				{ativoSelected !== undefined &&
+					<AbrirCFD modal={this.state.modal} toggle={this.toggle} ativo={ativoSelected} tipoCFD={this.state.tipoCFD} />
+				}
 				<AtivosContext.Consumer >
 					{ativos =>
 						Object.keys(ativos).length !== 0 ? (
@@ -115,15 +118,12 @@ class HomeTable extends Component {
 								</tbody>
 							</Table>
 						) : (
-							<div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '300px' }}>
-								<BarLoader height={7} width={200} color="#4A90E2" />
-							</div>
-						)}
+								<div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '300px' }}>
+									<BarLoader height={7} width={200} color="#4A90E2" />
+								</div>
+							)}
 
 				</AtivosContext.Consumer >
-				{ativoSelected !== undefined &&
-					<AbrirCFD modal={this.state.modal} toggle={this.toggle} ativo={ativoSelected} tipoCFD={this.state.tipoCFD} />
-				}
 			</div>
 		);
 	}
