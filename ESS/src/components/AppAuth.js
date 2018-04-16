@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom'
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Route, Redirect, Switch } from 'react-router-dom'
+import { Container } from 'reactstrap';
 
 import Watchlist from '../scenes/Watchlist';
 import AbrirCFD from '../scenes/Watchlist/components/AbrirCFD';
@@ -10,7 +10,6 @@ import Conta from '../scenes/Conta';
 import LevantarPlafond from '../scenes/LevantarPlafond';
 import Sidebar from './Sidebar';
 import * as routes from '../constants/routes';
-import './style.css';
 
 
 class AppAuth extends Component {
@@ -34,18 +33,20 @@ class AppAuth extends Component {
 	render() {
 		return (
 			<div className="wrapper2">
-				<Sidebar toggle={this.toggle}/>
+				<Sidebar toggle={this.toggle} />
 
-				<div id="content" className="container-fluid">
+				<Container fluid id="content">
 					<Redirect to={routes.WATCHLIST} />
-					<Route exact path={routes.WATCHLIST} component={Watchlist} />
-					<Route exact path={routes.ABRIR_CFD} component={AbrirCFD} />
-					<Route exact path={routes.PORTEFOLIO} component={Portefolio} />
-					<Route exact path={routes.GERAL} component={Geral} />
-					<Route exact path={routes.CONTA} component={Conta} />
-				</div>
+					<Switch>
+						<Route exact path={routes.WATCHLIST} component={Watchlist} />
+						<Route exact path={routes.ABRIR_CFD} component={AbrirCFD} />
+						<Route exact path={routes.PORTEFOLIO} component={Portefolio} />
+						<Route exact path={routes.GERAL} component={Geral} />
+						<Route exact path={routes.CONTA} component={Conta} />
+					</Switch>
+				</Container>
 
-				<LevantarPlafond modal={this.state.modal} toggle={this.toggle}/>
+				<LevantarPlafond modal={this.state.modal} toggle={this.toggle} />
 			</div>
 
 		);

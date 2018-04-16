@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import { auth } from '../../firebase';
@@ -9,7 +10,7 @@ import * as routes from '../../constants/routes';
 const NavBarNonAuth = () =>
 	<nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ backgroundColor: "rgb(93, 109, 172)" }}>
 		<Link to={routes.HOME} className="navbar-brand">
-			<img src={Logo} width="190"  alt="" />
+			<img src={Logo} width="190" alt="" />
 		</Link>
 		<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span className="navbar-toggler-icon"></span>
@@ -38,7 +39,7 @@ const NavBarNonAuth = () =>
 		</div>
 	</nav>
 
-const NavBarAuth = () =>
+const NavBarAuth = () => (
 	<nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ backgroundColor: "rgb(93, 109, 172)" }}>
 		<Link to={routes.WATCHLIST} className="navbar-brand">ESS Trading</Link>
 		<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,17 +63,21 @@ const NavBarAuth = () =>
 			</ul>
 		</div>
 	</nav>
+);
 
 class NavBar extends Component {
 
 	render() {
 		return (
-			<AuthUserContext.Consumer>
-				{authUser => authUser
-					? <NavBarAuth />
-					: <NavBarNonAuth />
-				}
-			</AuthUserContext.Consumer>
+			<Col>
+				<AuthUserContext.Consumer>
+					{authUser => authUser
+						? <NavBarAuth />
+						: <NavBarNonAuth />
+					}
+				</AuthUserContext.Consumer>
+				<hr className="mt-0 mb-0" style={{height: '1%', backgroundColor: '#7386D5'}}/>
+			</Col>
 		);
 	}
 }

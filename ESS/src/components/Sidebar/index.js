@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Media, Button } from 'reactstrap';
+import { Media } from 'reactstrap';
 import HideIcon from 'react-icons/lib/fa/angle-left';
 import ShowIcon from 'react-icons/lib/fa/angle-right';
 import EyeIcon from 'react-icons/lib/md/remove-red-eye';
@@ -10,7 +10,6 @@ import CreditCardIcon from 'react-icons/lib/md/credit-card';
 import SettingsIcon from 'react-icons/lib/md/settings';
 
 import { db, auth } from '../../firebase';
-import AuthUserContext from '../../contexts/AuthUserContext';
 import * as routes from '../../constants/routes';
 import './style.css';
 
@@ -65,15 +64,14 @@ class Sidebar extends Component {
         return (
             <nav id="sidebar" className={this.state.active ? "active" : ""}>
                 <div className="sidebar-header">
-                    {this.state.user && auth.currentUser() ? (
+                    {this.state.user ? (
                         <Media>
                             <Media left className="imgContainer">
                                 <Media className="userimg" object src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png" />
                             </Media>
                             <Media body className="hideOnActive">
-                                <span className="d-block" style={{marginBottom: '4px'}}>{this.state.user.first_name + " " + this.state.user.last_name}</span>
+                                <span className="d-block" style={{margin: '10px 0px 4px 0px'}}>{this.state.user.first_name + " " + this.state.user.last_name}</span>
                                 <small className="d-block">{this.state.user.username}</small>
-                                <small>{auth.currentUser().email}</small>
                             </Media>
                         </Media>
                     ) :

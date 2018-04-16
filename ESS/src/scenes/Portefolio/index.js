@@ -5,11 +5,7 @@ import withAuthorization from '../../higher-order_components/withAuthorization';
 
 
 class Portefolio extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
+    
     render() {
         return (
             <div>
