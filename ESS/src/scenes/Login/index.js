@@ -78,7 +78,7 @@ class Login extends Component {
 										'email': event.target.value
 									})}
 								/>
-								<label for="inputEmail">Email</label>
+								<label htmlFor="inputEmail">Email</label>
 							</div>
 
 							<div className="form-label-group">
@@ -87,7 +87,7 @@ class Login extends Component {
 										'password': event.target.value
 									})}
 								/>
-								<label for="inputPassword">Password</label>
+								<label htmlFor="inputPassword">Password</label>
 							</div>
 
 							<Button color="primary" disabled={isInvalid} type="submit" block={true} size="lg">Login</Button>

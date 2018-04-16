@@ -13,13 +13,14 @@ import * as routes from '../../constants/routes';
 import './style.css';
 
 
+let ativoSelected = undefined;
+
 class HomeTable extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			modal: false,
-			ativoSelected: undefined,
 			tipoCFD: undefined
 		};
 
@@ -28,8 +29,8 @@ class HomeTable extends Component {
 
 	toggle = () => {
 		if (this.state.modal === true) {
+			ativoSelected = undefined;
 			this.setState({
-				ativoSelected: undefined,
 				modal: !this.state.modal,
 			});
 		} else {
@@ -40,16 +41,19 @@ class HomeTable extends Component {
 	}
 
 	onClickRow = ativo => tipoCFD => event => {
-
 		if (this.props.openCFD) {
+			ativoSelected = ativo;
 			this.setState({
-				ativoSelected: ativo,
 				tipoCFD: tipoCFD,
 			});
 			this.toggle();
 		} else {
 			this.props.history.push(routes.LOGIN);
 		}
+	}
+
+	updateAtivoSelected = (ativo) => {
+		ativoSelected = ativo;
 	}
 
 	render() {
@@ -59,6 +63,7 @@ class HomeTable extends Component {
 					{ativos =>
 						Object.keys(ativos).length !== 0 ? (
 							<Table responsive >
+								{ativoSelected ? this.updateAtivoSelected(ativos[ativoSelected.quote.symbol]) : null}
 								<thead className="thead-light">
 									<tr>
 										<th key={0}>Mercados</th>
@@ -110,15 +115,14 @@ class HomeTable extends Component {
 								</tbody>
 							</Table>
 						) : (
-								<div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '300px' }}>
-									<BarLoader height={7} width={200} color="#4A90E2" />
-								</div>
-							)}
+							<div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '300px' }}>
+								<BarLoader height={7} width={200} color="#4A90E2" />
+							</div>
+						)}
+
 				</AtivosContext.Consumer >
-
-
-				{this.state.ativoSelected !== undefined &&
-					<AbrirCFD modal={this.state.modal} toggle={this.toggle} ativo={this.state.ativoSelected} tipoCFD={this.state.tipoCFD} />
+				{ativoSelected !== undefined &&
+					<AbrirCFD modal={this.state.modal} toggle={this.toggle} ativo={ativoSelected} tipoCFD={this.state.tipoCFD} />
 				}
 			</div>
 		);

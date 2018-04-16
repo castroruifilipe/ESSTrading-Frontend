@@ -100,7 +100,7 @@ class Registar extends Component {
 										'first_name': event.target.value
 									})}
 								/>
-								<label for="inputFirstName">Primeiro nome</label>
+								<label htmlFor="inputFirstName">Primeiro nome</label>
 							</div>
 							<div className="form-label-group">
 								<Input required value={last_name} placeholder="Último nome" type="text" className="form-control" id="inputLastName"
@@ -108,7 +108,7 @@ class Registar extends Component {
 										'last_name': event.target.value
 									})}
 								/>
-								<label for="inputLastName">Último nome</label>
+								<label htmlFor="inputLastName">Último nome</label>
 							</div>
 							<div className="form-label-group">
 								<Input required value={username} placeholder="Username" type="text" className="form-control" id="inputUsername"
@@ -116,7 +116,7 @@ class Registar extends Component {
 										'username': event.target.value
 									})}
 								/>
-								<label for="inputUsername">Username</label>
+								<label htmlFor="inputUsername">Username</label>
 							</div>
 							<div className="form-label-group">
 								<Input required value={email} placeholder="Email" type="email" className="form-control" id="inputEmail"
@@ -124,7 +124,7 @@ class Registar extends Component {
 										'email': event.target.value
 									})}
 								/>
-								<label for="inputEmail">Email</label>
+								<label htmlFor="inputEmail">Email</label>
 							</div>
 							<div className="form-label-group">
 								<Input required value={password_one} placeholder="Password" type="password" className="form-control" id="inputPasswordOne"
@@ -132,7 +132,7 @@ class Registar extends Component {
 										'password_one': event.target.value
 									})}
 								/>
-								<label for="inputPasswordOne">Password</label>
+								<label htmlFor="inputPasswordOne">Password</label>
 							</div>
 							<div className="form-label-group">
 								<Input required value={password_two} placeholder="Confirmar password" type="password" className="form-control" id="inputPasswordTwo"
@@ -140,7 +140,7 @@ class Registar extends Component {
 										'password_two': event.target.value
 									})}
 								/>
-								<label for="inputPasswordTwo">Confirmar password</label>
+								<label htmlFor="inputPasswordTwo">Confirmar password</label>
 							</div>
 							<div className="form-label-group">
 								<Input value={contacto} placeholder="Contacto" type="tel" className="form-control" id="inputContacto"
@@ -148,7 +148,7 @@ class Registar extends Component {
 										'contacto': event.target.value
 									})}
 								/>
-								<label for="inputContacto">Contacto</label>
+								<label htmlFor="inputContacto">Contacto</label>
 							</div>
 
 							<Button color="primary" disabled={isInvalid} type="submit" block={true} size="lg">Registar</Button>

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Media, Button, ButtonGroup, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
-import withAuthorization from '../../../../higher-order_components/withAuthorization';
-import * as routes from '../../../../constants/routes';
 import cfdEnum from '../../../../constants/cfdEnum';
 import { formatterPrice, formatterPercent } from '../../../../constants/formatters';
 import Spinner from './components/Spinner';
@@ -99,8 +97,5 @@ class AbrirCFD extends Component {
         );
     }
 }
-
-// const authCondition = (authUser) => !!authUser;
-// export default withAuthorization(authCondition)(AbrirCFD);
 
 export default AbrirCFD;
