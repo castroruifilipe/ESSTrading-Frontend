@@ -67,7 +67,7 @@ class Login extends Component {
 
 		return (
 			<Container>
-				<Row>
+				<Row className="animated fadeInLeft">
 					<Col md={{ size: 6, offset: 3 }}>
 						<h3 className="font-weight-normal mt-5 mb-3">Iniciar sessão</h3>
 

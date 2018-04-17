@@ -89,7 +89,7 @@ class Registar extends Component {
 
 		return (
 			<Container>
-				<Row>
+				<Row className="animated fadeInLeft">
 					<Col md={{ size: 6, offset: 3 }}>
 						<h3 className="font-weight-normal mt-5 mb-3">Criar conta</h3>
 
