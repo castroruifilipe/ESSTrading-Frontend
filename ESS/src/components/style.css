@@ -1,3 +1,14 @@
+@font-face {
+    /* declare fonts */
+    font-family: "Museo";
+    src: url("../fonts/museo-500.woff") format("woff");
+}
+
+#logo-text {
+    font-weight: bold;
+    font-family: "Museo";
+}
+
 html, body {
     height: 100%;
     /* important to vertically align the container */

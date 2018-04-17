@@ -19,7 +19,7 @@ class Home extends Component {
 								style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + Background + ')' }}>
 
 								<div className="text-white col-lg-6" style={{ padding: '100px 30px 0px 100px', textShadow: '0 0 30px black' }}>
-								<span style={{fontFamily: 'Museo', src: `url(${Museo}) format(woff)`, fontWeight: 'bold', fontSize: '40px'}}>ESS Trading</span>
+								<span id="logo-text" style={{fontWeight: 'bold', fontSize: '40px'}}>ESS Trading</span>
 									<h1>Junte-se e ganhe dinheiro com confiança</h1>
 									<span className="lead">
 										Invista em centenas de ativos financeiros e <i>commodities</i> de forma fácil.

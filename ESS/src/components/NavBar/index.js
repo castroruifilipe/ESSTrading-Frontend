@@ -13,7 +13,7 @@ import * as routes from '../../constants/routes';
 const logo = (route) =>
 	<Link to={route} className="navbar-brand">
 		<img src={Logo} width="50" alt="" className="d-inline-block align-middle mr-3" />
-		<span style={{fontFamily: 'Museo', src: `url(${Museo}) format(woff)`, fontWeight: 'bold', color: 'rgb(87, 102, 161)'}}>ESS Trading</span>
+		<span id="logo-text" style={{color: 'rgb(87, 102, 161)'}}>ESS Trading</span>
 	</Link>
 
 
