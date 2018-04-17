@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'mobx-react';
+
 import App from './components/App';
+import store from './stores';
 
 
 
 ReactDOM.render(
-  <App /> ,
-  document.getElementById('root')
+	<Provider {...store}>
+		<App />
+	</Provider>,
+	document.getElementById('root')
 );
 
 

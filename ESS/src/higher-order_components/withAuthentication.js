@@ -1,38 +1,26 @@
 import React from 'react';
+import { inject } from 'mobx-react';
 
-import AuthUserContext from '../contexts/AuthUserContext';
 import { firebase } from '../firebase';
 
 const withAuthentication = (Component) => {
     class WithAuthentication extends React.Component {
-        constructor(props) {
-            super(props);
-
-            this.state = {
-                authUser: null
-            };
-        }
 
         componentWillMount() {
+            const { sessionStore } = this.props;
             firebase.auth.onAuthStateChanged(authUser => {
                 authUser
-                    ? this.setState(() => ({ authUser }))
-                    : this.setState(() => ({ authUser: null }));
+                    ? sessionStore.setAuthUser(authUser)
+                    : sessionStore.setAuthUser(null);
             });
         }
 
         render() {
-            const { authUser }  = this.state;
-
-            return (
-                <AuthUserContext.Provider value={authUser}>
-                    <Component {...this.props}/>
-                </AuthUserContext.Provider>
-            );
+            return <Component {...this.props} />;
         }
     }
 
-    return WithAuthentication;
+    return inject('sessionStore')(WithAuthentication);
 }
 
 export default withAuthentication;

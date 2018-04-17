@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
+import { compose } from 'recompose';
 import { Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import { auth } from '../../firebase';
-import AuthUserContext from '../../contexts/AuthUserContext';
 import Logo from '../../images/logo.png';
 import * as routes from '../../constants/routes';
+
 
 const NavBarNonAuth = () =>
 	<nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ backgroundColor: "rgb(93, 109, 172)" }}>
@@ -70,17 +72,18 @@ class NavBar extends Component {
 	render() {
 		return (
 			<Col>
-				<AuthUserContext.Consumer>
-					{authUser => authUser
-						? <NavBarAuth />
-						: <NavBarNonAuth />
-					}
-				</AuthUserContext.Consumer>
-				<hr className="mt-0 mb-0" style={{height: '1%', backgroundColor: '#7386D5'}}/>
+				{this.props.sessionStore.authUser
+					? <NavBarAuth />
+					: <NavBarNonAuth />
+				}
+				<hr className="mt-0 mb-0" style={{ height: '1%', backgroundColor: '#7386D5' }} />
 			</Col>
 		);
 	}
 }
 
 
-export default NavBar;
+export default compose(
+	inject('sessionStore'),
+	observer
+)(NavBar);
