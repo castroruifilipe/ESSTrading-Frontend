@@ -8,6 +8,7 @@ import BookIcon from 'react-icons/lib/fa/book';
 import HistoryIcon from 'react-icons/lib/md/history';
 import CreditCardIcon from 'react-icons/lib/md/credit-card';
 import SettingsIcon from 'react-icons/lib/md/settings';
+import UserImage from '../../images/user.png'
 
 import { db, auth } from '../../firebase';
 import * as routes from '../../constants/routes';
@@ -65,9 +66,9 @@ class Sidebar extends Component {
             <nav id="sidebar" className={this.state.active ? "active" : ""}>
                 <div className="sidebar-header">
                     {this.state.user ? (
-                        <Media>
+                        <Media className="mt-2">
                             <Media left className="imgContainer">
-                                <Media className="userimg" object src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png" />
+                                <Media className="userimg" object src={UserImage} />
                             </Media>
                             <Media body className="hideOnActive">
                                 <span className="d-block" style={{ margin: '10px 0px 4px 0px' }}>{this.state.user.first_name + " " + this.state.user.last_name}</span>
@@ -78,8 +79,6 @@ class Sidebar extends Component {
                         null
                     }
                 </div>
-
-                <hr/>
 
                 <ul className="list-unstyled components">
                     <li >

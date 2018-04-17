@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import HomeTable from '../../components/HomeTable';
 import Background from '../../images/trading.jpg';
-import Museo from '../../fonts/museo-300.woff';
 import * as routes from '../../constants/routes';
 
 class Home extends Component {

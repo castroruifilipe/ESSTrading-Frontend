@@ -25,7 +25,7 @@
 }
 
 #sidebar.active ul li a {
-    padding: 20px 10px;
+    padding: 10px 10px;
     text-align: center;
     font-size: 0.75em;
 }
@@ -43,7 +43,7 @@
 
 #sidebar.active a[aria-expanded="false"]::before, #sidebar.active a[aria-expanded="true"]::before {
     top: auto;
-    bottom: 5px;
+    bottom: -5px;
     right: 50%;
     -webkit-transform: translateX(50%);
     -ms-transform: translateX(50%);
@@ -121,7 +121,7 @@ a[aria-expanded="true"]::before {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #6f7dbb;
 }
 
 ul.CTAs {

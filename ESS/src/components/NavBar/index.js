@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 import { auth } from '../../firebase';
 import Logo from '../../images/logo_icon.png';
-import Museo from '../../fonts/museo-300.woff';
 import * as routes from '../../constants/routes';
 
 

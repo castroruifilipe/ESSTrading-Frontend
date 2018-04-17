@@ -64,7 +64,7 @@ class AbrirCFD extends Component {
                             <span className="lead d-block">{formatterPrice.format(preco)}</span>
                             <div className={quote.changePercent < 0 ? "text-danger" : "text-success"}>
                                 {formatterPercent.format(quote.changePercent)}{' '}
-                                <small>({formatterPrice.format(quote.changePercent)})</small>
+                                <small>({formatterPrice.format(quote.change)})</small>
                             </div>
                         </Media>
                     </Media>

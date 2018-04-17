@@ -10,16 +10,10 @@ let _timeout = undefined;
 const withAtivos = (Component) => {
     class WithAtivos extends React.Component {
 
-        // constructor(props) {
-        //     super(props);
-        //     this.state = {
-        //         ativos: {},
-        //     };
-        // }
-
         componentDidMount() {
             this.getLogos();
             this.updateAtivos();
+            this.props.ativosStore.setDataLoad(true);
             _timeout = setInterval(this.updateAtivos, 1000);
         }
 
@@ -28,11 +22,9 @@ const withAtivos = (Component) => {
         }
 
         updateAtivos = () => {
-            // const prevAtivos = Object.assign(this.state.ativos);
             symbols.forEach(symbol => {
                 iex.stockQuote(symbol)
                     .then(quote => {
-                        // prevAtivos[symbol] = {...this.state.ativos[symbol], quote: quote};
                         this.props.ativosStore.setQuote(quote);
                     })
                     .catch(error => {
