@@ -79,6 +79,8 @@ class Sidebar extends Component {
                     }
                 </div>
 
+                <hr/>
+
                 <ul className="list-unstyled components">
                     <li >
                         <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
@@ -123,11 +125,6 @@ class Sidebar extends Component {
                         </ul>
                     </li>
 
-                </ul>
-
-                <ul className="list-unstyled CTAs">
-                    <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" className="download">Download source</a></li>
-                    <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" className="article">Back to article</a></li>
                 </ul>
 
                 <ul className="list-unstyled">

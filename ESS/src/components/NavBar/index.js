@@ -5,15 +5,24 @@ import { Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import { auth } from '../../firebase';
-import Logo from '../../images/logo.png';
+import Logo from '../../images/logo_icon.png';
+import Museo from '../../fonts/museo-300.woff';
 import * as routes from '../../constants/routes';
 
 
+const logo = (route) =>
+	<Link to={route} className="navbar-brand">
+		<img src={Logo} width="50" alt="" className="d-inline-block align-middle mr-3" />
+		<span style={{fontFamily: 'Museo', src: `url(${Museo}) format(woff)`, fontWeight: 'bold', color: 'rgb(87, 102, 161)'}}>ESS Trading</span>
+	</Link>
+
+
 const NavBarNonAuth = () =>
-	<nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ backgroundColor: "rgb(93, 109, 172)" }}>
-		<Link to={routes.HOME} className="navbar-brand">
-			<img src={Logo} width="190" alt="" />
-		</Link>
+	<nav className="navbar navbar-expand-lg navbar-light bg-light">
+		{logo(routes.HOME)}
+		{/* <Link to={routes.HOME} className="navbar-brand">
+			{logo}
+		</Link> */}
 		<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span className="navbar-toggler-icon"></span>
 		</button>
@@ -42,8 +51,8 @@ const NavBarNonAuth = () =>
 	</nav>
 
 const NavBarAuth = () => (
-	<nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ backgroundColor: "rgb(93, 109, 172)" }}>
-		<Link to={routes.WATCHLIST} className="navbar-brand">ESS Trading</Link>
+	<nav className="navbar navbar-expand-lg navbar-light bg-light">
+		{logo(routes.WATCHLIST)}
 		<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span className="navbar-toggler-icon"></span>
 		</button>
@@ -76,7 +85,7 @@ class NavBar extends Component {
 					? <NavBarAuth />
 					: <NavBarNonAuth />
 				}
-				<hr className="mt-0 mb-0" style={{ height: '1%', backgroundColor: '#7386D5' }} />
+				<hr className="mt-0 mb-0" style={{ height: '1%', backgroundColor: 'rgb(87, 102, 161)' }} />
 			</Col>
 		);
 	}

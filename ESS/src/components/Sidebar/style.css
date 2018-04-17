@@ -1,7 +1,7 @@
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #7386D5;
+    background: rgb(87, 102, 161);
     color: #fff;
     transition: all 0.3s;
 }
@@ -52,12 +52,12 @@
 
 #sidebar .sidebar-header {
     padding: 8px;
-    background: #6d7fcc;
+    background:  rgb(87, 102, 161);
 }
 
 #sidebar.active .sidebar-header {
     padding: 8px 0px 2px 8px;
-    background: #6d7fcc;
+    background:  rgb(87, 102, 161);
 }
 
 .userimg {
@@ -93,7 +93,7 @@
 
 #sidebar ul li .link.active, a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #6070b4;
 }
 
 
