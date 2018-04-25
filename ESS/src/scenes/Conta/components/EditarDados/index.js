@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col , Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
+import { Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import Avatar from 'react-avatar-edit';
@@ -17,7 +17,10 @@ class EditarDados extends Component {
 			last_name: props.sessionStore.userDB.last_name,
 			username: props.sessionStore.userDB.username,
 			email: props.sessionStore.authUser.email,
-			contacto: props.sessionStore.userDB.contacto,
+			contacto: (props.sessionStore.userDB.contacto || ""),
+			data_nascimento: (props.sessionStore.userDB.data_nascimento || ""),
+			sexo: (props.sessionStore.userDB.sexo || "Masculino"),
+			nif: (props.sessionStore.userDB.nif || ""),
 			error: null,
 		};
 
@@ -41,8 +44,11 @@ class EditarDados extends Component {
 			email,
 			contacto,
 			image,
+			data_nascimento,
+			sexo,
+			nif,
 		} = this.state;
-		db.doUpdateUser(this.props.sessionStore.authUser.uid, username, first_name, last_name, contacto, image)
+		db.doUpdateUser(this.props.sessionStore.authUser.uid, username, first_name, last_name, contacto, image, data_nascimento,sexo,nif)
 			.then(() => this.props.toggle());
 	}
 
@@ -53,6 +59,9 @@ class EditarDados extends Component {
 			username,
 			email,
 			contacto,
+			sexo,
+			data_nascimento,
+			nif,
 			error,
 		} = this.state;
 
@@ -63,7 +72,7 @@ class EditarDados extends Component {
 			email === '';
 
 		return (
-			<Modal isOpen={this.props.modal} toggle={this.props.toggle}>
+			<Modal isOpen={this.props.modal} size='lg' toggle={this.props.toggle}>
 				<ModalHeader toggle={this.props.toggle}>Editar dados da conta</ModalHeader>
 				<ModalBody className="center-block">
 					<Row className="mb-3">
@@ -87,7 +96,7 @@ class EditarDados extends Component {
 						</Col>
 					</Row>
 					<Row>
-						<Col sm={{ size: 10, offset: 1 }}>
+						<Col sm={{ size: 5, offset: 1 }}>
 							<Form className="form-sign">
 								<div className="form-label-group">
 									<Input required value={first_name} placeholder="Primeiro nome" type="text" className="form-control" id="inputFirstName"
@@ -108,7 +117,7 @@ class EditarDados extends Component {
 								</div>
 
 								<div className="form-label-group">
-									<Input required value={last_name} placeholder="Username" type="text" className="form-control" id="inputUsername"
+									<Input required value={username} placeholder="Username" type="text" className="form-control" id="inputUsername"
 										onChange={event => this.setState({
 											'username': event.target.value
 										})}
@@ -132,6 +141,37 @@ class EditarDados extends Component {
 										})}
 									/>
 									<label htmlFor="inputContacto">Contacto</label>
+								</div>
+							</Form>
+						</Col>
+						<Col sm={{ size: 5 }}>
+							<Form className="form-sign">
+								<div className="form-label-group">
+									<Input required value={data_nascimento} placeholder="Data de Nascimento" type="text" className="form-control" id="inputDN"
+										onChange={event => this.setState({
+											'data_nascimento': event.target.value
+										})}>
+									</Input>
+									<label htmlFor="inputDN">Data de Nascimento</label>
+								</div>
+
+								<div className="form-label-group">
+									<Input required value={sexo} placeholder="Sexo" type="select" className="form-control" id="inputSexo"
+										onChange={event => this.setState({
+											'sexo': event.target.value
+										})}>
+										<option>Masculino</option>
+										<option>Feminino</option>
+									</Input>
+								</div>
+
+								<div className="form-label-group">
+									<Input required value={nif} placeholder="NIF" type="text" className="form-control" id="inputNIF"
+										onChange={event => this.setState({
+											'nif': event.target.value
+										})}
+									/>
+									<label htmlFor="inputNIF">NIF</label>
 								</div>
 							</Form>
 						</Col>

@@ -81,7 +81,7 @@ class Conta extends Component {
 								</tr>
 								<tr>
 									<th>Data de nascimento</th>
-									<td>{userDB.nascimento}</td>
+									<td>{userDB.data_nascimento}</td>
 								</tr>
 								<tr>
 									<th>Sexo</th>

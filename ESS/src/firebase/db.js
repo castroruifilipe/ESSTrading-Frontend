@@ -17,7 +17,7 @@ export const onceGetUser = id =>
 export const onGetUser = (id, func) =>
     db.ref(`users/${id}`).on('value', func);
 
-export const doUpdateUser = function (id, username, first_name, last_name, contacto, image) {
+export const doUpdateUser = function (id, username, first_name, last_name, contacto, image, data_nascimento, sexo, nif) {
     return new Promise((resolve, reject) => {
         db.ref(`users/${id}`).set({
             username,
@@ -26,6 +26,9 @@ export const doUpdateUser = function (id, username, first_name, last_name, conta
             contacto,
             image: (image || userImage),
             saldo: 10000,
+            data_nascimento,
+            sexo,
+            nif
         })
             .then(() => resolve())
             .catch(error => reject());
