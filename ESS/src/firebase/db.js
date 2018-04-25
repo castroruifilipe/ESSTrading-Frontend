@@ -1,4 +1,5 @@
 import { db } from './firebase';
+import userImage from '../constants/userImage';
 
 // User API
 export const doCreateUser = (id, username, first_name, last_name, contacto) =>
@@ -7,7 +8,26 @@ export const doCreateUser = (id, username, first_name, last_name, contacto) =>
         first_name,
         last_name,
         contacto,
+        image: userImage,
     });
 
-export const onceGetUser = (id) =>
+export const onceGetUser = id =>
     db.ref(`users/${id}`).once('value');
+
+export const onGetUser = (id, func) =>
+    db.ref(`users/${id}`).on('value', func);
+
+export const doUpdateUser = function (id, username, first_name, last_name, contacto, image) {
+    return new Promise((resolve, reject) => {
+        db.ref(`users/${id}`).set({
+            username,
+            first_name,
+            last_name,
+            contacto,
+            image: (image || userImage),
+            saldo: 10000,
+        })
+            .then(() => resolve())
+            .catch(error => reject());
+    })
+}

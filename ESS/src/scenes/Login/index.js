@@ -52,6 +52,7 @@ class Login extends Component {
 			});
 
 		event.preventDefault();
+
 	}
 
 	render() {
@@ -111,6 +112,5 @@ class Login extends Component {
 		);
 	}
 }
-
 
 export default withRouter(Login);

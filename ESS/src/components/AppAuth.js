@@ -39,7 +39,6 @@ class AppAuth extends Component {
 					<Redirect to={routes.WATCHLIST} />
 					<Switch>
 						<Route exact path={routes.WATCHLIST} component={Watchlist} />
-						<Route exact path={routes.ABRIR_CFD} component={AbrirCFD} />
 						<Route exact path={routes.PORTEFOLIO} component={Portefolio} />
 						<Route exact path={routes.GERAL} component={Geral} />
 						<Route exact path={routes.CONTA} component={Conta} />

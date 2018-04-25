@@ -8,9 +8,10 @@ import BookIcon from 'react-icons/lib/fa/book';
 import HistoryIcon from 'react-icons/lib/md/history';
 import CreditCardIcon from 'react-icons/lib/md/credit-card';
 import SettingsIcon from 'react-icons/lib/md/settings';
-import UserImage from '../../images/user.png'
+import { inject, observer } from 'mobx-react';
+import { compose } from 'recompose';
+import { BarLoader } from 'react-spinners';
 
-import { db, auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 import './style.css';
 
@@ -23,7 +24,6 @@ class Sidebar extends Component {
         this.state = {
             active: false,
             hidded: false,
-            user: undefined,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -44,12 +44,6 @@ class Sidebar extends Component {
     }
 
     componentDidMount() {
-        db.onceGetUser(auth.currentUser().uid)
-            .then((snapshot => {
-                this.setState({
-                    user: snapshot.val(),
-                });
-            }));
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions.bind(this));
     }
@@ -62,24 +56,28 @@ class Sidebar extends Component {
     }
 
     render() {
-        return (
-            <nav id="sidebar" className={this.state.active ? "active" : ""}>
-                <div className="sidebar-header">
-                    {this.state.user ? (
-                        <Media className="mt-2">
-                            <Media left className="imgContainer">
-                                <Media className="userimg" object src={UserImage} />
-                            </Media>
-                            <Media body className="hideOnActive">
-                                <span className="d-block" style={{ margin: '10px 0px 4px 0px' }}>{this.state.user.first_name + " " + this.state.user.last_name}</span>
-                                <small className="d-block">{this.state.user.username}</small>
-                            </Media>
-                        </Media>
-                    ) :
-                        null
-                    }
-                </div>
+        let userMedia =
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}>
+                <BarLoader height={7} width={200} color="white" />
+            </div>
+        if (this.props.sessionStore.userDB.image) {
+            userMedia =
+                <Media className="mt-2">
+                    <Media left className="imgContainer">
+                        <Media className="userimg" object src={this.props.sessionStore.userDB.image} />
+                    </Media>
+                    <Media body className="hideOnActive">
+                        <span className="d-block" style={{ margin: '10px 0px 4px 0px' }}>{this.props.sessionStore.userDB.first_name + " " + this.props.sessionStore.userDB.last_name}</span>
+                        <small className="d-block">{this.props.sessionStore.userDB.username}</small>
+                    </Media>
+                </Media >
+        }
 
+        return (
+            <nav id="sidebar" className={this.state.active ? "active" : ""} >
+                <div className="sidebar-header" style={{height: '90px'}}>
+                    {userMedia}
+                </div >
                 <ul className="list-unstyled components">
                     <li >
                         <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
@@ -139,4 +137,7 @@ class Sidebar extends Component {
     }
 }
 
-export default Sidebar;
+export default compose(
+    inject('sessionStore'),
+    observer,
+)(Sidebar);

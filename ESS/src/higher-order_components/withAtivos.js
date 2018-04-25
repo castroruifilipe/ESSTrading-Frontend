@@ -34,11 +34,9 @@ const withAtivos = (Component) => {
         }
 
         getLogos = () => {
-            // const prevAtivos = this.state.ativos;
             symbols.forEach(symbol => {
                 iex.stockLogo(symbol)
                     .then(logo => {
-                        // prevAtivos[symbol] = {...this.state.ativos[symbol], logo: logo.url};
                         this.props.ativosStore.setLogo(symbol, logo.url);
                     })
                     .catch(error => {

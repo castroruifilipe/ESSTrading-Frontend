@@ -39,6 +39,7 @@
 
 #sidebar.active ul ul a {
     padding: 10px !important;
+    font-size: 0.7em !important;
 }
 
 #sidebar.active a[aria-expanded="false"]::before, #sidebar.active a[aria-expanded="true"]::before {

@@ -4,21 +4,25 @@ import { db } from '../firebase';
 
 class SessionStore {
     @observable authUser = null;
-    @observable userDB = null;
-    
+    @observable userDB = {};
+
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
 
     @action setAuthUser = authUser => {
         this.authUser = authUser;
-        this.updateUserDB();
+        if (authUser) {
+            this.updateUserDB();
+        }
     }
 
-    @action updateUserDB = () => {
-        db.onceGetUser(this.authUser.uid)
-            .then(snapshot => this.userDB = snapshot.val());
+    @action setUserDB = userDB => {
+        this.userDB = userDB;
     }
+
+    @action updateUserDB = () =>
+        db.onGetUser(this.authUser.uid, snapshot => this.setUserDB(snapshot.val()));
 }
 
 export default SessionStore;

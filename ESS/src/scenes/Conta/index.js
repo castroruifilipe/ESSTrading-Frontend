@@ -6,8 +6,6 @@ import PencilIcon from 'react-icons/lib/fa/edit'
 import EraserIcon from 'react-icons/lib/fa/eraser'
 
 import EditarDados from './components/EditarDados';
-import UserImage from '../../images/user.png';
-
 
 
 class Conta extends Component {
@@ -45,7 +43,7 @@ class Conta extends Component {
 					<Col md="6">
 						<Media>
 							<Media left>
-								<Media className="img-fluid rounded-circle" style={{ maxWidth: '150px' }} object src={UserImage} />
+								<Media className="img-fluid rounded-circle" style={{ maxWidth: '150px' }} object src={userDB.image} />
 							</Media>
 							<Media body className="ml-5 mt-3">
 								<span className="d-block lead">
