@@ -153,7 +153,7 @@ class Registar extends Component {
 
 							<Button color="primary" disabled={isInvalid} type="submit" block={true} size="lg">Registar</Button>
 
-							{error && <Alert color="danger">{error.message}</Alert>}
+							{error && <Alert color="danger" className="mt-5">{error.message}</Alert>}
 
 							<Modal isOpen={this.state.modal} toggle={this.toggle}>
 								<ModalHeader toggle={this.toggle}>Email de confirmação</ModalHeader>

@@ -47,6 +47,12 @@ export const doUpdateSaldo = function (id, saldo) {
 }
 
 export const doAbrirCFD = function (id, tipo, ativo, unidades, montante, valorAbertura) {
+    onceGetUser(id)
+        .then(snapshot => {
+            let saldo = snapshot.val().saldo;
+            doUpdateSaldo(id, saldo - montante);
+        })
+        .catch(error => console.error(error));
     return new Promise((resolve, reject) => {
         db.ref(`cfds/${id}`).push({
             ativo,

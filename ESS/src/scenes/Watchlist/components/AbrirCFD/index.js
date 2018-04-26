@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Media, Button, ButtonGroup, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Alert, Row, Media, Button, ButtonGroup, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import SwapIcon from 'react-icons/lib/md/swap-horiz';
@@ -17,6 +17,7 @@ class AbrirCFD extends Component {
         this.state = {
             tipoCFD: props.tipoCFD,
             unidade: unidadeEnum.MONTANTE,
+            error: undefined,
         };
     }
 
@@ -35,6 +36,9 @@ class AbrirCFD extends Component {
         } else {
             this.unidades = valueAsNumber;
         }
+        this.setState({
+            error: undefined,
+        })
     }
 
     updateValues = (preco) => {
@@ -54,9 +58,15 @@ class AbrirCFD extends Component {
 
     abrirCFD = (preco) => {
         this.updateValues(preco);
-        db.doAbrirCFD(auth.currentUser().uid, this.state.tipoCFD, this.props.ativo, this.unidades, this.montante, preco)
-            .then(() => this.props.toggle())
-            .catch(error => console.error(error));
+        if (this.props.sessionStore.userDB.saldo < this.montante) {
+            this.setState({
+                error: "O seu saldo é insuficiente para abrir este CFD."
+            });
+        } else {
+            db.doAbrirCFD(auth.currentUser().uid, this.state.tipoCFD, this.props.ativo, this.unidades, this.montante, preco)
+                .then(() => this.props.toggle())
+                .catch(error => console.error(error));
+        }
     }
 
     render() {
@@ -137,6 +147,7 @@ class AbrirCFD extends Component {
                         </Row>
                     </div>
 
+                    {this.state.error && <Alert className="mt-5" color="danger">{this.state.error}</Alert>}
                 </ModalBody>
                 <ModalFooter>
                     <Button block outline color="primary" size="lg" onClick={(e) => this.abrirCFD(preco, e)} >Abrir posição</Button>
@@ -148,6 +159,6 @@ class AbrirCFD extends Component {
 }
 
 export default compose(
-    inject('ativosStore'),
+    inject('ativosStore', 'sessionStore'),
     observer
 )(AbrirCFD);
