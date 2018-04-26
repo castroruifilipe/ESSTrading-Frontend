@@ -1,65 +1,42 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Container, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Row, Col, Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import NumericInput from 'react-numeric-input';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
+import { BarLoader } from 'react-spinners';
 
-import { formatterPrice } from '../../constants/formatters';
-import ReactDOM from 'react-dom';
 import { db } from '../../firebase';
 
-class AddMoney extends Component {
+class DepositarPlafond extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             value: 0,
-            mens: "",
         };
     }
-
-
 
     onChange = (valueAsNumber, valueAsString, input) => {
         this.setState({
             value: valueAsNumber,
-            mens: "",
         })
     }
 
-
-    addMoney = () => {
-        let sucesso =
-            <span className="mt-2 animated flash text-success">
-                Adicionado com sucesso
-        </span>;
-        let erro =
-            <span className="mt-2 animated shake text-danger">
-                Valor não autorizado
-        </span>;
-
-        if (this.state.value > 0) {
-            this.setState({
-                mens: sucesso,
-            });
-
-            db.doUpdateSaldo(this.props.sessionStore.authUser.uid, this.props.sessionStore.userDB.saldo + this.state.value)
-                .then(() => this.props.toggle())
-                .catch(error => console.error(error));
-
-        } else {
-            this.setState({
-                mens: erro,
-            })
-        }
-
-
+    onSubmit = () => {
+        db.doUpdateSaldo(this.props.sessionStore.authUser.uid, this.props.sessionStore.userDB.saldo + this.state.value)
+            .then(() => this.props.toggle())
+            .catch(error => console.error(error));
     }
 
     render() {
-
-
-
+        if (!this.props.sessionStore.userDB.saldo) {
+            return (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}>
+                    <BarLoader height={7} width={200} color="white" />
+                </div>
+            );
+        }
 
         return (
             <Modal isOpen={this.props.modal} toggle={this.props.toggle} centered>
@@ -91,4 +68,4 @@ class AddMoney extends Component {
 export default compose(
     inject('sessionStore'),
     observer
-)(AddMoney);
+)(DepositarPlafond);

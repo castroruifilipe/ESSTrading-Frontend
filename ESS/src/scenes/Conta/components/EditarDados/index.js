@@ -84,8 +84,8 @@ class EditarDados extends Component {
 			<Modal isOpen={this.props.modal} size='lg' toggle={this.props.toggle}>
 				<ModalHeader toggle={this.props.toggle}>Editar dados da conta</ModalHeader>
 				<ModalBody className="center-block">
-					<Row className="ml-1">
-						<Col lg="3">
+					<Row className="ml-4 mr-4">
+						<Col lg="3" className="mb-2">
 							<Avatar
 								width={150}
 								height={150}

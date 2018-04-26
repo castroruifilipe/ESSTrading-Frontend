@@ -70,9 +70,6 @@ class Sidebar extends Component {
                     <Media body className="hideOnActive">
                         <span className="d-block" style={{ margin: '10px 0px 4px 0px' }}>{this.props.sessionStore.userDB.first_name + " " + this.props.sessionStore.userDB.last_name}</span>
                         <small className="d-block">{this.props.sessionStore.userDB.username}</small>
-                        <NavLink to={routes.CONTA}>
-                            <small className="d-block" ><u>O meu perfil</u></small>
-                        </NavLink>
                     </Media>
                 </Media >
         }
@@ -94,17 +91,17 @@ class Sidebar extends Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                        <NavLink to={routes.HISTORICO} activeClassName="active" className="link">
                             <i><HistoryIcon /> </i>Histórico
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={routes.ADDMONEY} activeClassName="active" className="link">
-                            <i><AddMoneyIcon /> </i>Adicionar plafond
-                        </NavLink>
+                        <a className="link" onClick={this.props.toggleDepositar}>
+                            <i><AddMoneyIcon /> </i>Depositar plafond
+                        </a>
                     </li>
                     <li>
-                        <a className="link" onClick={this.props.toggle}>
+                        <a className="link" onClick={this.props.toggleLevantar}>
                             <i><CreditCardIcon /> </i>Levantar plafond
                         </a>
                     </li>
