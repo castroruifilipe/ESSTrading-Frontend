@@ -94,17 +94,17 @@ class Sidebar extends Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={routes.HISTORICO} activeClassName="active" className="link">
+                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
                             <i><HistoryIcon /> </i>Histórico
                         </NavLink>
                     </li>
                     <li>
-                        <a className="link" onClick={this.props.toggleDepositar}>
-                            <i><AddMoneyIcon /> </i>Depositar plafond
-                        </a>
+                        <NavLink to={routes.ADDMONEY} activeClassName="active" className="link">
+                            <i><AddMoneyIcon /> </i>Adicionar plafond
+                        </NavLink>
                     </li>
                     <li>
-                        <a className="link" onClick={this.props.toggleLevantar}>
+                        <a className="link" onClick={this.props.toggle}>
                             <i><CreditCardIcon /> </i>Levantar plafond
                         </a>
                     </li>

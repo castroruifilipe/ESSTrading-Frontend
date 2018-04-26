@@ -8,9 +8,7 @@ import Geral from '../scenes/Geral';
 import Conta from '../scenes/Conta';
 import AddMoney from '../scenes/AddMoney';
 import LevantarPlafond from '../scenes/LevantarPlafond';
-import DepositarPlafond from '../scenes/AddMoney';
 import Sidebar from './Sidebar';
-import Historico from '../scenes/Historico';
 import * as routes from '../constants/routes';
 
 
@@ -20,45 +18,35 @@ class AppAuth extends Component {
 		super(props);
 
 		this.state = {
-			modalDepositar: false,
-			modalLevantar: false,
+			modal: false,
 		};
 
-		this.toggleDepositar = this.toggleDepositar.bind(this);
-		this.toggleLevantar = this.toggleLevantar.bind(this);
+		this.toggle = this.toggle.bind(this);
 	}
 
-	toggleDepositar() {
+	toggle() {
 		this.setState({
-			modalDepositar: !this.state.modalDepositar
-		});
-	}
-
-	toggleLevantar() {
-		this.setState({
-			modalLevantar: !this.state.modalLevantar
+			modal: !this.state.modal
 		});
 	}
 
 	render() {
 		return (
 			<div className="wrapper2">
-				<Sidebar toggleLevantar={this.toggleLevantar} toggleDepositar={this.toggleDepositar} />
+				<Sidebar toggle={this.toggle} />
 
 				<Container fluid id="content">
 					<Redirect to={routes.WATCHLIST} />
 					<Switch>
 						<Route exact path={routes.WATCHLIST} component={Watchlist} />
 						<Route exact path={routes.PORTEFOLIO} component={Portefolio} />
-						<Route exact path={routes.HISTORICO} component={Historico} />
 						<Route exact path={routes.GERAL} component={Geral} />
 						<Route exact path={routes.CONTA} component={Conta} />
 						<Route exact path={routes.ADDMONEY} component={AddMoney} />
 					</Switch>
 				</Container>
 
-				<LevantarPlafond modal={this.state.modalLevantar} toggle={this.toggleLevantar} />
-				<DepositarPlafond modal={this.state.modalDepositar} toggle={this.toggleDepositar} />
+				<LevantarPlafond modal={this.state.modal} toggle={this.toggle} />
 			</div>
 
 		);

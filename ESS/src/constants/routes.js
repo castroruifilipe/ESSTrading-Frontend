@@ -8,4 +8,3 @@ export const PORTEFOLIO = AUTH + '/portefolio';
 export const GERAL = AUTH + '/geral';
 export const CONTA = AUTH + '/conta';
 export const ADDMONEY = AUTH + '/add-money';
-export const HISTORICO = AUTH + '/historico';

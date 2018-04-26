@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import Avatar from 'react-avatar-edit';
 
-import { db } from '../../../../firebase';
+import { db, auth } from '../../../../firebase';
 
 
 class EditarDados extends Component {
@@ -47,6 +47,7 @@ class EditarDados extends Component {
 			first_name,
 			last_name,
 			username,
+			email,
 			contacto,
 			image,
 			imageCroped,
@@ -55,7 +56,10 @@ class EditarDados extends Component {
 			nif,
 		} = this.state;
 		db.doUpdateUser(this.props.sessionStore.authUser.uid, username, first_name, last_name, contacto, image, imageCroped, data_nascimento, sexo, nif)
-			.then(() => this.props.toggle());
+			.then(
+
+				() => this.props.toggle()
+			);
 	}
 
 	render() {
