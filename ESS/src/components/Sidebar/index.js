@@ -6,6 +6,7 @@ import ShowIcon from 'react-icons/lib/fa/angle-right';
 import EyeIcon from 'react-icons/lib/md/remove-red-eye';
 import BookIcon from 'react-icons/lib/fa/book';
 import HistoryIcon from 'react-icons/lib/md/history';
+import AddMoneyIcon from 'react-icons/lib/md/attach-money';
 import CreditCardIcon from 'react-icons/lib/md/credit-card';
 import SettingsIcon from 'react-icons/lib/md/settings';
 import { inject, observer } from 'mobx-react';
@@ -57,7 +58,7 @@ class Sidebar extends Component {
 
     render() {
         let userMedia =
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}>
                 <BarLoader height={7} width={200} color="white" />
             </div>
         if (this.props.sessionStore.userDB.image) {
@@ -75,7 +76,7 @@ class Sidebar extends Component {
 
         return (
             <nav id="sidebar" className={this.state.active ? "active" : ""} >
-                <div className="sidebar-header" style={{height: '90px'}}>
+                <div className="sidebar-header" style={{ height: '90px' }}>
                     {userMedia}
                 </div >
                 <ul className="list-unstyled components">
@@ -92,6 +93,11 @@ class Sidebar extends Component {
                     <li>
                         <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
                             <i><HistoryIcon /> </i>Histórico
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to={routes.ADDMONEY} activeClassName="active" className="link">
+                            <i><AddMoneyIcon /> </i>Adicionar plafond
                         </NavLink>
                     </li>
                     <li>
