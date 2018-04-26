@@ -15,15 +15,21 @@ class Portefolio extends Component {
         this.props.cfdsStore.updateCFDs();
     }
 
+    fecharCFD = (cfd, lucro_perda) => {
+        db.doFecharCFD(auth.currentUser().uid, cfd, lucro_perda);
+    }
+
     makeRows = (rows) => {
         this.props.cfdsStore.CFDs.forEach((cfd, key, map) => {
             let quote = this.props.ativosStore.quotes.get(cfd.ativo);
-            let precoAtual = quote.iexBidPrice;;
+            let precoAtual = quote.iexAskPrice;
             let label = "V";
             if (cfd.tipo === cfdEnum.COMPRAR) {
-                precoAtual = quote.iexAskPrice;;
+                precoAtual = quote.iexBidPrice;
                 label = "C";
             }
+
+            let lucro_perda = 0;
             rows.push(
                 <tr key={key}>
                     <td key={key + "0"} style={{ width: '16,5%', verticalAlign: 'middle' }}>
@@ -47,28 +53,28 @@ class Portefolio extends Component {
                     </td>
 
                     <td key={key + "3"} style={{ width: '16,5%', verticalAlign: 'middle' }} className="text-center">
-                        <Button color="light" type="button" className="btnprice" style={{ borderColor: '#e6e6e6' }}>
-                            <Badge color="primary" className="price">P</Badge>
+                        <Button color="light" className="btnprice" style={{ borderColor: '#e6e6e6', cursor: 'default' }}>
+                            <Badge color="primary" className="price">{label}</Badge>
                             {formatterPrice.format(cfd.valorAbertura)}
                         </Button>
                     </td>
 
                     <td key={key + "4"} className="text-center" style={{ width: '16,5%', verticalAlign: 'middle' }}>
-                        <Button color="light" type="button" className="btnprice" style={{ borderColor: '#e6e6e6' }}>
-                            <Badge color="primary" className="price">{label}</Badge>
+                        <Button color="light" className="btnprice" style={{ borderColor: '#e6e6e6', cursor: 'default' }}>
+                            <Badge color="primary" className="price">P</Badge>
                             {formatterPrice.format(precoAtual)}
                         </Button>
                     </td>
 
                     <td key={key + "5"} className="text-center" style={{ width: '16,5%', verticalAlign: 'middle' }}>
-                        <Button color="light" type="button" className="btnprice" style={{ borderColor: '#e6e6e6' }}>
+                        <Button color="light" className="btnprice" style={{ borderColor: '#e6e6e6', cursor: 'default' }}>
                             <Badge color="primary" className="price">L/P</Badge>
                             {formatterPrice.format(quote.iexAskPrice)}
                         </Button>
                     </td>
 
                     <td key={key + "6"} className="text-center" style={{ width: '16,5%', verticalAlign: 'middle' }}>
-                        <Button color="danger" type="button">
+                        <Button color="danger" onClick={(e) => {this.fecharCFD(key, lucro_perda, e)}}>
                             <b>X</b>
                         </Button>
                     </td>

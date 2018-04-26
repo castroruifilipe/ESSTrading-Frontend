@@ -42,10 +42,14 @@ class AbrirCFD extends Component {
     }
 
     updateValues = (preco) => {
-        if (this.state.unidade === unidadeEnum.MONTANTE) {
-            this.unidades = this.montante / preco;
+        if (preco === 0) {
+            this.unidades = this.montante = 0;
         } else {
-            this.montante = this.unidades * preco;
+            if (this.state.unidade === unidadeEnum.MONTANTE) {
+                this.unidades = this.montante / preco;
+            } else {
+                this.montante = this.unidades * preco;
+            }
         }
     }
 
@@ -150,7 +154,7 @@ class AbrirCFD extends Component {
                     {this.state.error && <Alert className="mt-5" color="danger">{this.state.error}</Alert>}
                 </ModalBody>
                 <ModalFooter>
-                    <Button block outline color="primary" size="lg" onClick={(e) => this.abrirCFD(preco, e)} >Abrir posição</Button>
+                    <Button disabled={preco === 0} block outline color="primary" size="lg" onClick={(e) => this.abrirCFD(preco, e)} >Abrir posição</Button>
                     <Button outline color="secondary" size="lg" onClick={this.props.toggle}>Cancelar</Button>
                 </ModalFooter>
             </Modal>

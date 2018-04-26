@@ -20,6 +20,10 @@ class CFDsStore {
         db.onGetCFDs(auth.currentUser().uid, snapshot => this.setCFDs(snapshot.val()));
     }
 
+    @action removeCFD = (cfd) => {
+        this.CFDs.delete(cfd);
+    }
+
 }
 
 export default CFDsStore;
