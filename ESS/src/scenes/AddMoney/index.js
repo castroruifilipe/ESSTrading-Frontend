@@ -52,6 +52,8 @@ class AddMoney extends Component {
                 mens: erro,
             })
         }
+
+
     }
 
     render() {

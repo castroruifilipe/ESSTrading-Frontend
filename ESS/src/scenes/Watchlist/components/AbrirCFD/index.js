@@ -6,7 +6,6 @@ import { compose } from 'recompose';
 import cfdEnum from '../../../../constants/cfdEnum';
 import { formatterPrice, formatterPercent } from '../../../../constants/formatters';
 import Spinner from './components/Spinner';
-import { db } from '../../../../firebase';
 
 class AbrirCFD extends Component {
 
@@ -14,8 +13,6 @@ class AbrirCFD extends Component {
         super(props);
         this.state = {
             tipoCFD: props.tipoCFD,
-            montante: 0,
-            unidades: 1,
         };
     }
 
@@ -25,31 +22,6 @@ class AbrirCFD extends Component {
         }));
     }
 
-    abrir = () => {
-        let sucesso =
-            <span className="mt-2 animated flash text-success">
-                CFD aberto
-        </span>;
-        let erro =
-            <span className="mt-2 animated shake text-danger">
-                Não autorizado
-        </span>;
-
-        if (this.state.value > 0) {
-            this.setState({
-                mens: sucesso,
-            });
-
-        } else {
-            this.setState({
-                mens: erro,
-            })
-
-        }
-        let valor = this.state.montante * this.setState.unidades;
-        //alert(this.state.tipoCFD);
-        alert(valor);
-    }
 
     render() {
         let quote = this.props.ativosStore.quotes.get(this.props.ativo);
@@ -77,11 +49,11 @@ class AbrirCFD extends Component {
 
         return (
             <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
-                <ModalBody style={{ margin: '8px 5px' }}>
+                <ModalBody style={{margin: '8px 5px'}}>
                     <div className="text-center">
                         {buttonGroup}
                     </div>
-                    <hr style={{ padding: '3px' }} />
+                    <hr style={{padding: '3px'}}/>
                     <Media>
                         <Media left className="imgContainer">
                             <Media className="logo" object src={this.props.ativosStore.logos.get(this.props.ativo)} />
@@ -96,13 +68,13 @@ class AbrirCFD extends Component {
                             </div>
                         </Media>
                     </Media>
-                    <hr style={{ padding: '7px' }} />
+                    <hr style={{padding: '7px'}}/>
 
-                    <Spinner preco={preco} />
+                    <Spinner preco={preco}/>
 
                 </ModalBody>
                 <ModalFooter>
-                    <Button block outline color="primary" size="lg" onClick={this.abrir} >Abrir posição</Button>
+                    <Button block outline color="primary" size="lg" >Abrir posição</Button>
                     <Button outline color="secondary" size="lg" onClick={this.props.toggle}>Cancelar</Button>
                 </ModalFooter>
             </Modal>
@@ -111,6 +83,6 @@ class AbrirCFD extends Component {
 }
 
 export default compose(
-    inject('ativosStore'),
-    observer
+	inject('ativosStore'),
+	observer
 )(AbrirCFD);
