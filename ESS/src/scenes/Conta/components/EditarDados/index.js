@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label } from 'reactstrap';
+import { Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import Avatar from 'react-avatar-edit';
 
-import { db } from '../../../../firebase';
+import { db, auth } from '../../../../firebase';
 
 
 class EditarDados extends Component {
@@ -13,6 +13,7 @@ class EditarDados extends Component {
 		super(props);
 		this.state = {
 			image: props.sessionStore.userDB.image,
+			imageCroped: props.sessionStore.userDB.imageCroped,
 			first_name: props.sessionStore.userDB.first_name,
 			last_name: props.sessionStore.userDB.last_name,
 			username: props.sessionStore.userDB.username,
@@ -26,6 +27,7 @@ class EditarDados extends Component {
 
 		this.onImageLoad = this.onImageLoad.bind(this)
 		this.onClose = this.onClose.bind(this)
+		this.onCrop = this.onCrop.bind(this)
 	}
 
 	onClose() {
@@ -36,6 +38,10 @@ class EditarDados extends Component {
 		this.setState({ image });
 	}
 
+	onCrop(imageCroped) {
+		this.setState({ imageCroped })
+	}
+
 	onSubmit = () => {
 		const {
 			first_name,
@@ -44,12 +50,15 @@ class EditarDados extends Component {
 			email,
 			contacto,
 			image,
+			imageCroped,
 			data_nascimento,
 			sexo,
 			nif,
 		} = this.state;
-		db.doUpdateUser(this.props.sessionStore.authUser.uid, username, first_name, last_name, contacto, image, data_nascimento,sexo,nif)
-			.then(() => this.props.toggle());
+		db.doUpdateUser(this.props.sessionStore.authUser.uid, username, first_name, last_name, contacto, image, imageCroped, data_nascimento, sexo, nif)
+			.then(
+				() => this.props.toggle()
+			);
 	}
 
 	render() {
@@ -62,7 +71,6 @@ class EditarDados extends Component {
 			sexo,
 			data_nascimento,
 			nif,
-			error,
 		} = this.state;
 
 		const isInvalid =
@@ -88,7 +96,7 @@ class EditarDados extends Component {
 										cropRadius={300}
 										onFileLoad={this.onImageLoad}
 										onClose={this.onClose}
-										onCrop={this.onImageLoad}
+										onCrop={this.onCrop}
 										src={this.state.image}
 									/>
 								</Col>
@@ -99,7 +107,7 @@ class EditarDados extends Component {
 						<Col sm={{ size: 5, offset: 1 }}>
 							<Form className="form-sign">
 								<div className="form-label-group">
-									<Input required value={first_name} placeholder="Primeiro nome" type="text" className="form-control" id="inputFirstName"
+									<Input value={first_name} placeholder="Primeiro nome" type="text" className="form-control" id="inputFirstName"
 										onChange={event => this.setState({
 											'first_name': event.target.value
 										})}
@@ -108,7 +116,7 @@ class EditarDados extends Component {
 								</div>
 
 								<div className="form-label-group">
-									<Input required value={last_name} placeholder="Último nome" type="text" className="form-control" id="inputLastName"
+									<Input value={last_name} placeholder="Último nome" type="text" className="form-control" id="inputLastName"
 										onChange={event => this.setState({
 											'last_name': event.target.value
 										})}
@@ -117,7 +125,7 @@ class EditarDados extends Component {
 								</div>
 
 								<div className="form-label-group">
-									<Input required value={username} placeholder="Username" type="text" className="form-control" id="inputUsername"
+									<Input value={username} placeholder="Username" type="text" className="form-control" id="inputUsername"
 										onChange={event => this.setState({
 											'username': event.target.value
 										})}
@@ -126,28 +134,28 @@ class EditarDados extends Component {
 								</div>
 
 								<div className="form-label-group">
-									<Input required value={email} placeholder="Email" type="text" className="form-control" id="inputEmail"
+									<Input value={email} placeholder="Email" type="text" className="form-control" id="inputEmail"
 										onChange={event => this.setState({
 											'email': event.target.value
 										})}
 									/>
 									<label htmlFor="inputEmail">Email</label>
 								</div>
-
+							</Form>
+						</Col>
+						<Col sm={{ size: 5 }}>
+							<Form className="form-sign">
 								<div className="form-label-group">
-									<Input required value={contacto} placeholder="Contacto" type="text" className="form-control" id="inputContacto"
+									<Input value={contacto} placeholder="Contacto" type="text" className="form-control" id="inputContacto"
 										onChange={event => this.setState({
 											'contacto': event.target.value
 										})}
 									/>
 									<label htmlFor="inputContacto">Contacto</label>
 								</div>
-							</Form>
-						</Col>
-						<Col sm={{ size: 5 }}>
-							<Form className="form-sign">
+
 								<div className="form-label-group">
-									<Input required value={data_nascimento} placeholder="Data de Nascimento" type="text" className="form-control" id="inputDN"
+									<Input value={data_nascimento} placeholder="Data de Nascimento" type="text" className="form-control" id="inputDN"
 										onChange={event => this.setState({
 											'data_nascimento': event.target.value
 										})}>
@@ -156,7 +164,16 @@ class EditarDados extends Component {
 								</div>
 
 								<div className="form-label-group">
-									<Input required value={sexo} placeholder="Sexo" type="select" className="form-control" id="inputSexo"
+									<Input value={nif} placeholder="NIF" type="text" className="form-control" id="inputNIF"
+										onChange={event => this.setState({
+											'nif': event.target.value
+										})}
+									/>
+									<label htmlFor="inputNIF">NIF</label>
+								</div>
+
+								<div className="form-label-group">
+									<Input value={sexo} placeholder="Sexo" type="select" className="form-control" id="inputSexo"
 										onChange={event => this.setState({
 											'sexo': event.target.value
 										})}>
@@ -165,20 +182,12 @@ class EditarDados extends Component {
 									</Input>
 								</div>
 
-								<div className="form-label-group">
-									<Input required value={nif} placeholder="NIF" type="text" className="form-control" id="inputNIF"
-										onChange={event => this.setState({
-											'nif': event.target.value
-										})}
-									/>
-									<label htmlFor="inputNIF">NIF</label>
-								</div>
 							</Form>
 						</Col>
 					</Row>
 				</ModalBody>
 				<ModalFooter>
-					<Button outline color="primary" onClick={this.onSubmit}>Guardar</Button>
+					<Button outline color="primary" disabled={isInvalid} onClick={this.onSubmit}>Guardar</Button>
 					<Button outline color="secondary" onClick={this.props.toggle}>Cancelar</Button>
 				</ModalFooter>
 			</Modal>

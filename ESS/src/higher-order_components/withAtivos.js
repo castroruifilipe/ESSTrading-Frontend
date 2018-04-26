@@ -4,7 +4,7 @@ import { inject } from 'mobx-react';
 import { iex } from '../IEXClient';
 
 
-let symbols = ['AMZN', 'AAPL', 'FB', 'GOOG', 'TSLA', 'DBX', 'EA', 'HPQ', 'IBM', 'MSFT', 'MSI', 'NOK', 'NVDA', 'ORCL', 'SNAP', 'SPOT', 'TRIP'];
+let symbols = ['AMZN', 'AAPL', 'FB', 'GOOG', 'TSLA', 'EA', 'HPQ', 'IBM', 'MSFT', 'MSI', 'NOK', 'NVDA', 'ORCL', 'SNAP', 'TRIP'];
 let _timeout = undefined;
 
 const withAtivos = (Component) => {
@@ -14,7 +14,7 @@ const withAtivos = (Component) => {
             this.getLogos();
             this.updateAtivos();
             this.props.ativosStore.setDataLoad(true);
-            _timeout = setInterval(this.updateAtivos, 1000);
+            _timeout = setInterval(this.updateAtivos, 3000);
         }
 
         componentWillUnmount() {
@@ -44,7 +44,6 @@ const withAtivos = (Component) => {
                     });
             });
         }
-
 
         render() { 
             return (<Component {...this.props} />);

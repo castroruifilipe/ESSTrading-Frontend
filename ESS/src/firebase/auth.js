@@ -31,3 +31,6 @@ export const doPasswordUpdate = (password) =>
 // Update profile
 export const currentUser = () => 
 	auth.currentUser;
+// Update Email
+export const updateEmail = (email) =>
+	auth.currentUser.updateEmail(email);

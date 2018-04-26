@@ -43,7 +43,7 @@ class Conta extends Component {
 					<Col md="6">
 						<Media>
 							<Media left>
-								<Media className="img-fluid rounded-circle" style={{ maxWidth: '150px' }} object src={userDB.image} />
+								<Media className="img-fluid rounded-circle" style={{ maxWidth: '150px' }} object src={userDB.imageCroped} />
 							</Media>
 							<Media body className="ml-5 mt-3">
 								<span className="d-block lead">

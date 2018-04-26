@@ -3,7 +3,6 @@ import { Route, Redirect, Switch } from 'react-router-dom'
 import { Container } from 'reactstrap';
 
 import Watchlist from '../scenes/Watchlist';
-import AbrirCFD from '../scenes/Watchlist/components/AbrirCFD';
 import Portefolio from '../scenes/Portefolio';
 import Geral from '../scenes/Geral';
 import Conta from '../scenes/Conta';
