@@ -6,6 +6,7 @@ import Watchlist from '../scenes/Watchlist';
 import Portefolio from '../scenes/Portefolio';
 import Geral from '../scenes/Geral';
 import Conta from '../scenes/Conta';
+import AddMoney from '../scenes/AddMoney';
 import LevantarPlafond from '../scenes/LevantarPlafond';
 import Sidebar from './Sidebar';
 import * as routes from '../constants/routes';
@@ -41,6 +42,7 @@ class AppAuth extends Component {
 						<Route exact path={routes.PORTEFOLIO} component={Portefolio} />
 						<Route exact path={routes.GERAL} component={Geral} />
 						<Route exact path={routes.CONTA} component={Conta} />
+						<Route exact path={routes.ADDMONEY} component={AddMoney} />
 					</Switch>
 				</Container>
 
