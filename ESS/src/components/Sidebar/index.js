@@ -60,11 +60,11 @@ class Sidebar extends Component {
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}>
                 <BarLoader height={7} width={200} color="white" />
             </div>
-        if (this.props.sessionStore.userDB.image) {
+        if (this.props.sessionStore.userDB.imageCroped) {
             userMedia =
                 <Media className="mt-2">
                     <Media left className="imgContainer">
-                        <Media className="userimg" object src={this.props.sessionStore.userDB.image} />
+                        <Media className="userimg" object src={this.props.sessionStore.userDB.imageCroped} />
                     </Media>
                     <Media body className="hideOnActive">
                         <span className="d-block" style={{ margin: '10px 0px 4px 0px' }}>{this.props.sessionStore.userDB.first_name + " " + this.props.sessionStore.userDB.last_name}</span>

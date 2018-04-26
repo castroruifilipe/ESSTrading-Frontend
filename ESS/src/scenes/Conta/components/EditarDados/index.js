@@ -13,6 +13,7 @@ class EditarDados extends Component {
 		super(props);
 		this.state = {
 			image: props.sessionStore.userDB.image,
+			imageCroped: props.sessionStore.userDB.imageCroped,
 			first_name: props.sessionStore.userDB.first_name,
 			last_name: props.sessionStore.userDB.last_name,
 			username: props.sessionStore.userDB.username,
@@ -26,6 +27,7 @@ class EditarDados extends Component {
 
 		this.onImageLoad = this.onImageLoad.bind(this)
 		this.onClose = this.onClose.bind(this)
+		this.onCrop = this.onCrop.bind(this)
 	}
 
 	onClose() {
@@ -36,6 +38,10 @@ class EditarDados extends Component {
 		this.setState({ image });
 	}
 
+	onCrop(imageCroped) {
+		this.setState({ imageCroped })
+	}
+
 	onSubmit = () => {
 		const {
 			first_name,
@@ -44,11 +50,12 @@ class EditarDados extends Component {
 			email,
 			contacto,
 			image,
+			imageCroped,
 			data_nascimento,
 			sexo,
 			nif,
 		} = this.state;
-		db.doUpdateUser(this.props.sessionStore.authUser.uid, username, first_name, last_name, contacto, image, data_nascimento, sexo, nif)
+		db.doUpdateUser(this.props.sessionStore.authUser.uid, username, first_name, last_name, contacto, image, imageCroped, data_nascimento, sexo, nif)
 			.then(
 				() => this.props.toggle()
 			);
@@ -89,7 +96,7 @@ class EditarDados extends Component {
 										cropRadius={300}
 										onFileLoad={this.onImageLoad}
 										onClose={this.onClose}
-										onCrop={this.onImageLoad}
+										onCrop={this.onCrop}
 										src={this.state.image}
 									/>
 								</Col>
@@ -134,7 +141,10 @@ class EditarDados extends Component {
 									/>
 									<label htmlFor="inputEmail">Email</label>
 								</div>
-
+							</Form>
+						</Col>
+						<Col sm={{ size: 5 }}>
+							<Form className="form-sign">
 								<div className="form-label-group">
 									<Input value={contacto} placeholder="Contacto" type="text" className="form-control" id="inputContacto"
 										onChange={event => this.setState({
@@ -143,10 +153,7 @@ class EditarDados extends Component {
 									/>
 									<label htmlFor="inputContacto">Contacto</label>
 								</div>
-							</Form>
-						</Col>
-						<Col sm={{ size: 5 }}>
-							<Form className="form-sign">
+
 								<div className="form-label-group">
 									<Input value={data_nascimento} placeholder="Data de Nascimento" type="text" className="form-control" id="inputDN"
 										onChange={event => this.setState({
@@ -154,6 +161,15 @@ class EditarDados extends Component {
 										})}>
 									</Input>
 									<label htmlFor="inputDN">Data de Nascimento</label>
+								</div>
+
+								<div className="form-label-group">
+									<Input value={nif} placeholder="NIF" type="text" className="form-control" id="inputNIF"
+										onChange={event => this.setState({
+											'nif': event.target.value
+										})}
+									/>
+									<label htmlFor="inputNIF">NIF</label>
 								</div>
 
 								<div className="form-label-group">
@@ -166,14 +182,6 @@ class EditarDados extends Component {
 									</Input>
 								</div>
 
-								<div className="form-label-group">
-									<Input value={nif} placeholder="NIF" type="text" className="form-control" id="inputNIF"
-										onChange={event => this.setState({
-											'nif': event.target.value
-										})}
-									/>
-									<label htmlFor="inputNIF">NIF</label>
-								</div>
 							</Form>
 						</Col>
 					</Row>
