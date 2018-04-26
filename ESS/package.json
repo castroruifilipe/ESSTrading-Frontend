@@ -9,7 +9,6 @@
     "iex-api": "0.0.3",
     "mobx": "^4.2.0",
     "mobx-react": "^5.0.0",
-    "paypal-checkout": "^4.0.198",
     "react": "^16.3.0",
     "react-avatar-edit": "^0.5.9",
     "react-bootstrap-table-next": "^0.1.7",
