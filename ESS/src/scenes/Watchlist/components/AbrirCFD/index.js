@@ -6,6 +6,7 @@ import { compose } from 'recompose';
 import cfdEnum from '../../../../constants/cfdEnum';
 import { formatterPrice, formatterPercent } from '../../../../constants/formatters';
 import Spinner from './components/Spinner';
+import unidadeEnum from '../../../../constants/unidadeEnum';
 
 class AbrirCFD extends Component {
 
@@ -13,6 +14,7 @@ class AbrirCFD extends Component {
         super(props);
         this.state = {
             tipoCFD: props.tipoCFD,
+            unidade: unidadeEnum.MONTANTE,
         };
     }
 
@@ -22,23 +24,36 @@ class AbrirCFD extends Component {
         }));
     }
 
-    valorInvestimento = 0.0;
-    setValorInvestimento = (valorInvestimento) => {
-        this.valorInvestimento = valorInvestimento;
-    }
+    montante = 0;
+    unidades = 0;
 
-    setUnidades = (unidades) => {
-        if (this.state.tipoCFD === cfdEnum.COMPRAR) {
-            this.valorInvestimento = unidades * this.props.ativosStore.quotes.get(this.props.ativo).iexAskPrice;
+    onChange = (valueAsNumber, valueAsString, input) => {
+        if (this.state.unidade === unidadeEnum.MONTANTE) {
+            this.montante = valueAsNumber;
         } else {
-            this.valorInvestimento = unidades * this.props.ativosStore.quotes.get(this.props.ativo).iexBidPrice;
+            this.unidades = valueAsNumber;
         }
     }
 
-    abrirCFD = () => {
-        alert(this.valorInvestimento);
+    convertUnidades = () => {
+        let preco = this.props.ativosStore.quotes.get(this.props.ativo).iexBidPrice;
+        if (this.state.tipoCFD === cfdEnum.COMPRAR) {
+            preco = this.props.ativosStore.quotes.get(this.props.ativo).iexBidPrice;
+        }
+
+        if (this.state.unidade === unidadeEnum.MONTANTE) {
+            this.unidades = this.montante / preco;
+        } else {
+            this.montante = this.unidades * preco;
+        }
+        this.setState(prevState => ({
+            unidade: 1 - prevState.unidade,
+        }));
     }
 
+    abrirCFD = () => {
+        alert(this.montante);
+    }
 
     render() {
         let quote = this.props.ativosStore.quotes.get(this.props.ativo);
@@ -66,11 +81,11 @@ class AbrirCFD extends Component {
 
         return (
             <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
-                <ModalBody style={{margin: '8px 5px'}}>
+                <ModalBody style={{ margin: '8px 5px' }}>
                     <div className="text-center">
                         {buttonGroup}
                     </div>
-                    <hr style={{padding: '3px'}}/>
+                    <hr style={{ padding: '3px' }} />
                     <Media>
                         <Media left className="imgContainer">
                             <Media className="logo" object src={this.props.ativosStore.logos.get(this.props.ativo)} />
@@ -85,9 +100,9 @@ class AbrirCFD extends Component {
                             </div>
                         </Media>
                     </Media>
-                    <hr style={{padding: '7px'}}/>
+                    <hr style={{ padding: '7px' }} />
 
-                    <Spinner preco={preco} setValorInvestimento={this.setValorInvestimento} setUnidades={this.setUnidades}/>
+                    <Spinner preco={preco} setValorInvestimento={this.setValorInvestimento} setUnidades={this.setUnidades} />
 
                 </ModalBody>
                 <ModalFooter>
@@ -100,6 +115,6 @@ class AbrirCFD extends Component {
 }
 
 export default compose(
-	inject('ativosStore'),
-	observer
+    inject('ativosStore'),
+    observer
 )(AbrirCFD);
