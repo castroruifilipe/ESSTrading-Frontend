@@ -53,7 +53,6 @@ class AppAuth extends Component {
 						<Route exact path={routes.HISTORICO} component={Historico} />
 						<Route exact path={routes.GERAL} component={Geral} />
 						<Route exact path={routes.CONTA} component={Conta} />
-						<Route exact path={routes.ADDMONEY} component={AddMoney} />
 					</Switch>
 				</Container>
 
