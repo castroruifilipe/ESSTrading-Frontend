@@ -66,6 +66,12 @@ class Portefolio extends Component {
                             {formatterPrice.format(quote.iexAskPrice)}
                         </Button>
                     </td>
+
+                    <td key={key + "6"} className="text-center" style={{ width: '16,5%', verticalAlign: 'middle' }}>
+                        <Button color="danger" type="button">
+                            <b>X</b>
+                        </Button>
+                    </td>
                 </tr>
             )
         }
@@ -96,6 +102,7 @@ class Portefolio extends Component {
                             <th key={3} className="text-center">Valor de Abertura</th>
                             <th key={4} className="text-center">Valor Atual</th>
                             <th key={5} className="text-center">Lucro/Perda</th>
+                            <th key={6} className="text-center">Fechar</th>
                         </tr>
                     </thead>
                     <tbody id="table">
