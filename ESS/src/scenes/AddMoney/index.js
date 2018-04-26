@@ -39,7 +39,7 @@ class DepositarPlafond extends Component {
         }
 
         return (
-            <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
+            <Modal isOpen={this.props.modal} toggle={this.props.toggle} centered>
                 <ModalHeader>Depositar plafond</ModalHeader>
                 <ModalBody>
                     <Row className="text-center mb-4">

@@ -54,7 +54,7 @@ class LevantarPlafond extends Component {
                 </span>
         }
         return (
-            <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
+            <Modal isOpen={this.props.modal} toggle={this.props.toggle} centered>
                 <ModalHeader>Levantar plafond</ModalHeader>
                 <ModalBody>
                     <Row className="text-center mb-4">
