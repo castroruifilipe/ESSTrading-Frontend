@@ -57,6 +57,7 @@ class EditarDados extends Component {
 		} = this.state;
 		db.doUpdateUser(this.props.sessionStore.authUser.uid, username, first_name, last_name, contacto, image, imageCroped, data_nascimento, sexo, nif)
 			.then(
+
 				() => this.props.toggle()
 			);
 	}
@@ -83,46 +84,43 @@ class EditarDados extends Component {
 			<Modal isOpen={this.props.modal} size='lg' toggle={this.props.toggle}>
 				<ModalHeader toggle={this.props.toggle}>Editar dados da conta</ModalHeader>
 				<ModalBody className="center-block">
-					<Row className="mb-3">
-						<Col sm={{ size: 10, offset: 1 }}>
-							<Row>
-								<Col size="6">
-									<span>Foto de perfil</span>
-								</Col>
-								<Col size="6">
-									<Avatar
-										width={150}
-										height={150}
-										cropRadius={300}
-										onFileLoad={this.onImageLoad}
-										onClose={this.onClose}
-										onCrop={this.onCrop}
-										src={this.state.image}
-									/>
-								</Col>
-							</Row>
+					<Row className="ml-1">
+						<Col lg="3">
+							<Avatar
+								width={150}
+								height={150}
+								cropRadius={300}
+								onFileLoad={this.onImageLoad}
+								onClose={this.onClose}
+								onCrop={this.onCrop}
+								src={this.state.image}
+							/>
 						</Col>
-					</Row>
-					<Row>
-						<Col sm={{ size: 5, offset: 1 }}>
+						<Col lg="9">
 							<Form className="form-sign">
-								<div className="form-label-group">
-									<Input value={first_name} placeholder="Primeiro nome" type="text" className="form-control" id="inputFirstName"
-										onChange={event => this.setState({
-											'first_name': event.target.value
-										})}
-									/>
-									<label htmlFor="inputFirstName">Primeiro nome</label>
-								</div>
+								<Row>
+									<Col lg="6">
+										<div className="form-label-group">
+											<Input value={first_name} placeholder="Primeiro nome" type="text" className="form-control" id="inputFirstName"
+												onChange={event => this.setState({
+													'first_name': event.target.value
+												})}
+											/>
+											<label htmlFor="inputFirstName">Primeiro nome</label>
+										</div>
+									</Col>
+									<Col lg="6">
+										<div className="form-label-group">
+											<Input value={last_name} placeholder="Último nome" type="text" className="form-control" id="inputLastName"
+												onChange={event => this.setState({
+													'last_name': event.target.value
+												})}
+											/>
+											<label htmlFor="inputLastName">Último nome</label>
+										</div>
+									</Col>
+								</Row>
 
-								<div className="form-label-group">
-									<Input value={last_name} placeholder="Último nome" type="text" className="form-control" id="inputLastName"
-										onChange={event => this.setState({
-											'last_name': event.target.value
-										})}
-									/>
-									<label htmlFor="inputLastName">Último nome</label>
-								</div>
 
 								<div className="form-label-group">
 									<Input value={username} placeholder="Username" type="text" className="form-control" id="inputUsername"
@@ -132,19 +130,6 @@ class EditarDados extends Component {
 									/>
 									<label htmlFor="inputUsername">Username</label>
 								</div>
-
-								<div className="form-label-group">
-									<Input value={email} placeholder="Email" type="text" className="form-control" id="inputEmail"
-										onChange={event => this.setState({
-											'email': event.target.value
-										})}
-									/>
-									<label htmlFor="inputEmail">Email</label>
-								</div>
-							</Form>
-						</Col>
-						<Col sm={{ size: 5 }}>
-							<Form className="form-sign">
 								<div className="form-label-group">
 									<Input value={contacto} placeholder="Contacto" type="text" className="form-control" id="inputContacto"
 										onChange={event => this.setState({
