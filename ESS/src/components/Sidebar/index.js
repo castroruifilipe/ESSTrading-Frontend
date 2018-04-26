@@ -91,7 +91,7 @@ class Sidebar extends Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                        <NavLink to={routes.HISTORICO} activeClassName="active" className="link">
                             <i><HistoryIcon /> </i>Histórico
                         </NavLink>
                     </li>
