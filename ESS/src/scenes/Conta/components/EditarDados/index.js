@@ -56,10 +56,7 @@ class EditarDados extends Component {
 			nif,
 		} = this.state;
 		db.doUpdateUser(this.props.sessionStore.authUser.uid, username, first_name, last_name, contacto, image, imageCroped, data_nascimento, sexo, nif)
-			.then(
-
-				() => this.props.toggle()
-			);
+			.then(() => this.props.toggle());
 	}
 
 	render() {
