@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Media, Button, ButtonGroup, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Row, Media, Button, ButtonGroup, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
+import SwapIcon from 'react-icons/lib/md/swap-horiz';
+import NumericInput from 'react-numeric-input';
 
 import cfdEnum from '../../../../constants/cfdEnum';
 import { formatterPrice, formatterPercent } from '../../../../constants/formatters';
-import Spinner from './components/Spinner';
 import unidadeEnum from '../../../../constants/unidadeEnum';
 
 class AbrirCFD extends Component {
@@ -35,23 +36,23 @@ class AbrirCFD extends Component {
         }
     }
 
-    convertUnidades = () => {
-        let preco = this.props.ativosStore.quotes.get(this.props.ativo).iexBidPrice;
-        if (this.state.tipoCFD === cfdEnum.COMPRAR) {
-            preco = this.props.ativosStore.quotes.get(this.props.ativo).iexBidPrice;
-        }
-
+    updateValues = (preco) => {
         if (this.state.unidade === unidadeEnum.MONTANTE) {
             this.unidades = this.montante / preco;
         } else {
             this.montante = this.unidades * preco;
         }
+    }
+
+    convertUnidades = (preco) => {
+        this.updateValues(preco);
         this.setState(prevState => ({
             unidade: 1 - prevState.unidade,
         }));
     }
 
-    abrirCFD = () => {
+    abrirCFD = (preco) => {
+        this.updateValues(preco);
         alert(this.montante);
     }
 
@@ -79,6 +80,15 @@ class AbrirCFD extends Component {
             preco = quote.iexBidPrice;
         }
 
+        let value = this.montante;
+        let buttonText = "UNIDADES";
+        let labelText = "MONTANTE";
+        if (this.state.unidade === unidadeEnum.UNIDADES) {
+            value = this.unidades;
+            buttonText = "MONTANTE";
+            labelText = "UNIDADES";
+        }
+
         return (
             <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
                 <ModalBody style={{ margin: '8px 5px' }}>
@@ -102,11 +112,31 @@ class AbrirCFD extends Component {
                     </Media>
                     <hr style={{ padding: '7px' }} />
 
-                    <Spinner preco={preco} setValorInvestimento={this.setValorInvestimento} setUnidades={this.setUnidades} />
+                    <div className="container">
+                        <Row className="align-items-center h-100">
+                            <div className="col-md-3" >
+                                <span>{labelText}</span>
+                            </div>
+
+                            <div className="col-md-5 col-md-offset-6">
+                                <NumericInput mobile className="form-control"
+                                    min={0} precision={2}
+                                    value={value}
+                                    onChange={this.onChange} />
+                            </div>
+
+                            <div className="col-md-4 text-center" >
+                                <Button outline color="primary" onClick={(e) => this.convertUnidades(preco, e)} size="sm">
+                                    <SwapIcon className="lead" />
+                                    {buttonText}
+                                </Button>
+                            </div>
+                        </Row>
+                    </div>
 
                 </ModalBody>
                 <ModalFooter>
-                    <Button block outline color="primary" size="lg" onClick={this.abrirCFD} >Abrir posição</Button>
+                    <Button block outline color="primary" size="lg" onClick={(e) => this.abrirCFD(preco, e)} >Abrir posição</Button>
                     <Button outline color="secondary" size="lg" onClick={this.props.toggle}>Cancelar</Button>
                 </ModalFooter>
             </Modal>
