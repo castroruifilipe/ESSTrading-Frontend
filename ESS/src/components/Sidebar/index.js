@@ -96,12 +96,12 @@ class Sidebar extends Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={routes.ADDMONEY} activeClassName="active" className="link">
-                            <i><AddMoneyIcon /> </i>Adicionar plafond
-                        </NavLink>
+                        <a className="link" onClick={this.props.toggleDepositar}>
+                            <i><AddMoneyIcon /> </i>Depositar plafond
+                        </a>
                     </li>
                     <li>
-                        <a className="link" onClick={this.props.toggle}>
+                        <a className="link" onClick={this.props.toggleLevantar}>
                             <i><CreditCardIcon /> </i>Levantar plafond
                         </a>
                     </li>

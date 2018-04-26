@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import Avatar from 'react-avatar-edit';
 
-import { db, auth } from '../../../../firebase';
+import { db } from '../../../../firebase';
 
 
 class EditarDados extends Component {
@@ -47,7 +47,6 @@ class EditarDados extends Component {
 			first_name,
 			last_name,
 			username,
-			email,
 			contacto,
 			image,
 			imageCroped,
