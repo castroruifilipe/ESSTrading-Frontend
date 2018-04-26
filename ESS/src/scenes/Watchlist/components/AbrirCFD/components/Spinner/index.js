@@ -6,9 +6,6 @@ import NumericInput from 'react-numeric-input';
 import unidadeEnum from '../../../../../../constants/unidadeEnum';
 
 
-let montante = 0;
-let unidades = 0;
-
 class Spinner extends Component {
 
     constructor(props) {
@@ -20,6 +17,7 @@ class Spinner extends Component {
         };
     }
 
+    
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.preco !== prevState.preco) {
             return ({
@@ -29,24 +27,30 @@ class Spinner extends Component {
             return null;
         }
     }
+    
+    montante = 0;
+    unidades = 0;
 
     onChange = (valueAsNumber, valueAsString, input) => {
         if (this.state.unidade === unidadeEnum.MONTANTE) {
-            montante = valueAsNumber;
+            this.montante = valueAsNumber;
+            this.props.setValorInvestimento(valueAsNumber);
         } else {
-            unidades = valueAsNumber;
+            this.unidades = valueAsNumber;
+            this.props.setUnidades(valueAsNumber);
         }
     }
 
+
     convertUnidades = () => {
         if (this.state.preco === null) {
-            unidades = 0;
-            montante = 0;
+            this.unidades = 0;
+            this.montante = 0;
         } else {
             if (this.state.unidade === unidadeEnum.MONTANTE) {
-                unidades = montante / this.state.preco;
+                this.unidades = this.montante / this.state.preco;
             } else {
-                montante = unidades * this.state.preco;
+                this.montante = this.unidades * this.state.preco;
             }
         }
         this.setState(prevState => ({
@@ -55,11 +59,11 @@ class Spinner extends Component {
     }
 
     render() {
-        let value = montante;
+        let value = this.montante;
         let buttonText = "UNIDADES";
         let labelText = "MONTANTE";
         if (this.state.unidade === unidadeEnum.UNIDADES) {
-            value = unidades;
+            value = this.unidades;
             buttonText = "MONTANTE";
             labelText = "UNIDADES";
         }

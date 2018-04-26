@@ -22,6 +22,23 @@ class AbrirCFD extends Component {
         }));
     }
 
+    valorInvestimento = 0.0;
+    setValorInvestimento = (valorInvestimento) => {
+        this.valorInvestimento = valorInvestimento;
+    }
+
+    setUnidades = (unidades) => {
+        if (this.state.tipoCFD === cfdEnum.COMPRAR) {
+            this.valorInvestimento = unidades * this.props.ativosStore.quotes.get(this.props.ativo).iexAskPrice;
+        } else {
+            this.valorInvestimento = unidades * this.props.ativosStore.quotes.get(this.props.ativo).iexBidPrice;
+        }
+    }
+
+    abrirCFD = () => {
+        alert(this.valorInvestimento);
+    }
+
 
     render() {
         let quote = this.props.ativosStore.quotes.get(this.props.ativo);
@@ -70,11 +87,11 @@ class AbrirCFD extends Component {
                     </Media>
                     <hr style={{padding: '7px'}}/>
 
-                    <Spinner preco={preco}/>
+                    <Spinner preco={preco} setValorInvestimento={this.setValorInvestimento} setUnidades={this.setUnidades}/>
 
                 </ModalBody>
                 <ModalFooter>
-                    <Button block outline color="primary" size="lg" >Abrir posição</Button>
+                    <Button block outline color="primary" size="lg" onClick={this.abrirCFD} >Abrir posição</Button>
                     <Button outline color="secondary" size="lg" onClick={this.props.toggle}>Cancelar</Button>
                 </ModalFooter>
             </Modal>

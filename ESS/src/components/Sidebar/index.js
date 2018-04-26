@@ -70,6 +70,7 @@ class Sidebar extends Component {
                     <Media body className="hideOnActive">
                         <span className="d-block" style={{ margin: '10px 0px 4px 0px' }}>{this.props.sessionStore.userDB.first_name + " " + this.props.sessionStore.userDB.last_name}</span>
                         <small className="d-block">{this.props.sessionStore.userDB.username}</small>
+                        <NavLink to={routes.CONTA}><small><u>O meu perfil</u></small></NavLink>
                     </Media>
                 </Media >
         }
