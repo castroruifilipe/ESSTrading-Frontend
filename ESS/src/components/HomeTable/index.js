@@ -98,33 +98,32 @@ class HomeTable extends Component {
 	}
 
 	render() {
+		if (!this.props.ativosStore.dataLoad) {
+			return (
+				<div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+					<BarLoader height={7} width={200} color="#4A90E2" />
+				</div>
+			);
+		}
+
 		let rows = [];
 		this.makeRows(rows);
 
 		return (
 			<div>
-				{this.props.ativosStore.dataLoad
-					? (
-						<Table responsive >
-							<thead className="thead-light">
-								<tr>
-									<th key={0}>Mercados</th>
-									<th key={1}><ButaoVariacao onChangeVariacao={(variacao) => this.changeVariacao(variacao)} /></th>
-									<th key={2} className="text-center">Vender</th>
-									<th key={3} className="text-center">Comprar</th>
-								</tr>
-							</thead>
-							<tbody id="table">
-								{rows}
-							</tbody>
-						</Table>
-					)
-					: (
-						<div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '300px' }}>
-							<BarLoader height={7} width={200} color="#4A90E2" />
-						</div>
-					)
-				}
+				<Table responsive >
+					<thead className="thead-light">
+						<tr>
+							<th key={0}>Mercados</th>
+							<th key={1}><ButaoVariacao onChangeVariacao={(variacao) => this.changeVariacao(variacao)} /></th>
+							<th key={2} className="text-center">Vender</th>
+							<th key={3} className="text-center">Comprar</th>
+						</tr>
+					</thead>
+					<tbody id="table">
+						{rows}
+					</tbody>
+				</Table>
 				{ativoSelected !== undefined &&
 					<AbrirCFD modal={this.state.modal} toggle={this.toggle} ativo={ativoSelected} tipoCFD={this.state.tipoCFD} />
 				}

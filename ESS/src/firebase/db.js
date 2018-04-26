@@ -8,6 +8,7 @@ export const doCreateUser = (id, username, first_name, last_name, contacto) =>
         first_name,
         last_name,
         contacto,
+        saldo: 10000,
         image: userImage,
     });
 
@@ -25,10 +26,19 @@ export const doUpdateUser = function (id, username, first_name, last_name, conta
             last_name,
             contacto,
             image: (image || userImage),
-            saldo: 10000,
             data_nascimento,
             sexo,
             nif
+        })
+            .then(() => resolve())
+            .catch(error => reject());
+    })
+}
+
+export const doUpdateSaldo = function (id, saldo) {
+    return new Promise((resolve, reject) => {
+        db.ref(`users/${id}`).update({
+            saldo,
         })
             .then(() => resolve())
             .catch(error => reject());
