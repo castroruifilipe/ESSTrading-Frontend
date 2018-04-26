@@ -5,6 +5,7 @@ import { compose } from 'recompose';
 import SwapIcon from 'react-icons/lib/md/swap-horiz';
 import NumericInput from 'react-numeric-input';
 
+import { db, auth } from '../../../../firebase';
 import cfdEnum from '../../../../constants/cfdEnum';
 import { formatterPrice, formatterPercent } from '../../../../constants/formatters';
 import unidadeEnum from '../../../../constants/unidadeEnum';
@@ -53,7 +54,9 @@ class AbrirCFD extends Component {
 
     abrirCFD = (preco) => {
         this.updateValues(preco);
-        alert(this.montante);
+        db.doAbrirCFD(auth.currentUser().uid, this.state.tipoCFD, this.props.ativo, this.unidades, this.montante, preco)
+            .then(() => this.props.toggle())
+            .catch(error => console.error(error));
     }
 
     render() {
