@@ -96,12 +96,12 @@ class Sidebar extends Component {
                             <i><HistoryIcon /> </i>Histórico
                         </NavLink>
                     </li>
-                    <li>
+                    <li style={{cursor:'pointer'}}>
                         <a className="link" onClick={this.props.toggleDepositar}>
                             <i><AddMoneyIcon /> </i>Depositar plafond
                         </a>
                     </li>
-                    <li>
+                    <li style={{cursor:'pointer'}}>
                         <a className="link" onClick={this.props.toggleLevantar}>
                             <i><CreditCardIcon /> </i>Levantar plafond
                         </a>

@@ -24,9 +24,6 @@ const NavBarNonAuth = () =>
 		</button>
 		<div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 			<ul className="nav navbar-nav navbar-right">
-				<li>
-					<input className="form-control mr-sm-2" id="search" placeholder="procurar" aria-label="Search" />
-				</li>
 				<li className="nav-item " style={{ margin: "0 5px" }}>
 					<Link to={routes.SOBRE}>
 						<button type="button" className="btn btn-light">Sobre</button>

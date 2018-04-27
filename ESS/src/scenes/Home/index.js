@@ -35,6 +35,11 @@ class Home extends Component {
 					</div>
 				</section>
 				<div className="container">
+					<div className="row">
+						<div className="col-lg-3" style={{marginBottom:"10px"}}>
+						<input className="form-control mr-sm-2" id="search" placeholder="procurar ativo" aria-label="Search" />
+						</div>
+				</div>
 					<HomeTable openCFD={false}/>
 				</div>
 			</div>
