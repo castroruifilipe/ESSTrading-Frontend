@@ -6,7 +6,6 @@ import Watchlist from '../scenes/Watchlist';
 import Portefolio from '../scenes/Portefolio';
 import Geral from '../scenes/Geral';
 import Conta from '../scenes/Conta';
-import AddMoney from '../scenes/AddMoney';
 import LevantarPlafond from '../scenes/LevantarPlafond';
 import DepositarPlafond from '../scenes/AddMoney';
 import Sidebar from './Sidebar';

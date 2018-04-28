@@ -42,7 +42,7 @@ class AbrirCFD extends Component {
     }
 
     updateValues = (preco) => {
-        if (preco === 0) {
+        if (preco === 0 || !preco ) {
             this.unidades = this.montante = 0;
         } else {
             if (this.state.unidade === unidadeEnum.MONTANTE) {
@@ -86,7 +86,7 @@ class AbrirCFD extends Component {
                     <Button onClick={this.onSwitchChange}>VENDER</Button>
                 </ButtonGroup>;
             designacao = 'COMPRAR';
-            preco = quote.iexAskPrice;
+            preco = quote.iexAskPrice === null ? 0 :  quote.iexAskPrice;
         } else {
             buttonGroup =
                 <ButtonGroup className="btn-toggle">
@@ -94,7 +94,7 @@ class AbrirCFD extends Component {
                     <Button onClick={this.onSwitchChange} className="btn-default" color="primary" active>VENDER</Button>
                 </ButtonGroup>;
             designacao = 'VENDER';
-            preco = quote.iexBidPrice;
+            preco = quote.iexBidPrice === null ? 0 : quote.iexBidPrice;
         }
 
         let value = this.montante;
@@ -154,7 +154,7 @@ class AbrirCFD extends Component {
                     {this.state.error && <Alert className="mt-5" color="danger">{this.state.error}</Alert>}
                 </ModalBody>
                 <ModalFooter>
-                    <Button disabled={preco === 0} block outline color="primary" size="lg" onClick={(e) => this.abrirCFD(preco, e)} >Abrir posição</Button>
+                    <Button block outline color="primary" size="lg" onClick={(e) => this.abrirCFD(preco, e)} >Abrir posição</Button>
                     <Button outline color="secondary" size="lg" onClick={this.props.toggle}>Cancelar</Button>
                 </ModalFooter>
             </Modal>
