@@ -53,21 +53,18 @@ class App extends Component {
 					</Row>
 					<Row style={{ minHeight: '80vh' }}>
 						<Col>
-							<div>
-								<Switch>
-									{homeRoute}
-									<Route exact path={routes.LOGIN} component={Login} />
-									<Route exact path={routes.REGISTAR} component={Registar} />
-									<Route exact path={routes.SOBRE} component={Sobre} />
-									<Route path={routes.AUTH} component={AppAuth} />
-								</Switch>
-							</div>
+							<Switch>
+								{homeRoute}
+								<Route exact path={routes.LOGIN} component={Login} />
+								<Route exact path={routes.REGISTAR} component={Registar} />
+								<Route exact path={routes.SOBRE} component={Sobre} />
+								<Route path={routes.AUTH} component={AppAuth} />
+							</Switch>
 						</Col>
 					</Row>
 					<Row>
 						<Footer />
 					</Row>
-
 				</div>
 			</Router>
 

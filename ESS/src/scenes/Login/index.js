@@ -70,7 +70,7 @@ class Login extends Component {
 			<Container>
 				<Row className="animated fadeInLeft">
 					<Col md={{ size: 6, offset: 3 }}>
-						<h3 className="font-weight-normal mt-5 mb-3">Iniciar sessão</h3>
+						<h3 className="font-weight-normal mt-5 mb-3" style={{paddingTop : '90px'}}>Iniciar sessão</h3>
 
 						<Form className="form-sign" onSubmit={this.onSubmit}>
 							<div className="form-label-group">

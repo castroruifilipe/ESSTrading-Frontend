@@ -81,3 +81,18 @@ html, body {
     font-size: 12px;
     color: #777;
 }
+
+
+.pageContent {
+    padding-left: 255px !important;
+}
+
+.pageContent  {
+    padding-left: 255px !important;
+}
+
+@media (max-width: 1000px) {
+    .pageContent {
+        padding-left: 85px !important;
+    }
+}

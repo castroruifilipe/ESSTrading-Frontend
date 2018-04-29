@@ -1,4 +1,7 @@
 #sidebar {
+    position: fixed;
+    border-radius: 0;
+    height: 100%;
     min-width: 250px;
     max-width: 250px;
     background: rgb(87, 102, 161);
@@ -25,7 +28,7 @@
 }
 
 #sidebar.active ul li a {
-    padding: 10px 10px;
+    padding: 6px 10px;
     text-align: center;
     font-size: 0.75em;
 }
@@ -97,8 +100,8 @@
     background: #6070b4;
 }
 
-
 .wrapper2 {
+    padding-top: 70px;
     display: flex;
     align-items: stretch;
 }
@@ -108,14 +111,10 @@ a[data-toggle="collapse"] {
 }
 
 a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
-    content: '\2228';
     display: block;
     position: absolute;
     right: 20px;
     font-size: 0.6em;
-}
-a[aria-expanded="true"]::before {
-    content: '\2227';
 }
 
 

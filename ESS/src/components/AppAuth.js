@@ -44,7 +44,7 @@ class AppAuth extends Component {
 			<div className="wrapper2">
 				<Sidebar toggleLevantar={this.toggleLevantar} toggleDepositar={this.toggleDepositar} />
 
-				<Container fluid id="content">
+				<Container fluid id="content" className="pageContent">
 					<Redirect to={routes.WATCHLIST} />
 					<Switch>
 						<Route exact path={routes.WATCHLIST} component={Watchlist} />

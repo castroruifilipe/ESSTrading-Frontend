@@ -1,7 +1,6 @@
 import { db } from './firebase';
 import userImage from '../constants/userImage';
 import rootStore from '../stores';
-import { firebase } from '.';
 
 export const doCreateUser = (id, username, first_name, last_name, contacto) =>
     db.ref(`users/${id}`).set({

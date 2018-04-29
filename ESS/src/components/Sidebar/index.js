@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Media } from 'reactstrap';
-import HideIcon from 'react-icons/lib/fa/angle-left';
-import ShowIcon from 'react-icons/lib/fa/angle-right';
 import EyeIcon from 'react-icons/lib/md/remove-red-eye';
 import BookIcon from 'react-icons/lib/fa/book';
 import HistoryIcon from 'react-icons/lib/md/history';
@@ -76,7 +74,7 @@ class Sidebar extends Component {
         }
 
         return (
-            <nav id="sidebar" className={this.state.active ? "active" : ""} >
+            <nav id="sidebar" className={this.state.active ? "active" : ""}>
                 <div className="sidebar-header" style={{ height: '90px' }}>
                     {userMedia}
                 </div >
@@ -129,14 +127,6 @@ class Sidebar extends Component {
                         </ul>
                     </li>
 
-                </ul>
-
-                <ul className="list-unstyled">
-                    <li onClick={this.toggle}>
-                        {this.state.active ?
-                            <a> <ShowIcon /> </a> :
-                            <a> <HideIcon /> <small>Esconder</small> </a>}
-                    </li>
                 </ul>
             </nav>
 
