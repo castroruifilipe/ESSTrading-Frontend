@@ -6,6 +6,7 @@ import PencilIcon from 'react-icons/lib/fa/edit'
 import EraserIcon from 'react-icons/lib/fa/eraser'
 
 import EditarDados from './components/EditarDados';
+import './style.css';
 
 
 class Conta extends Component {
@@ -33,7 +34,7 @@ class Conta extends Component {
 		let authUser = this.props.sessionStore.authUser;
 
 		return (
-			<Container>
+			<Container id="contaContainer">
 				<Row>
 					<Col>
 						<h3 className="mb-5">A minha conta</h3>

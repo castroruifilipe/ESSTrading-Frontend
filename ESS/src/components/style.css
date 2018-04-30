@@ -84,6 +84,7 @@ html, body {
 
 .pageContent {
     padding-left: 255px !important;
+    padding-bottom: 80px !important; 
 }
 
 .footer {

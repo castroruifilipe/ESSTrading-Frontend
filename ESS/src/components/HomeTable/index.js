@@ -106,7 +106,7 @@ class HomeTable extends Component {
 
 		return (
 			<div>
-				<Table responsive >
+				<Table responsive>
 					<thead className="thead-light">
 						<tr>
 							<th key={0}><input className="form-control mr-sm-2" id="search" placeholder="procurar ativo" aria-label="Search" /></th>
@@ -115,7 +115,7 @@ class HomeTable extends Component {
 							<th key={3} className="text-center">Comprar</th>
 						</tr>
 					</thead>
-					<tbody id="table">
+					<tbody>
 						{rows}
 					</tbody>
 				</Table>

@@ -1,25 +1,20 @@
 import React, { Component } from 'react';
+import { Container } from 'reactstrap';
 
 import withAuthorization from '../../higher-order_components/withAuthorization';
 import HomeTable from '../../components/HomeTable';
+import AccountFooter from '../../components/AccountFooter';
 import './style.css';
 
 
 class Watchlist extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            active: false,
-        };
-    }
-
-
-
     render() {
         return (
-            <HomeTable />
+            <Container>
+                <HomeTable />
+                <AccountFooter />
+            </Container>
         );
     }
 

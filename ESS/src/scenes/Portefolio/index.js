@@ -7,6 +7,7 @@ import { db, auth } from '../../firebase';
 import withAuthorization from '../../higher-order_components/withAuthorization';
 import { formatterPrice, formatterNumber, formatterPercent } from '../../constants/formatters';
 import cfdEnum from '../../constants/cfdEnum';
+import AccountFooter from '../../components/AccountFooter';
 
 
 class Portefolio extends Component {
@@ -99,6 +100,7 @@ class Portefolio extends Component {
             return (
                 <div>
                     <p className="lead mt-5">Ainda não tem CFDs. Experimente comprar ou vender um ativo da sua Watchlist</p>
+                    <AccountFooter />
                 </div>
             )
         }
@@ -122,6 +124,7 @@ class Portefolio extends Component {
                         {rows}
                     </tbody>
                 </Table>
+                <AccountFooter />
             </div>
         );
     }

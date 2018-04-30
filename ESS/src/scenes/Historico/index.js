@@ -4,6 +4,7 @@ import { formatterPrice, formatterNumber, formatterPercent } from '../../constan
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 
+import AccountFooter from '../../components/AccountFooter';
 import withAuthorization from '../../higher-order_components/withAuthorization';
 
 
@@ -64,6 +65,7 @@ class Historico extends Component {
             return (
                 <div>
                     <p className="lead mt-5">Ainda não tem movimentos. Experimente fechar um CFD do seu Portefólio.</p>
+                    <AccountFooter />
                 </div>
             )
         }
@@ -87,6 +89,7 @@ class Historico extends Component {
                         {rows}
                     </tbody>
                 </Table>
+                <AccountFooter />
             </div>
         );
     }
