@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Row, Col, Container, Media, Table } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
-import PencilIcon from 'react-icons/lib/fa/edit'
-import EraserIcon from 'react-icons/lib/fa/eraser'
+import PencilIcon from 'react-icons/lib/fa/edit';
+import EraserIcon from 'react-icons/lib/fa/eraser';
 
 import EditarDados from './components/EditarDados';
 import './style.css';
