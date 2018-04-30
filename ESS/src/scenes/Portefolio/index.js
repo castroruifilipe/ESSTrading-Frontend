@@ -31,7 +31,7 @@ class Portefolio extends Component {
             }
 
             let lucro_perda = (precoAtual - cfd.valorAbertura)*cfd.unidades;
-            let percent_lucro_perda = (precoAtual === 0) ? 0 : ((precoAtual - cfd.valorAbertura) / precoAtual) * cfd.unidades * 100;
+            let percent_lucro_perda = (precoAtual === 0) ? 0 : ((precoAtual - cfd.valorAbertura) / precoAtual);
 
             rows.push(
                 <tr key={key}>
