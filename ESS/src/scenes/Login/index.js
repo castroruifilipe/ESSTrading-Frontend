@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Row, Col, Container, Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
 
+
+import Footer from '../../components/Footer';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 
@@ -67,10 +69,10 @@ class Login extends Component {
 			email === '';
 
 		return (
-			<Container>
-				<Row className="animated fadeInLeft">
-					<Col md={{ size: 6, offset: 3 }}>
-						<h3 className="font-weight-normal mt-5 mb-3" style={{paddingTop : '90px'}}>Iniciar sessão</h3>
+			<Container fluid >
+				<Row style={{ minHeight: '100vh' }}>
+					<Col md={{ size: 6, offset: 4 }}>
+						<h3 className="font-weight-normal mt-5 mb-3" style={{ paddingTop: '90px' }}>Iniciar sessão</h3>
 
 						<Form className="form-sign" onSubmit={this.onSubmit}>
 							<div className="form-label-group">
@@ -107,6 +109,9 @@ class Login extends Component {
 
 						</Form >
 					</Col>
+				</Row>
+				<Row>
+					<Footer />
 				</Row>
 			</Container>
 		);

@@ -10,7 +10,6 @@ import ButaoVariacao from './components/ButaoVariacao';
 import AbrirCFD from '../../scenes/Watchlist/components/AbrirCFD';
 import cfdEnum from '../../constants/cfdEnum';
 import { formatterPercent, formatterPrice } from '../../constants/formatters';
-import * as routes from '../../constants/routes';
 import './style.css';
 
 
@@ -42,15 +41,11 @@ class HomeTable extends Component {
 	}
 
 	onClickRow = symbol => tipoCFD => event => {
-		if (this.props.openCFD) {
-			ativoSelected = symbol;
-			this.setState({
-				tipoCFD: tipoCFD,
-			});
-			this.toggle();
-		} else {
-			this.props.history.push(routes.LOGIN);
-		}
+		ativoSelected = symbol;
+		this.setState({
+			tipoCFD: tipoCFD,
+		});
+		this.toggle();
 	}
 
 	makeRows = (rows) => {
@@ -100,7 +95,7 @@ class HomeTable extends Component {
 	render() {
 		if (!this.props.ativosStore.dataLoad) {
 			return (
-				<div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+				<div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 					<BarLoader height={7} width={200} color="#4A90E2" />
 				</div>
 			);

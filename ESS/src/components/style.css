@@ -82,14 +82,17 @@ html, body {
     color: #777;
 }
 
-
 .pageContent {
     padding-left: 255px !important;
 }
 
-.pageContent  {
-    padding-left: 255px !important;
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
 }
+
 
 @media (max-width: 1000px) {
     .pageContent {

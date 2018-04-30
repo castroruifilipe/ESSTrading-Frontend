@@ -3,6 +3,7 @@ import { auth, db } from '../../firebase';
 import { withRouter } from 'react-router-dom';
 import { Row, Col, Container, Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
 
+import Footer from '../../components/Footer';
 import * as routes from '../../constants/routes';
 
 const INITIAL_STATE = {
@@ -88,10 +89,10 @@ class Registar extends Component {
 			password_one === '';
 
 		return (
-			<Container>
-				<Row className="animated fadeInLeft">
-					<Col md={{ size: 6, offset: 3 }}>
-						<h3 className="font-weight-normal mb-3" style={{paddingTop : '90px'}}>Criar conta</h3>
+			<Container fluid>
+				<Row style={{minHeight : '100vh'}}>
+					<Col md={{ size: 6, offset: 4 }}>
+						<h3 className="font-weight-normal mb-3" style={{paddingTop : '120px'}}>Criar conta</h3>
 
 						<Form className="form-sign" onSubmit={this.onSubmit}>
 							<div className="form-label-group">
@@ -167,6 +168,9 @@ class Registar extends Component {
 
 						</Form >
 					</Col>
+				</Row>
+				<Row>
+					<Footer />
 				</Row>
 			</Container>
 		);
