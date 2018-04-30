@@ -109,7 +109,7 @@ class HomeTable extends Component {
 				<Table responsive >
 					<thead className="thead-light">
 						<tr>
-							<th key={0}>Mercados</th>
+							<th key={0}><input className="form-control mr-sm-2" id="search" placeholder="procurar ativo" aria-label="Search" /></th>
 							<th key={1}><ButaoVariacao onChangeVariacao={(variacao) => this.changeVariacao(variacao)} /></th>
 							<th key={2} className="text-center">Vender</th>
 							<th key={3} className="text-center">Comprar</th>
