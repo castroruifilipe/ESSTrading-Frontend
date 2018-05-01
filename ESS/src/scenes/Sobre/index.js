@@ -78,28 +78,24 @@ class Sobre extends Component {
 										<div className="testimonial-item mx-auto mb-5 mb-lg-0">
 											<img className="img-fluid rounded-circle mb-3" src={k1Url} alt="" />
 											<h5>Diogo Machado</h5>
-											<p className="font-weight-light mb-0">"Bla bla bla"</p>
 										</div>
 									</Col>
 									<Col lg='3'>
 										<div className="testimonial-item mx-auto mb-5 mb-lg-0">
 											<img className="img-fluid rounded-circle mb-3" src={k2Url} alt="" />
 											<h5>Miguel Matos</h5>
-											<p className="font-weight-light mb-0">"Bla bla"</p>
 										</div>
 									</Col>
 									<Col lg='3'>
 										<div className="testimonial-item mx-auto mb-5 mb-lg-0">
 											<img className="img-fluid rounded-circle mb-3" src={k3Url} alt="" />
 											<h5>Rui Leite</h5>
-											<p className="font-weight-light mb-0">"Bla"</p>
 										</div>
 									</Col>
 									<Col lg='3'>
 										<div className="testimonial-item mx-auto mb-5 mb-lg-0">
 											<img className="img-fluid rounded-circle mb-3" src={k4Url} alt="" />
 											<h5>Tiago Gomes</h5>
-											<p className="font-weight-light mb-0">"Bla bla"</p>
 										</div>
 									</Col>
 								</Row>
