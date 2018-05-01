@@ -119,11 +119,6 @@ class Sidebar extends Component {
                                     Conta
                                 </NavLink>
                             </li>
-                            <li>
-                                <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
-                                    Notificações
-                                </NavLink>
-                            </li>
                         </ul>
                     </li>
 

@@ -19,6 +19,7 @@
     "react-paypal-express-checkout": "^1.0.4",
     "react-router-dom": "^4.2.2",
     "react-spinners": "^0.3.2",
+    "react-toggle": "^4.0.2",
     "reactstrap": "^5.0.0"
   },
   "devDependencies": {
