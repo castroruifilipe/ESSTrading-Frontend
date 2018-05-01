@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
-import { Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import { auth } from '../../firebase';
@@ -70,13 +69,12 @@ class NavBar extends Component {
 
 	render() {
 		return (
-			<Col>
+			<div>
 				{this.props.sessionStore.authUser
 					? <NavBarAuth />
 					: <NavBarNonAuth />
 				}
-				<hr className="mt-0 mb-0" style={{ height: '1%', backgroundColor: 'rgb(87, 102, 161)' }} />
-			</Col>
+			</div>	
 		);
 	}
 }
