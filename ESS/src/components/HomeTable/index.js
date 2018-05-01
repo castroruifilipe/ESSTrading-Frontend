@@ -115,7 +115,7 @@ class HomeTable extends Component {
 							<th key={3} className="text-center">Comprar</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="table">
 						{rows}
 					</tbody>
 				</Table>
