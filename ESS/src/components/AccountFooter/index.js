@@ -13,7 +13,7 @@ class AccountFooter extends Component {
 
     render() {
 
-        let saldo=this.props.sessionStore.userDB.saldo
+        let saldo = this.props.sessionStore.userDB.saldo || 0;
         let investido = 0, plAcumulado = 0;
         
         this.props.cfdsStore.CFDs.forEach((cfd, key, map) => {
@@ -28,7 +28,7 @@ class AccountFooter extends Component {
         });
 
         return (
-            <Row className="floatAccount no-gutters text-center">
+            <Row className="floatAccount no-gutters text-center" style={{paddingLeft:'90px'}}>
                 <Col md='2'>
                     <p><strong>Saldo</strong></p>
                     <p>{formatterPrice.format(saldo)}</p>
