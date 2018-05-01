@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Row, Media, Button, ButtonGroup, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Alert, Row, Col, Media, Button, ButtonGroup, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import SwapIcon from 'react-icons/lib/md/swap-horiz';
@@ -7,7 +7,7 @@ import NumericInput from 'react-numeric-input';
 
 import { db, auth } from '../../../../firebase';
 import cfdEnum from '../../../../constants/cfdEnum';
-import { formatterPrice, formatterPercent } from '../../../../constants/formatters';
+import { formatterPrice, formatterPercent, formatterNumber } from '../../../../constants/formatters';
 import unidadeEnum from '../../../../constants/unidadeEnum';
 
 class AbrirCFD extends Component {
@@ -29,6 +29,7 @@ class AbrirCFD extends Component {
 
     montante = 0;
     unidades = 0;
+    preco = undefined;
 
     onChange = (valueAsNumber, valueAsString, input) => {
         if (this.state.unidade === unidadeEnum.MONTANTE) {
@@ -36,38 +37,39 @@ class AbrirCFD extends Component {
         } else {
             this.unidades = valueAsNumber;
         }
+        this.updateValues();
         this.setState({
             error: undefined,
         })
     }
 
-    updateValues = (preco) => {
-        if (preco === 0 || !preco ) {
+    updateValues = () => {
+        if (this.preco === 0 || !this.preco ) {
             this.unidades = this.montante = 0;
         } else {
             if (this.state.unidade === unidadeEnum.MONTANTE) {
-                this.unidades = this.montante / preco;
+                this.unidades = this.montante / this.preco;
             } else {
-                this.montante = this.unidades * preco;
+                this.montante = this.unidades * this.preco;
             }
         }
     }
 
-    convertUnidades = (preco) => {
-        this.updateValues(preco);
+    convertUnidades = () => {
+        this.updateValues();
         this.setState(prevState => ({
             unidade: 1 - prevState.unidade,
         }));
     }
 
-    abrirCFD = (preco) => {
-        this.updateValues(preco);
+    abrirCFD = () => {
+        this.updateValues();
         if (this.props.sessionStore.userDB.saldo < this.montante) {
             this.setState({
                 error: "O seu saldo é insuficiente para abrir este CFD."
             });
         } else {
-            db.doAbrirCFD(auth.currentUser().uid, this.state.tipoCFD, this.props.ativo, this.unidades, this.montante, preco)
+            db.doAbrirCFD(auth.currentUser().uid, this.state.tipoCFD, this.props.ativo, this.unidades, this.montante, this.preco)
                 .then(() => this.props.toggle())
                 .catch(error => console.error(error));
         }
@@ -78,7 +80,6 @@ class AbrirCFD extends Component {
 
         let buttonGroup = undefined;
         let designacao = undefined;
-        let preco = undefined;
         if (this.state.tipoCFD === cfdEnum.COMPRAR) {
             buttonGroup =
                 <ButtonGroup className="btn-toggle">
@@ -86,7 +87,7 @@ class AbrirCFD extends Component {
                     <Button onClick={this.onSwitchChange}>VENDER</Button>
                 </ButtonGroup>;
             designacao = 'COMPRAR';
-            preco = quote.iexAskPrice === null ? 0 :  quote.iexAskPrice;
+            this.preco = quote.iexAskPrice === null ? 0 :  quote.iexAskPrice;
         } else {
             buttonGroup =
                 <ButtonGroup className="btn-toggle">
@@ -94,7 +95,7 @@ class AbrirCFD extends Component {
                     <Button onClick={this.onSwitchChange} className="btn-default" color="primary" active>VENDER</Button>
                 </ButtonGroup>;
             designacao = 'VENDER';
-            preco = quote.iexBidPrice === null ? 0 : quote.iexBidPrice;
+            this.preco = quote.iexBidPrice === null ? 0 : quote.iexBidPrice;
         }
 
         let value = this.montante;
@@ -105,6 +106,8 @@ class AbrirCFD extends Component {
             buttonText = "MONTANTE";
             labelText = "UNIDADES";
         }
+
+        this.updateValues();
 
         return (
             <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
@@ -120,7 +123,7 @@ class AbrirCFD extends Component {
                         <Media body>
                             <span className="text-secondary">{designacao}</span>{' '}
                             <span className="text-primary">{quote.symbol}</span>
-                            <span className="lead d-block">{formatterPrice.format(preco)}</span>
+                            <span className="lead d-block">{formatterPrice.format(this.preco)}</span>
                             <div className={quote.changePercent < 0 ? "text-danger" : "text-success"}>
                                 {formatterPercent.format(quote.changePercent)}{' '}
                                 <small>({formatterPrice.format(quote.change)})</small>
@@ -143,18 +146,24 @@ class AbrirCFD extends Component {
                             </div>
 
                             <div className="col-md-4 text-center" >
-                                <Button outline color="primary" onClick={(e) => this.convertUnidades(preco, e)} size="sm">
+                                <Button outline color="primary" onClick={(e) => this.convertUnidades(this.preco, e)} size="sm">
                                     <SwapIcon className="lead" />
                                     {buttonText}
                                 </Button>
                             </div>
+                        </Row>
+
+                        <Row>
+                            <Col md={{size:5,offset:3}} className="text-center pt-2">
+                                <p>{this.state.unidade===unidadeEnum.MONTANTE ? formatterNumber.format(this.unidades)+" unidades" : formatterPrice.format(this.montante) }</p>
+                            </Col>
                         </Row>
                     </div>
 
                     {this.state.error && <Alert className="mt-5" color="danger">{this.state.error}</Alert>}
                 </ModalBody>
                 <ModalFooter>
-                    <Button block outline color="primary" size="lg" onClick={(e) => this.abrirCFD(preco, e)} >Abrir posição</Button>
+                    <Button block outline color="primary" size="lg" onClick={(e) => this.abrirCFD(this.preco, e)} >Abrir posição</Button>
                     <Button outline color="secondary" size="lg" onClick={this.props.toggle}>Cancelar</Button>
                 </ModalFooter>
             </Modal>

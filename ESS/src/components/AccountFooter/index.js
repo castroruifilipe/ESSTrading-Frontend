@@ -52,7 +52,7 @@ class AccountFooter extends Component {
                 </Col>
                 <Col md='2'>
                     <p><strong>Total</strong></p>
-                    <p>{formatterPrice.format(saldo+investido)}</p>
+                    <p>{formatterPrice.format(saldo+investido+plAcumulado)}</p>
                 </Col>
             </Row>
         );

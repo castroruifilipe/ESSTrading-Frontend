@@ -100,10 +100,11 @@ export const doFecharCFD = function (id, cfd, designacao, precoAtual, lucro_perd
         .then(rootStore.cfdsStore.removeCFD(cfd))
         .catch(error => console.log(error));
 
+   
     onceGetUser(id)
         .then(snapshot => {
             let saldo = snapshot.val().saldo;
-            doUpdateSaldo(id, saldo + lucro_perda);
+            doUpdateSaldo(id, saldo + cfd_history.montante + lucro_perda);
         })
         .catch(error => console.error(error));
 

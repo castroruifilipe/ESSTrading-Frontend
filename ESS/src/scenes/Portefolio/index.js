@@ -75,7 +75,7 @@ class Portefolio extends Component {
 
                     <td key={key + "6"} className="text-center" style={{ width: '12,5%', verticalAlign: 'middle' }}>
                         <Button color="light" className="btnprice" style={{ width: '100%',borderColor: '#e6e6e6', cursor: 'default' }}>
-                            <Badge color="primary" className="price">L/P(%)</Badge>
+                            <Badge color="primary" className="price">L/P</Badge>
                             {formatterPercent.format(percent_lucro_perda)}
                         </Button>
                     </td>
