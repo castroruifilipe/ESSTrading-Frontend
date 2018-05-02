@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
 
 import withAuthorization from '../../higher-order_components/withAuthorization';
 import HomeTable from '../../components/HomeTable';
@@ -11,10 +10,10 @@ class Watchlist extends Component {
 
     render() {
         return (
-            <Container>
+            <div className="px-0 mx-0">
                 <HomeTable />
                 <AccountFooter />
-            </Container>
+            </div>
         );
     }
 

@@ -35,7 +35,7 @@ class Conta extends Component {
 
 		return (
 			<Container id="contaContainer">
-				<Row>
+				<Row className="pt-5">
 					<Col>
 						<h3 className="mb-5">A minha conta</h3>
 					</Col>
