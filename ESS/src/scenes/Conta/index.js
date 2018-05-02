@@ -6,6 +6,8 @@ import PencilIcon from 'react-icons/lib/fa/edit';
 import EraserIcon from 'react-icons/lib/fa/eraser';
 
 import EditarDados from './components/EditarDados';
+import { auth } from '../../firebase';
+import * as routes from '../../constants/routes';
 import './style.css';
 
 
@@ -18,12 +20,21 @@ class Conta extends Component {
 		};
 
 		this.toggle = this.toggle.bind(this);
+		this.removeUser = this.removeUser.bind(this);
 	}
 
 	toggle = () => {
 		this.setState({
 			modal: !this.state.modal,
 		});
+	}
+
+	removeUser = () => {
+		auth.doRemoveAccount()
+			.then(() => {
+				this.props.history.push(routes.HOME);
+			})
+			.catch(error => console.error(error))
 	}
 
 	render() {
@@ -60,7 +71,7 @@ class Conta extends Component {
 								<PencilIcon className="mr-1" />
 								Editar Dados
                 			</button>
-							<button type="button" className="btn btn-danger">
+							<button type="button" className="btn btn-danger" onClick={this.removeUser}>
 								<EraserIcon className="mr-1" />
 								Apagar Conta
               				</button>
