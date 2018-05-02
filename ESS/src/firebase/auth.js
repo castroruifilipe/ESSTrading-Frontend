@@ -39,3 +39,7 @@ export const updateEmail = (email) =>
 // Remove account
 export const doRemoveAccount = () =>
 	auth.currentUser.delete()
+
+// Reauthenticate
+export const doReauthenticateWithCredential = (credential) =>
+	auth.currentUser.reauthenticateWithCredential(credential)

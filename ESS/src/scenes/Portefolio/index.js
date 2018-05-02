@@ -99,7 +99,7 @@ class Portefolio extends Component {
         if (rows.length === 0) {
             return (
                 <div>
-                    <p className="lead mt-5">Ainda não tem CFDs. Experimente comprar ou vender um ativo da sua Watchlist</p>
+                    <p className="lead pl-5 mt-5">Ainda não tem CFDs. Experimente comprar ou vender um ativo da sua Watchlist</p>
                     <AccountFooter />
                 </div>
             )

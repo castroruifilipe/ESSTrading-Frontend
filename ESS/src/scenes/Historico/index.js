@@ -64,7 +64,7 @@ class Historico extends Component {
         if (rows.length === 0) {
             return (
                 <div>
-                    <p className="lead mt-5">Ainda não tem movimentos. Experimente fechar um CFD do seu Portefólio.</p>
+                    <p className="lead pl-5 mt-5">Ainda não tem movimentos. Experimente fechar um CFD do seu Portefólio.</p>
                     <AccountFooter />
                 </div>
             )

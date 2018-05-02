@@ -6,6 +6,7 @@ import PencilIcon from 'react-icons/lib/fa/edit';
 import EraserIcon from 'react-icons/lib/fa/eraser';
 
 import EditarDados from './components/EditarDados';
+import ModalReauth from '../../components/ModalReauth';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 import './style.css';
@@ -17,10 +18,8 @@ class Conta extends Component {
 		super(props);
 		this.state = {
 			modal: false,
+			modalReauth: false,
 		};
-
-		this.toggle = this.toggle.bind(this);
-		this.removeUser = this.removeUser.bind(this);
 	}
 
 	toggle = () => {
@@ -29,7 +28,13 @@ class Conta extends Component {
 		});
 	}
 
-	removeUser = () => {
+	toggleReauth = () => {
+		this.setState({
+			modalReauth: !this.state.modalReauth,
+		});
+	}
+	
+	operation = () => {
 		auth.doRemoveAccount()
 			.then(() => {
 				this.props.history.push(routes.HOME);
@@ -71,7 +76,7 @@ class Conta extends Component {
 								<PencilIcon className="mr-1" />
 								Editar Dados
                 			</button>
-							<button type="button" className="btn btn-danger" onClick={this.removeUser}>
+							<button type="button" className="btn btn-danger" onClick={this.toggleReauth}>
 								<EraserIcon className="mr-1" />
 								Apagar Conta
               				</button>
@@ -109,6 +114,9 @@ class Conta extends Component {
 				</Row >
 
 				<EditarDados modal={this.state.modal} toggle={this.toggle} />
+
+				<ModalReauth modal={this.state.modalReauth} toggle={this.toggleReauth} operation={this.operation} />
+				
 			</Container >
 		);
 	}
