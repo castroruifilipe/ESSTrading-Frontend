@@ -7,6 +7,7 @@ import EraserIcon from 'react-icons/lib/fa/eraser';
 
 import EditarDados from './components/EditarDados';
 import ModalReauth from '../../components/ModalReauth';
+import AlterarPassword from './components/AlterarPassword';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 import './style.css';
@@ -19,6 +20,7 @@ class Conta extends Component {
 		this.state = {
 			modal: false,
 			modalReauth: false,
+			modalPass: false,
 		};
 	}
 
@@ -31,6 +33,12 @@ class Conta extends Component {
 	toggleReauth = () => {
 		this.setState({
 			modalReauth: !this.state.modalReauth,
+		});
+	}
+
+	togglePass = () => {
+		this.setState({
+			modalPass: !this.state.modalPass,
 		});
 	}
 	
@@ -47,7 +55,11 @@ class Conta extends Component {
 		if (!userDB) {
 			return null;
 		}
+
 		let authUser = this.props.sessionStore.authUser;
+		if (!authUser) {
+			return null;
+		}
 
 		return (
 			<Container id="contaContainer">
@@ -71,16 +83,19 @@ class Conta extends Component {
 						</Media>
 					</Col>
 					<Col md="1">
-						<div className="btn-group-vertical">
-							<button type="button" className="btn btn-primary mb-3" onClick={this.toggle}>
+						
+							<button type="button" className="btn btn-primary mb-2" style={{width: '180px'}} onClick={this.toggle}>
 								<PencilIcon className="mr-1" />
 								Editar Dados
                 			</button>
-							<button type="button" className="btn btn-danger" onClick={this.toggleReauth}>
+							<button type="button" className="btn btn-primary mb-2" style={{width: '180px'}} onClick={this.togglePass}>
+								<PencilIcon className="mr-1" />
+								Alterar Password
+                			</button>
+							<button type="button" className="btn btn-danger" style={{width: '180px'}} onClick={this.toggleReauth}>
 								<EraserIcon className="mr-1" />
 								Apagar Conta
               				</button>
-						</div>
 					</Col>
 				</Row>
 
@@ -116,7 +131,8 @@ class Conta extends Component {
 				<EditarDados modal={this.state.modal} toggle={this.toggle} />
 
 				<ModalReauth modal={this.state.modalReauth} toggle={this.toggleReauth} operation={this.operation} />
-				
+
+				<AlterarPassword modal={this.state.modalPass} toggle={this.togglePass} />
 			</Container >
 		);
 	}

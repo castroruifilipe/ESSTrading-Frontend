@@ -82,6 +82,7 @@ class Registar extends Component {
 
 		const isInvalid =
 			password_one !== password_two ||
+			password_one.length < 6 ||
 			first_name === '' ||
 			last_name === '' ||
 			username === '' ||
@@ -153,7 +154,8 @@ class Registar extends Component {
 							</div>
 
 							<Button color="primary" disabled={isInvalid} type="submit" block={true} size="lg">Registar</Button>
-
+							
+							<small>A password deverá ter no mínimo 6 caracteres.</small>
 							{error && <Alert color="danger" className="mt-5">{error.message}</Alert>}
 
 							<Modal isOpen={this.state.modal} toggle={this.toggle}>

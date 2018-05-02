@@ -55,10 +55,7 @@ class EditarDados extends Component {
 			nif,
 		} = this.state;
 		db.doUpdateUser(this.props.sessionStore.authUser.uid, username, first_name, last_name, contacto, image, imageCroped, data_nascimento, sexo, nif)
-			.then(
-
-				() => this.props.toggle()
-			);
+			.then(() => this.props.toggle());
 	}
 
 	render() {
@@ -155,7 +152,7 @@ class EditarDados extends Component {
 									/>
 									<label htmlFor="inputNIF">NIF</label>
 								</div>
-
+								
 								<div className="form-label-group">
 									<Input value={sexo} placeholder="Sexo" type="select" className="form-control" id="inputSexo"
 										onChange={event => this.setState({
@@ -165,7 +162,6 @@ class EditarDados extends Component {
 										<option>Feminino</option>
 									</Input>
 								</div>
-
 							</Form>
 						</Col>
 					</Row>
