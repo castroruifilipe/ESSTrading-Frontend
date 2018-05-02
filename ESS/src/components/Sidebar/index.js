@@ -61,7 +61,7 @@ class Sidebar extends Component {
             </div>
         if (this.props.sessionStore.userDB.imageCroped) {
             userMedia =
-                <Media className="mt-2">
+                <Media className="mt-2 mb-3">
                     <Media left className="imgContainer">
                         <Media className="userimg" object src={this.props.sessionStore.userDB.imageCroped} />
                     </Media>
@@ -80,17 +80,17 @@ class Sidebar extends Component {
                 </div >
                 <ul className="list-unstyled components">
                     <li >
-                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                        <NavLink to={routes.WATCHLIST} className="link">
                             <i><EyeIcon /> </i>Watchlist
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={routes.PORTEFOLIO} activeClassName="active" className="link">
+                        <NavLink to={routes.PORTEFOLIO} className="link">
                             <i><BookIcon /> </i>Portefólio
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={routes.HISTORICO} activeClassName="active" className="link">
+                        <NavLink to={routes.HISTORICO} className="link">
                             <i><HistoryIcon /> </i>Histórico
                         </NavLink>
                     </li>
@@ -110,12 +110,12 @@ class Sidebar extends Component {
                         </a>
                         <ul className="collapse list-unstyled" id="settingsSubmenu">
                             <li>
-                                <NavLink to={routes.GERAL} activeClassName="active" className="link">
+                                <NavLink to={routes.GERAL} className="link">
                                     Geral
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink to={routes.CONTA} activeClassName="active" className="link">
+                                <NavLink to={routes.CONTA} className="link">
                                     Conta
                                 </NavLink>
                             </li>

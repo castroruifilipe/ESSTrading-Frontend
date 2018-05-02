@@ -95,11 +95,6 @@
     margin-right: 10px;
 }
 
-#sidebar ul li .link.active, a[aria-expanded="true"] {
-    color: #fff;
-    background: #6070b4;
-}
-
 .wrapper2 {
     padding-top: 70px;
     display: flex;
@@ -121,7 +116,6 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6f7dbb;
 }
 
 ul.CTAs {
