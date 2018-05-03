@@ -59,4 +59,52 @@ const withAtivos = (Component) => {
     return inject('ativosStore')(WithAtivos);
 }
 
-export default withAtivos;
+
+const getChartData = (symbol) => {
+    let data = {
+        labels: [],
+        datasets: [
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: []
+            }
+        ]
+    }
+    iex.stockChart(symbol, "1d").then((value) => {
+        value.forEach(object => {
+            data.labels.push("")
+            data.datasets[0].data.push(2)
+        })
+    });
+
+
+    let data2 = {
+        labels: ["", "", "", "", "", "", ""],
+        datasets: [
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [28, 48, 40, 19, 86, 27, 90]
+            }
+        ]
+    };
+
+    return data2;
+
+}
+
+export {
+    withAtivos,
+    getChartData,
+}

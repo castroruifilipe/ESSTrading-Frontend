@@ -4,14 +4,15 @@ import { withRouter } from 'react-router-dom';
 import { BarLoader } from 'react-spinners';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
+import { Line as LineChart } from "react-chartjs";
 
-import withAtivos from '../../higher-order_components/withAtivos';
+import { withAtivos, getChartData } from '../../higher-order_components/withAtivos';
 import ButaoVariacao from './components/ButaoVariacao';
 import AbrirCFD from '../../scenes/Watchlist/components/AbrirCFD';
 import cfdEnum from '../../constants/cfdEnum';
+import chartOptions from '../../constants/chartOptions';
 import { formatterPercent, formatterPrice } from '../../constants/formatters';
 import './style.css';
-
 
 let ativoSelected = undefined;
 
@@ -49,6 +50,7 @@ class HomeTable extends Component {
 	}
 
 	makeRows = (rows) => {
+		
 		this.props.ativosStore.quotes.forEach((quote, symbol, map) =>
 			rows.push(
 				<tr key={symbol}>
@@ -66,8 +68,9 @@ class HomeTable extends Component {
 
 					<td key={symbol + "1"} style={{ width: '25%', verticalAlign: 'middle' }}
 						className={(quote.changePercent < 0 ? "text-danger" : "text-success") + " text-center"}>
-						{formatterPercent.format(quote.changePercent)}
-						<small className="d-block">({formatterPrice.format(quote.change)})</small>
+						{/* {formatterPercent.format(quote.changePercent)} */}
+						{/* <small className="d-block">({formatterPrice.format(quote.change)})</small> */}
+						<LineChart data={getChartData(symbol)} options={chartOptions} width="180" height="80"/>
 					</td>
 
 					<td key={symbol + "2"} className="text-center" style={{ width: '25%', verticalAlign: 'middle' }}>
@@ -100,12 +103,16 @@ class HomeTable extends Component {
 				</div>
 			);
 		}
+		let data = getChartData("AAPL");
+		console.log(data);
 
 		let rows = [];
 		this.makeRows(rows);
 
+
 		return (
 			<div>
+				
 				<Table responsive>
 					<thead className="thead-light">
 						<tr>
