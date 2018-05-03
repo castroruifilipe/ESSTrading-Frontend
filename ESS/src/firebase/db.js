@@ -2,6 +2,17 @@ import { db } from './firebase';
 import userImage from '../constants/userImage';
 import rootStore from '../stores';
 
+export const doUpdateQuote = (quote) =>
+    db.ref(`quotes/${quote.symbol}`).update({
+        ...quote
+    })
+
+export const onGetQuotes = (func) =>
+    db.ref(`quotes`).on('value', func);
+
+export const onGetQuote = (symbol, func) =>
+    db.ref(`quotes/${symbol}`).on('value', func);
+
 export const doCreateUser = (id, username, first_name, last_name, contacto) =>
     db.ref(`users/${id}`).set({
         username,
@@ -61,7 +72,7 @@ export const doAbrirCFD = function (id, tipo, ativo, unidades, montante, valorAb
             unidades,
             montante,
             valorAbertura,
-            dataAbertura : new Date().toLocaleString(),
+            dataAbertura: new Date().toLocaleString(),
         })
             .then(() => resolve())
             .catch(error => reject());
@@ -81,9 +92,9 @@ export const doNovoMovimento = function (id, cfd, designacao, precoFecho, lucroP
     return new Promise((resolve, reject) => {
         db.ref(`movs/${id}`).push({
             designacao,
-            valorAbertura : cfd.valorAbertura,
-            dataAbertura : cfd.dataAbertura,
-            valorInvestido : cfd.montante,
+            valorAbertura: cfd.valorAbertura,
+            dataAbertura: cfd.dataAbertura,
+            valorInvestido: cfd.montante,
             precoFecho,
             lucroPerda,
             percent_lucroPerda,
@@ -94,13 +105,13 @@ export const doNovoMovimento = function (id, cfd, designacao, precoFecho, lucroP
     });
 }
 
-export const doFecharCFD = function (id, cfd, designacao, precoAtual, lucro_perda, percent_lucro_atual ) {
+export const doFecharCFD = function (id, cfd, designacao, precoAtual, lucro_perda, percent_lucro_atual) {
     let cfd_history = rootStore.cfdsStore.CFDs.get(cfd);
     doNovoMovimento(id, cfd_history, designacao, precoAtual, lucro_perda, percent_lucro_atual)
         .then(rootStore.cfdsStore.removeCFD(cfd))
         .catch(error => console.log(error));
 
-   
+
     onceGetUser(id)
         .then(snapshot => {
             let saldo = snapshot.val().saldo;

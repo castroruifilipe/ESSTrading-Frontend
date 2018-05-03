@@ -1,6 +1,7 @@
 import React from 'react';
 import { inject } from 'mobx-react';
 
+import { db } from '../firebase';
 import { iex } from '../IEXClient';
 
 
@@ -11,6 +12,9 @@ const withAtivos = (Component) => {
     class WithAtivos extends React.Component {
 
         componentDidMount() {
+            symbols.forEach(symbol => {
+                db.onGetQuote(symbol, (snapshot) => this.props.ativosStore.setQuote(snapshot.val()))
+            })
             this.getLogos();
             this.updateAtivos();
             this.props.ativosStore.setDataLoad(true);
@@ -25,7 +29,9 @@ const withAtivos = (Component) => {
             symbols.forEach(symbol => {
                 iex.stockQuote(symbol)
                     .then(quote => {
-                        this.props.ativosStore.setQuote(quote);
+                        if (quote.iexAskPrice * quote.iexBidPrice !== 0) {
+                            db.doUpdateQuote(quote);
+                        }
                     })
                     .catch(error => {
                         console.error(error);
@@ -45,7 +51,7 @@ const withAtivos = (Component) => {
             });
         }
 
-        render() { 
+        render() {
             return (<Component {...this.props} />);
         }
     }
