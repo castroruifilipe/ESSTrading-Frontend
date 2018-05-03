@@ -24,8 +24,8 @@ class Sobre extends Component {
 	render() {
 		return (
 			<Container fluid style={{ paddingRight: '0', paddingLeft: '0' }}>
-				<Row>
-					<Col>
+				<div>
+					<div>
 						<section className="showcase">
 							<Row className="no-gutters">
 								<div className="col-lg-6 order-lg-2 text-white showcase-img" style={imageUrl(diUrl)}></div>
@@ -101,11 +101,9 @@ class Sobre extends Component {
 								</Row>
 							</Container>
 						</section>
-					</Col>
-				</Row>
-				<Row>
+					</div>
+				</div>
 					<Footer />
-				</Row>
 			</Container>
 		);
 	}
