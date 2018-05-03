@@ -81,7 +81,7 @@ class Login extends Component {
 
 		return (
 			<Container fluid >
-				<Row style={{ minHeight: '100vh' }}>
+				<Row  style={{ minHeight: '90vh' }}>
 					<Col md={{ size: 6, offset: 4 }}>
 						<h3 className="font-weight-normal mt-5 mb-3" style={{ paddingTop: '90px' }}>Iniciar sessão</h3>
 

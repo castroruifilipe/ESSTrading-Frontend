@@ -91,7 +91,7 @@ class Registar extends Component {
 
 		return (
 			<Container fluid>
-				<Row style={{minHeight : '100vh'}}>
+				<Row style={{minHeight : '90vh'}}>
 					<Col md={{ size: 6, offset: 4 }}>
 						<h3 className="font-weight-normal mb-3" style={{paddingTop : '120px'}}>Criar conta</h3>
 
