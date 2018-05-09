@@ -24,3 +24,8 @@
     }
 }
 
+@media (max-width: 800px) {
+    .saldoHidden {
+        display : none;
+    }
+}

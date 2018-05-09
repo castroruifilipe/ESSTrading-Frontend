@@ -28,29 +28,29 @@ class AccountFooter extends Component {
         });
 
         return (
-            <Row className="floatAccount no-gutters text-center" style={{paddingLeft:'90px'}}>
-                <Col md='2'>
+            <Row className="floatAccount no-gutters text-center" >
+                <Col md='2' className="saldoHidden">
                     <p><strong>Saldo</strong></p>
                     <p>{formatterPrice.format(saldo)}</p>
                 </Col>
-                <Col md='1'>
+                <Col md='1' className="saldoHidden">
                     <FaPlusCircle />
                 </Col>
-                <Col md='2'>
+                <Col md='2' className="saldoHidden">
                     <p><strong>Investido</strong></p>
                     <p>{formatterPrice.format(investido)}</p>
                 </Col>
-                <Col md='1'>
+                <Col md='1' className="saldoHidden">
                     <FaPlusCircle />
                 </Col>
-                <Col md='2'>
+                <Col md='2' className="saldoHidden">
                     <p><strong>P/L</strong></p>
                     <p>{formatterPrice.format(plAcumulado)}</p>
                 </Col>
-                <Col md='1'>
+                <Col md='1' className="saldoHidden">
                     <Equals />
                 </Col>
-                <Col md='2'>
+                <Col>
                     <p><strong>Total</strong></p>
                     <p>{formatterPrice.format(saldo+investido+plAcumulado)}</p>
                 </Col>
