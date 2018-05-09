@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { Media, Table, Button, Badge, Row, Col } from 'reactstrap';
+import { Media, Table, Row, Col } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import { BarLoader } from 'react-spinners';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import { Line as LineChart } from "react-chartjs";
 
+import cfdEnum from '../../constants/cfdEnum';
+import BotaoPreco from '../BotaoPreco';
 import { withAtivos, getChartDatas } from '../../higher-order_components/withAtivos';
 import BotaoVariacao from './components/BotaoVariacao';
 import AbrirCFD from '../../scenes/Watchlist/components/AbrirCFD';
-import cfdEnum from '../../constants/cfdEnum';
 import { chartOptions } from '../../constants/chartOptions';
 import { formatterPrice, formatterPercent } from '../../constants/formatters';
 import './style.css';
@@ -69,7 +70,7 @@ class HomeTable extends Component {
 	}
 
 	makeRows = (rows) => {
-		this.props.ativosStore.quotes.forEach((quote, symbol, map) =>
+		this.props.ativosStore.quotes.forEach((quote, symbol, map) => {
 			rows.push(
 				<tr key={symbol}>
 					<td key={symbol + "0"} style={{ width: '25%', verticalAlign: 'middle' }}>
@@ -93,34 +94,25 @@ class HomeTable extends Component {
 							</Col>
 							<Col>
 								{(this.state.chartDatas
-									? <LineChart data={this.state.chartDatas[symbol]} options={chartOptions} width="180" height="100%" />
+									? ""
 									: ""
 								)}
 							</Col>
+							{/* <LineChart data={this.state.chartDatas[symbol]} options={chartOptions} width="180" height="100%" /> */}
 						</Row>
 
 					</td>
 
 					<td key={symbol + "2"} className="text-center" style={{ width: '22.5%', verticalAlign: 'middle' }}>
-						<Button color="light" type="button" className="btnprice"
-							onClick={this.onClickRow(symbol)(cfdEnum.VENDER)}
-							style={{ borderColor: '#e6e6e6' }}>
-							<Badge color="primary" className="price">V</Badge>
-							{formatterPrice.format(quote.iexBidPrice)}
-						</Button>
+						<BotaoPreco onClickRow={this.onClickRow} label="V" price="iexBidPrice" symbol={symbol} tipoCFD={cfdEnum.VENDER}/>
 					</td>
 
 					<td key={symbol + "3"} className="text-center" style={{ width: '22.5%', verticalAlign: 'middle' }}>
-						<Button color="light" type="button" className="btnprice"
-							onClick={this.onClickRow(symbol)(cfdEnum.COMPRAR)}
-							style={{ borderColor: '#e6e6e6' }}>
-							<Badge color="primary" className="price">C</Badge>
-							{formatterPrice.format(quote.iexAskPrice)}
-						</Button>
+						<BotaoPreco onClickRow={this.onClickRow} label="C" price="iexAskPrice" symbol={symbol} tipoCFD={cfdEnum.COMPRAR}/>
 					</td>
 				</tr>
-			)
-		);
+			);
+		});
 	}
 
 	render() {
@@ -131,7 +123,6 @@ class HomeTable extends Component {
 				</div>
 			);
 		}
-		//this.getChartDatas();
 		let rows = [];
 		this.makeRows(rows);
 

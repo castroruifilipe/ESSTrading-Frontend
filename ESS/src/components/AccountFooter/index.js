@@ -12,19 +12,20 @@ import './style.css';
 class AccountFooter extends Component {
 
     render() {
-
         let saldo = this.props.sessionStore.userDB.saldo || 0;
         let investido = 0, plAcumulado = 0;
-        
+
         this.props.cfdsStore.CFDs.forEach((cfd, key, map) => {
             let quote = this.props.ativosStore.quotes.get(cfd.ativo);
-            let precoAtual = quote.iexAskPrice === null ? 0 : quote.iexAskPrice;
-            if (cfd.tipo === cfdEnum.COMPRAR) {
-                precoAtual = quote.iexBidPrice === null ? 0 : quote.iexBidPrice;
-            }
+            if (quote) {
+                let precoAtual = quote.iexAskPrice === null ? 0 : quote.iexAskPrice;
+                if (cfd.tipo === cfdEnum.COMPRAR) {
+                    precoAtual = quote.iexBidPrice === null ? 0 : quote.iexBidPrice;
+                }
 
-            investido += cfd.montante;
-            plAcumulado += (precoAtual - cfd.valorAbertura)*cfd.unidades;
+                investido += cfd.montante;
+                plAcumulado += (precoAtual - cfd.valorAbertura) * cfd.unidades;
+            }
         });
 
         return (
@@ -52,7 +53,7 @@ class AccountFooter extends Component {
                 </Col>
                 <Col>
                     <p><strong>Total</strong></p>
-                    <p>{formatterPrice.format(saldo+investido+plAcumulado)}</p>
+                    <p>{formatterPrice.format(saldo + investido + plAcumulado)}</p>
                 </Col>
             </Row>
         );
@@ -60,6 +61,6 @@ class AccountFooter extends Component {
 }
 
 export default compose(
-    inject('sessionStore', 'cfdsStore','ativosStore'),
+    inject('sessionStore', 'cfdsStore', 'ativosStore'),
     observer
 )(AccountFooter);

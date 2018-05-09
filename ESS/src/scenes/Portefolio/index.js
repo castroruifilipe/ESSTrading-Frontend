@@ -3,6 +3,7 @@ import { Table, Media, Button, Badge } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 
+import BotaoPreco from '../../components/BotaoPreco';
 import { db, auth } from '../../firebase';
 import withAuthorization from '../../higher-order_components/withAuthorization';
 import { formatterPrice, formatterNumber, formatterPercent } from '../../constants/formatters';
@@ -25,7 +26,9 @@ class Portefolio extends Component {
             let quote = this.props.ativosStore.quotes.get(cfd.ativo);
             let precoAtual = quote.iexAskPrice === null ? 0 : quote.iexAskPrice;
             let label = "Venda " + quote.symbol;
+            let price = "iexAskPrice";
             if (cfd.tipo === cfdEnum.COMPRAR) {
+                price = "iexBidPrice";
                 precoAtual = quote.iexBidPrice === null ? 0 : quote.iexBidPrice;
                 label = "Compra " + quote.symbol;
             }
@@ -60,10 +63,7 @@ class Portefolio extends Component {
                     </td>
 
                     <td key={key + "4"} className="text-center" style={{ width: '12,5%', verticalAlign: 'middle' }}>
-                        <Button color="light" className="btnprice" style={{ width: '100%', borderColor: '#e6e6e6', cursor: 'default' }}>
-                            <Badge color="primary" className="price">P</Badge>
-                            {formatterPrice.format(precoAtual)}
-                        </Button>
+                        <BotaoPreco label="P" price={price} symbol={quote.symbol} cursor="default"/>
                     </td>
 
                     <td key={key + "5"} className="text-center" style={{ width: '12,5%', verticalAlign: 'middle' }}>
