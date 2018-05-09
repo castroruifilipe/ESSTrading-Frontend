@@ -11,7 +11,7 @@ import ButaoVariacao from './components/ButaoVariacao';
 import AbrirCFD from '../../scenes/Watchlist/components/AbrirCFD';
 import cfdEnum from '../../constants/cfdEnum';
 import chartOptions from '../../constants/chartOptions';
-import { formatterPercent, formatterPrice } from '../../constants/formatters';
+import { formatterPrice } from '../../constants/formatters';
 import './style.css';
 
 let ativoSelected = undefined;
