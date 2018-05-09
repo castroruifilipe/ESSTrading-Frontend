@@ -7,6 +7,8 @@
     background: rgb(87, 102, 161);
     color: #fff;
     transition: all 0.3s;
+    padding-bottom: 50px;
+    overflow-y: scroll;
 }
 
 #sidebar.active {
