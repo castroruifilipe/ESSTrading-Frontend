@@ -60,51 +60,56 @@ const withAtivos = (Component) => {
 }
 
 
-const getChartData = (symbol) => {
-    let data = {
-        labels: [],
-        datasets: [
-            {
-                label: "My Second dataset",
-                fillColor: "rgba(151,187,205,0.2)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: []
-            }
-        ]
-    }
-    iex.stockChart(symbol, "1d").then((value) => {
-        value.forEach(object => {
-            data.labels.push("")
-            data.datasets[0].data.push(2)
-        })
+const getChartData = (symbol, variacao) => {
+    return new Promise(function (resolve, reject) {
+        iex.stockChart(symbol, variacao)
+            .then((value) => {
+                let data = {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: "My Second dataset",
+                            fillColor: "rgba(0,0,0,0)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(151,187,205,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(151,187,205,1)",
+                            data: []
+                        }
+                    ]
+                };
+
+                value.forEach(object => {
+                    if (object.close) {
+                        data.labels.push("")
+                        data.datasets[0].data.push(object.close)
+                    }
+                });
+                resolve(data);
+            })
+            .catch(error => reject(error));
     });
+}
 
-
-    let data2 = {
-        labels: ["", "", "", "", "", "", ""],
-        datasets: [
-            {
-                label: "My Second dataset",
-                fillColor: "rgba(151,187,205,0.2)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: [28, 48, 40, 19, 86, 27, 90]
-            }
-        ]
-    };
-
-    return data2;
-
+const getChartDatas = (variacao) => {
+    return new Promise(function (resolve, reject) {
+        let chartDatas = {};
+        symbols.forEach(symbol => {
+            getChartData(symbol, variacao)
+                .then(chartData => {
+                    chartDatas[symbol] = chartData;
+                    if (Object.keys(chartDatas).length === symbols.length) {
+                        resolve(chartDatas);
+                    }
+                })
+                .catch(error => reject(error));
+        });
+    })
 }
 
 export {
     withAtivos,
     getChartData,
+    getChartDatas,
 }

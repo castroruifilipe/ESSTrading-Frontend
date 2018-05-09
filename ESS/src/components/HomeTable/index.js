@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { Media, Table, Button, Badge } from 'reactstrap';
+import { Media, Table, Button, Badge, Row, Col } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import { BarLoader } from 'react-spinners';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import { Line as LineChart } from "react-chartjs";
 
-import { withAtivos, getChartData } from '../../higher-order_components/withAtivos';
-import ButaoVariacao from './components/ButaoVariacao';
+import { withAtivos, getChartDatas } from '../../higher-order_components/withAtivos';
+import BotaoVariacao from './components/BotaoVariacao';
 import AbrirCFD from '../../scenes/Watchlist/components/AbrirCFD';
 import cfdEnum from '../../constants/cfdEnum';
-import chartOptions from '../../constants/chartOptions';
-import { formatterPrice } from '../../constants/formatters';
+import { chartOptions } from '../../constants/chartOptions';
+import { formatterPrice, formatterPercent } from '../../constants/formatters';
 import './style.css';
 
 let ativoSelected = undefined;
@@ -22,7 +22,9 @@ class HomeTable extends Component {
 		super(props);
 		this.state = {
 			modal: false,
-			tipoCFD: undefined
+			tipoCFD: undefined,
+			chartDatas: undefined,
+			variacaoAtual: '1d',
 		};
 
 		this.toggle = this.toggle.bind(this);
@@ -49,8 +51,24 @@ class HomeTable extends Component {
 		this.toggle();
 	}
 
+	onChangeVariacao = (variacao) => {
+		if (this.state.variacaoAtual !== variacao) {
+			getChartDatas(variacao).then(chartDatas => {
+				this.setState({
+					variacaoAtual: variacao,
+					chartDatas,
+				});
+			});
+		}
+	}
+
+	componentDidMount() {
+		getChartDatas("1d").then(chartDatas => {
+			this.setState({ chartDatas });
+		});
+	}
+
 	makeRows = (rows) => {
-		
 		this.props.ativosStore.quotes.forEach((quote, symbol, map) =>
 			rows.push(
 				<tr key={symbol}>
@@ -66,14 +84,24 @@ class HomeTable extends Component {
 						</Media>
 					</td>
 
-					<td key={symbol + "1"} style={{ width: '25%', verticalAlign: 'middle' }}
+					<td key={symbol + "1"} style={{ width: '30%', verticalAlign: 'middle' }}
 						className={(quote.changePercent < 0 ? "text-danger" : "text-success") + " text-center"}>
-						{/* {formatterPercent.format(quote.changePercent)} */}
-						{/* <small className="d-block">({formatterPrice.format(quote.change)})</small> */}
-						<LineChart data={getChartData(symbol)} options={chartOptions} width="180" height="80"/>
+						<Row>
+							<Col className="pt-4">
+								{formatterPercent.format(quote.changePercent)}
+								<small className="d-block">({formatterPrice.format(quote.change)})</small>
+							</Col>
+							<Col>
+								{(this.state.chartDatas
+									? <LineChart data={this.state.chartDatas[symbol]} options={chartOptions} width="180" height="100%" />
+									: ""
+								)}
+							</Col>
+						</Row>
+
 					</td>
 
-					<td key={symbol + "2"} className="text-center" style={{ width: '25%', verticalAlign: 'middle' }}>
+					<td key={symbol + "2"} className="text-center" style={{ width: '22.5%', verticalAlign: 'middle' }}>
 						<Button color="light" type="button" className="btnprice"
 							onClick={this.onClickRow(symbol)(cfdEnum.VENDER)}
 							style={{ borderColor: '#e6e6e6' }}>
@@ -82,7 +110,7 @@ class HomeTable extends Component {
 						</Button>
 					</td>
 
-					<td key={symbol + "3"} className="text-center" style={{ width: '25%', verticalAlign: 'middle' }}>
+					<td key={symbol + "3"} className="text-center" style={{ width: '22.5%', verticalAlign: 'middle' }}>
 						<Button color="light" type="button" className="btnprice"
 							onClick={this.onClickRow(symbol)(cfdEnum.COMPRAR)}
 							style={{ borderColor: '#e6e6e6' }}>
@@ -103,21 +131,19 @@ class HomeTable extends Component {
 				</div>
 			);
 		}
-		let data = getChartData("AAPL");
-		console.log(data);
-
+		//this.getChartDatas();
 		let rows = [];
 		this.makeRows(rows);
 
 
 		return (
 			<div>
-				
+
 				<Table responsive>
 					<thead className="thead-light">
 						<tr>
 							<th key={0}><input className="form-control mr-sm-2" id="search" placeholder="procurar ativo" aria-label="Search" /></th>
-							<th key={1}><ButaoVariacao onChangeVariacao={(variacao) => this.changeVariacao(variacao)} /></th>
+							<th key={1}><BotaoVariacao onChange={this.onChangeVariacao} variacaoAtual={this.state.variacaoAtual} /></th>
 							<th key={2} className="text-center">Vender</th>
 							<th key={3} className="text-center">Comprar</th>
 						</tr>

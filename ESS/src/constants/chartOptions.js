@@ -4,7 +4,6 @@ export const chartOptions = {
 	scaleShowVerticalLines: false,
 	scaleShowLabels: false,
 	pointDot: false,
-	datasetStroke: false,
 	legend: {
 		display: false
 	},
