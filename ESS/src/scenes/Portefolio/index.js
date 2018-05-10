@@ -13,10 +13,6 @@ import AccountFooter from '../../components/AccountFooter';
 
 class Portefolio extends Component {
 
-    componentDidMount() {
-        this.props.cfdsStore.updateCFDs();
-    }
-
     fecharCFD = (cfd, designacao, precoAtual, lucro_perda, percent_lucro_perda ) => {
         db.doFecharCFD(auth.currentUser().uid, cfd, designacao, precoAtual, lucro_perda, percent_lucro_perda);
     }

@@ -11,6 +11,10 @@ import './style.css';
 
 class AccountFooter extends Component {
 
+    componentDidMount() {
+        this.props.cfdsStore.updateCFDs();
+    }
+
     render() {
         let saldo = this.props.sessionStore.userDB.saldo || 0;
         let investido = 0, plAcumulado = 0;
