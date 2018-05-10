@@ -65,25 +65,12 @@ const getChartData = (symbol, variacao) => {
         iex.stockChart(symbol, variacao)
             .then((value) => {
                 let data = {
-                    labels: [],
-                    datasets: [
-                        {
-                            label: "My Second dataset",
-                            fillColor: "rgba(0,0,0,0)",
-                            strokeColor: "rgba(220,220,220,1)",
-                            pointColor: "rgba(151,187,205,1)",
-                            pointStrokeColor: "#fff",
-                            pointHighlightFill: "#fff",
-                            pointHighlightStroke: "rgba(151,187,205,1)",
-                            data: []
-                        }
-                    ]
-                };
+                    series: [[]]
+                }
 
                 value.forEach(object => {
                     if (object.close) {
-                        data.labels.push("")
-                        data.datasets[0].data.push(object.close)
+                        data.series[0].push(object.close);
                     }
                 });
                 resolve(data);

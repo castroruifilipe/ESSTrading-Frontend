@@ -9,3 +9,17 @@
     max-height: 100%;
     margin: auto;
 }
+
+.ct-series-a .ct-line {
+    /* Set the colour of this series line */
+    stroke: rgb(0, 140, 221);
+    /* Control the thikness of your lines */
+    stroke-width: 2px;
+    /* Create a dashed line with a pattern */
+}
+
+@media (max-width: 1220px) {
+    .changeHidden {
+        display: none !important;
+    }
+}

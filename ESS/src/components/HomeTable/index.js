@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { BarLoader } from 'react-spinners';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
-import { Line as LineChart } from "react-chartjs";
+import ChartistGraph from 'react-chartist';
 
 import cfdEnum from '../../constants/cfdEnum';
 import BotaoPreco from '../BotaoPreco';
@@ -16,6 +16,7 @@ import { formatterPrice, formatterPercent } from '../../constants/formatters';
 import './style.css';
 
 let ativoSelected = undefined;
+
 
 class HomeTable extends Component {
 
@@ -65,6 +66,7 @@ class HomeTable extends Component {
 
 	componentDidMount() {
 		getChartDatas("1d").then(chartDatas => {
+			console.log(chartDatas);
 			this.setState({ chartDatas });
 		});
 	}
@@ -87,28 +89,29 @@ class HomeTable extends Component {
 
 					<td key={symbol + "1"} style={{ width: '30%', verticalAlign: 'middle' }}
 						className={(quote.changePercent < 0 ? "text-danger" : "text-success") + " text-center"}>
-						<Row>
-							<Col className="pt-4">
+						<Row style={{ height: '100px' }}>
+							<Col className="changeHidden pt-4">
 								{formatterPercent.format(quote.changePercent)}
 								<small className="d-block">({formatterPrice.format(quote.change)})</small>
 							</Col>
 							<Col>
 								{(this.state.chartDatas
-									? ""
-									: ""
+									? <ChartistGraph data={this.state.chartDatas[symbol]} type={'Line'} options={chartOptions} />
+									:
+									<div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+										<BarLoader height={4} width={200} color="#4A90E2" />
+									</div>
 								)}
 							</Col>
-							{/* <LineChart data={this.state.chartDatas[symbol]} options={chartOptions} width="180" height="100%" /> */}
 						</Row>
-
 					</td>
 
 					<td key={symbol + "2"} className="text-center" style={{ width: '22.5%', verticalAlign: 'middle' }}>
-						<BotaoPreco onClickRow={this.onClickRow} label="V" price="iexBidPrice" symbol={symbol} tipoCFD={cfdEnum.VENDER}/>
+						<BotaoPreco onClickRow={this.onClickRow} label="V" price="iexBidPrice" symbol={symbol} tipoCFD={cfdEnum.VENDER} />
 					</td>
 
 					<td key={symbol + "3"} className="text-center" style={{ width: '22.5%', verticalAlign: 'middle' }}>
-						<BotaoPreco onClickRow={this.onClickRow} label="C" price="iexAskPrice" symbol={symbol} tipoCFD={cfdEnum.COMPRAR}/>
+						<BotaoPreco onClickRow={this.onClickRow} label="C" price="iexAskPrice" symbol={symbol} tipoCFD={cfdEnum.COMPRAR} />
 					</td>
 				</tr>
 			);
