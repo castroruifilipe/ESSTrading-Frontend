@@ -31,3 +31,15 @@ export const doPasswordUpdate = (password) =>
 // Update profile
 export const currentUser = () => 
 	auth.currentUser;
+
+// Update Email
+export const updateEmail = (email) =>
+	auth.currentUser.updateEmail(email);
+
+// Remove account
+export const doRemoveAccount = () =>
+	auth.currentUser.delete()
+
+// Reauthenticate
+export const doReauthenticateWithCredential = (credential) =>
+	auth.currentUser.reauthenticateWithCredential(credential)

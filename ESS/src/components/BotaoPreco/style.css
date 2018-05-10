@@ -1,0 +1,38 @@
+.btnprice {
+    width: 100%;
+    max-width: 200px;
+    text-align: left;
+}
+
+.price {
+    font-size: 90%;
+    margin-right: 10px;
+}
+
+.animateSubida {
+    animation: 1s bgcolorchangeGreen;
+}
+
+@keyframes bgcolorchangeGreen {
+    0% {
+        color: white;
+    }
+    100% {
+        color: white;
+        background: rgb(12, 192, 12);
+    }
+}
+
+.animateDescida {
+    animation: 1s bgcolorchangeRed;
+}
+
+@keyframes bgcolorchangeRed {
+    0% {
+        color: white;
+    }
+    100% {
+        color: white;
+        background: red;
+    }
+}

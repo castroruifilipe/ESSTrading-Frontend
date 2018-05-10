@@ -1,77 +1,102 @@
 import React from 'react';
+import { inject } from 'mobx-react';
+
+import { db } from '../firebase';
 import { iex } from '../IEXClient';
 
-import AtivosContext from '../contexts/AtivosContext';
 
-
-let symbols = ['AMZN', 'AAPL', 'FB', 'GOOG', 'TSLA', 'DBX', 'EA', 'HPQ', 'IBM', 'MSFT', 'MSI', 'NOK', 'NVDA', 'ORCL', 'SNAP', 'SPOT', 'TRIP'];
+let symbols = ['AMZN', 'AAPL', 'FB', 'GOOG', 'TSLA', 'EA', 'HPQ', 'IBM', 'MSFT', 'MSI', 'NOK', 'NVDA', 'ORCL', 'SNAP', 'TRIP'];
 let _timeout = undefined;
 
 const withAtivos = (Component) => {
     class WithAtivos extends React.Component {
 
-        constructor(props) {
-            super(props);
-            this.state = {
-                ativos: {},
-            };
-        }
-
         componentDidMount() {
+            symbols.forEach(symbol => {
+                db.onGetQuote(symbol, (snapshot) => this.props.ativosStore.setQuote(snapshot.val()))
+            })
             this.getLogos();
             this.updateAtivos();
-            _timeout = setInterval(this.updateAtivos, 1000);
+            this.props.ativosStore.setDataLoad(true);
+            _timeout = setInterval(this.updateAtivos, 3000);
         }
-        
+
         componentWillUnmount() {
             clearTimeout(_timeout);
         }
 
         updateAtivos = () => {
-            const prevAtivos = Object.assign(this.state.ativos);
             symbols.forEach(symbol => {
                 iex.stockQuote(symbol)
                     .then(quote => {
-                        prevAtivos[symbol] = {...this.state.ativos[symbol], quote: quote};
+                        if (quote.iexAskPrice * quote.iexBidPrice !== 0) {
+                            db.doUpdateQuote(quote);
+                        }
                     })
                     .catch(error => {
                         console.error(error);
                     });
-            });
-
-            this.setState({
-                ativos: prevAtivos,
             });
         }
 
         getLogos = () => {
-            const prevAtivos = this.state.ativos;
             symbols.forEach(symbol => {
                 iex.stockLogo(symbol)
                     .then(logo => {
-                        prevAtivos[symbol] = {...this.state.ativos[symbol], logo: logo.url};
+                        this.props.ativosStore.setLogo(symbol, logo.url);
                     })
                     .catch(error => {
                         console.error(error);
                     });
             });
-
-            this.setState({
-                ativos: prevAtivos
-            })
         }
-        
 
         render() {
-            return (
-                <AtivosContext.Provider value={this.state.ativos}>
-                    <Component {...this.props} />
-                </AtivosContext.Provider>
-            );
+            return (<Component {...this.props} />);
         }
     }
 
-    return WithAtivos;
+    return inject('ativosStore')(WithAtivos);
 }
 
-export default withAtivos;
+
+const getChartData = (symbol, variacao) => {
+    return new Promise(function (resolve, reject) {
+        iex.stockChart(symbol, variacao)
+            .then((value) => {
+                let data = {
+                    series: [[]]
+                }
+
+                value.forEach(object => {
+                    if (object.close) {
+                        data.series[0].push(object.close);
+                    }
+                });
+                resolve(data);
+            })
+            .catch(error => reject(error));
+    });
+}
+
+const getChartDatas = (variacao) => {
+    return new Promise(function (resolve, reject) {
+        let chartDatas = {};
+        symbols.forEach(symbol => {
+            getChartData(symbol, variacao)
+                .then(chartData => {
+                    chartDatas[symbol] = chartData;
+                    if (Object.keys(chartDatas).length === symbols.length) {
+                        resolve(chartDatas);
+                    }
+                })
+                .catch(error => reject(error));
+        });
+    })
+}
+
+export {
+    withAtivos,
+    getChartData,
+    getChartDatas,
+}
