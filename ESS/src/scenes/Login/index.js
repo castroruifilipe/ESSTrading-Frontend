@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Row, Col, Container, Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
-
+import { inject, observer } from 'mobx-react';
+import { compose } from 'recompose';
+import axios from 'axios';
 
 import Footer from '../../components/Footer';
 import PasswordForget from './components/PasswordForget';
@@ -22,50 +24,46 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { ...INITIAL_STATE };
-
-		this.toggleEmail = this.toggleEmail.bind(this);
-		this.togglePassword = this.togglePassword.bind(this);
 	}
 
-	toggleEmail() {
+	toggleEmail = () => {
 		this.setState({
 			modalEmail: !this.state.modalEmail
 		});
 	}
 
-	togglePassword() {
+	togglePassword = () => {
 		this.setState({
 			modalPassword: !this.state.modalPassword
 		});
 	}
 
 	onSubmit = (event) => {
-
 		if (this.state.modalEmail === true) return;
-		const {
-			email,
-			password,
-		} = this.state;
 
-		auth.doSignInWithEmailAndPassword(email, password)
-			.then(() => {
+		let credentials = {
+			email: this.state.email,
+			password: this.state.password
+		}
+		axios.post('http://localhost:9000/api/customers/signin', { ...credentials })
+			.then(response => auth.doSignInWithCustomToken(response.data))
+			.then(authUser => {
 				if (auth.emailVerified()) {
-					this.setState(() => ({ ...INITIAL_STATE }));
 					this.props.history.push(routes.WATCHLIST);
 				} else {
+					// ALTERAR
 					auth.doSignOut();
 					this.toggleEmail();
 				}
-
 			})
 			.catch(error => {
-				this.setState({
-					'error': error
-				});
+				if (error.response) {
+					this.setState({ "error": error.response.data.error.message })
+				} else {
+					console.error(error);
+				}
 			});
-
 		event.preventDefault();
-
 	}
 
 	render() {
@@ -81,7 +79,7 @@ class Login extends Component {
 
 		return (
 			<Container fluid >
-				<Row  style={{ minHeight: '90vh' }}>
+				<Row style={{ minHeight: '90vh' }}>
 					<Col md={{ size: 6, offset: 4 }}>
 						<h3 className="font-weight-normal mt-5 mb-3" style={{ paddingTop: '90px' }}>Iniciar sessão</h3>
 
@@ -106,12 +104,12 @@ class Login extends Component {
 
 							<Button color="primary" disabled={isInvalid} type="submit" block={true} size="lg">Login</Button>
 							<div className="pt-3">
-								<a className="text-primary" style={{cursor:'pointer'}} onClick={this.togglePassword}>
+								<a className="text-primary" style={{ cursor: 'pointer' }} onClick={this.togglePassword}>
 									Esqueceu-se da password?
 								</a>
 							</div>
 
-							{error && <Alert color="danger" className="mt-5">{error.message}</Alert>}
+							{error && <Alert color="danger" className="mt-5">{error}</Alert>}
 							<Modal isOpen={this.state.modalEmail} toggle={this.toggleEmail}>
 								<ModalHeader toggle={this.toggleEmail}>Email de confirmação</ModalHeader>
 								<ModalBody>
@@ -135,4 +133,8 @@ class Login extends Component {
 	}
 }
 
-export default withRouter(Login);
+export default compose(
+	withRouter,
+	inject('sessionStore'),
+	observer
+)(Login);

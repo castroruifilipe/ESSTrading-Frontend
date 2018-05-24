@@ -5,6 +5,8 @@ import { BarLoader } from 'react-spinners';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import ChartistGraph from 'react-chartist';
+import socketIOClient from 'socket.io-client';
+
 
 import cfdEnum from '../../constants/cfdEnum';
 import BotaoPreco from '../BotaoPreco';
@@ -14,6 +16,7 @@ import AbrirCFD from '../../scenes/Watchlist/components/AbrirCFD';
 import { chartOptions } from '../../constants/chartOptions';
 import { formatterPrice, formatterPercent } from '../../constants/formatters';
 import './style.css';
+import { auth } from 'firebase';
 
 let ativoSelected = undefined;
 
@@ -66,9 +69,17 @@ class HomeTable extends Component {
 
 	componentDidMount() {
 		getChartDatas("1d").then(chartDatas => {
-			console.log(chartDatas);
 			this.setState({ chartDatas });
 		});
+
+		// fetch('http://localhost:9000/quotes-ms/Quotes').then(result => console.log(result.json()));
+
+		// const socket = socketIOClient("http://localhost:9000/", { query: { token: "token"} });
+
+		// socket.emit('mensagem');
+		// socket.on('message', message => {
+		// 	console.log("mensagem");
+		// })
 	}
 
 	makeRows = (rows) => {

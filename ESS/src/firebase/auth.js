@@ -1,5 +1,12 @@
 import { auth } from './firebase';
 
+// Sign In with Custom Token
+export const doSignInWithCustomToken = (token) =>
+	auth.signInWithCustomToken(token);
+
+
+
+
 // Sign Up
 export const doCreateUserWithEmailAndPassword = (email, password) =>
 	auth.createUserWithEmailAndPassword(email, password);
@@ -11,6 +18,7 @@ export const sendEmailVerification = () =>
 // Email verified
 export const emailVerified = () =>
 	auth.currentUser.emailVerified;
+
 
 // Sign In
 export const doSignInWithEmailAndPassword = (email, password) =>
