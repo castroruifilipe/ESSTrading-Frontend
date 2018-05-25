@@ -5,11 +5,14 @@ export const doSignInWithCustomToken = (token) =>
 	auth.signInWithCustomToken(token);
 
 
+// Sign out
+export const doSignOut = () =>
+	auth.signOut();
 
 
 // Sign Up
-export const doCreateUserWithEmailAndPassword = (email, password) =>
-	auth.createUserWithEmailAndPassword(email, password);
+// export const doCreateUserWithEmailAndPassword = (email, password) =>
+// 	auth.createUserWithEmailAndPassword(email, password);
 
 // Email verification
 export const sendEmailVerification = () =>
@@ -20,13 +23,10 @@ export const emailVerified = () =>
 	auth.currentUser.emailVerified;
 
 
-// Sign In
-export const doSignInWithEmailAndPassword = (email, password) =>
-	auth.signInWithEmailAndPassword(email, password);
+// // Sign In
+// export const doSignInWithEmailAndPassword = (email, password) =>
+// 	auth.signInWithEmailAndPassword(email, password);
 
-// Sign out
-export const doSignOut = () =>
-	auth.signOut();
 
 // Password Reset
 export const doPasswordReset = (email) =>
@@ -37,7 +37,7 @@ export const doPasswordUpdate = (password) =>
 	auth.currentUser.updatePassword(password);
 
 // Update profile
-export const currentUser = () => 
+export const currentUser = () =>
 	auth.currentUser;
 
 // Update Email

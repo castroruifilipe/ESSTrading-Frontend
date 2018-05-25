@@ -1,20 +1,14 @@
 import { observable, action } from 'mobx';
 import axios from 'axios';
-
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
 
 class SessionStore {
-    @observable tokenID = null;
 
     @observable authUser = null;
     @observable userDB = {};
 
     constructor(rootStore) {
         this.rootStore = rootStore;
-    }
-
-    @action setTokenID = tokenID => {
-        this.tokenID = tokenID;
     }
 
     @action setAuthUser = authUser => {
@@ -37,7 +31,6 @@ class SessionStore {
                 this.setUserDB(user.data)
             })
             .catch(error => console.error(error));
-
 }
 
 export default SessionStore;

@@ -11,7 +11,7 @@ import * as routes from '../../constants/routes';
 const logo = (route) =>
 	<Link to={route} className="navbar-brand">
 		<img src={Logo} width="45" alt="" className="d-inline-block align-middle mr-3" />
-		<span id="logo-text" style={{color: 'rgb(87, 102, 161)'}}>ESS Trading</span>
+		<span id="logo-text" style={{ color: 'rgb(87, 102, 161)' }}>ESS Trading</span>
 	</Link>
 
 
@@ -74,7 +74,7 @@ class NavBar extends Component {
 					? <NavBarAuth />
 					: <NavBarNonAuth />
 				}
-			</div>	
+			</div>
 		);
 	}
 }
