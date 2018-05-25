@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { auth, db } from '../../firebase';
 import { withRouter } from 'react-router-dom';
 import { Row, Col, Container, Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
+import axios from 'axios';
 
 import Footer from '../../components/Footer';
 import * as routes from '../../constants/routes';
@@ -23,12 +24,10 @@ class Registar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { ...INITIAL_STATE };
-
-		this.toggle = this.toggle.bind(this);
 	}
 
 
-	toggle() {
+	toggle = () => {
 		this.setState({
 			modal: !this.state.modal
 		});
@@ -39,33 +38,43 @@ class Registar extends Component {
 	}
 
 	onSubmit = (event) => {
-		const {
-			username,
-			first_name,
-			last_name,
-			email,
-			contacto,
-			password_one,
-		} = this.state;
-
-		auth.doCreateUserWithEmailAndPassword(email, password_one)
-			.then(authUser => {
-				db.doCreateUser(authUser.uid, username, first_name, last_name, contacto)
-					.then(() => {
-						auth.sendEmailVerification()
-							.then(() => this.toggle())
-							.catch(error => console.error(error));
-						auth.doSignOut();
-					})
-					.catch(error => console.error(error));
-			})
+		const data = {
+			username: this.state.username,
+			first_name: this.state.first_name,
+			last_name: this.state.last_name,
+			email: this.state.email,
+			password: this.state.password_one,
+			contacto: this.state.contacto,
+		}
+		axios.post('http://localhost:9000/api/customers/signup', { ...data })
+			.then(response => this.toggle())
 			.catch(error => {
-				this.setState({
-					'error': error
-				});
+				if (error.response) {
+					this.setState({ "error": error.response.data.error.message })
+				} else {
+					console.error(error);
+				}
 			});
-
 		event.preventDefault();
+
+
+		// auth.doCreateUserWithEmailAndPassword(email, password_one)
+		// 	.then(authUser => {
+		// 		db.doCreateUser(authUser.uid, username, first_name, last_name, contacto)
+		// 			.then(() => {
+		// 				auth.sendEmailVerification()
+		// 					.then(() => this.toggle())
+		// 					.catch(error => console.error(error));
+		// 				auth.doSignOut();
+		// 			})
+		// 			.catch(error => console.error(error));
+		// 	})
+		// 	.catch(error => {
+		// 		this.setState({
+		// 			'error': error
+		// 		});
+		// 	});
+
 	}
 
 	render() {
@@ -91,9 +100,9 @@ class Registar extends Component {
 
 		return (
 			<Container fluid>
-				<Row style={{minHeight : '90vh'}}>
+				<Row style={{ minHeight: '90vh' }}>
 					<Col md={{ size: 6, offset: 4 }}>
-						<h3 className="font-weight-normal mb-3" style={{paddingTop : '120px'}}>Criar conta</h3>
+						<h3 className="font-weight-normal mb-3" style={{ paddingTop: '120px' }}>Criar conta</h3>
 
 						<Form className="form-sign" onSubmit={this.onSubmit}>
 							<div className="form-label-group">
@@ -154,7 +163,7 @@ class Registar extends Component {
 							</div>
 
 							<Button color="primary" disabled={isInvalid} type="submit" block={true} size="lg">Registar</Button>
-							
+
 							<small>A password deverá ter no mínimo 6 caracteres.</small>
 							{error && <Alert color="danger" className="mt-5">{error.message}</Alert>}
 

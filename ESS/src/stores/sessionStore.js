@@ -1,4 +1,5 @@
 import { observable, action } from 'mobx';
+import axios from 'axios';
 
 import { db } from '../firebase';
 
@@ -14,7 +15,6 @@ class SessionStore {
 
     @action setTokenID = tokenID => {
         this.tokenID = tokenID;
-        console.log(this.tokenID);
     }
 
     @action setAuthUser = authUser => {
@@ -29,7 +29,15 @@ class SessionStore {
     }
 
     @action updateUserDB = () =>
-        db.onGetUser(this.authUser.uid, snapshot => this.setUserDB(snapshot.val()));
+        this.authUser.getIdToken()
+            .then(token => axios.get('http://localhost:9000/api/customers/getProfile', {
+                headers: { 'Authorization': token }
+            }))
+            .then(user => {
+                this.setUserDB(user.data)
+            })
+            .catch(error => console.error(error));
+
 }
 
 export default SessionStore;

@@ -12,9 +12,7 @@ const withAuthorization = (authCondition) => (Component) => {
 
         componentDidMount() {
             firebase.auth.onAuthStateChanged(authUser => {
-                console.log("AQUI");
                 if (!authCondition(authUser)) {
-                    console.log("AQUI condition TRUE");
                     this.props.history.push(routes.LOGIN);
                 }
             });

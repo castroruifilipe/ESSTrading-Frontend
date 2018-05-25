@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
+import axios from 'axios';
 import Avatar from 'react-avatar-edit';
 
 import { db } from '../../../../firebase';
@@ -43,19 +44,25 @@ class EditarDados extends Component {
 	}
 
 	onSubmit = () => {
-		const {
-			first_name,
-			last_name,
-			username,
-			contacto,
-			image,
-			imageCroped,
-			data_nascimento,
-			sexo,
-			nif,
-		} = this.state;
-		db.doUpdateUser(this.props.sessionStore.authUser.uid, username, first_name, last_name, contacto, image, imageCroped, data_nascimento, sexo, nif)
-			.then(() => this.props.toggle());
+		const data = {
+			first_name: this.state.first_name,
+			last_name: this.state.last_name,
+			username: this.state.username,
+			contacto: this.state.contacto,
+			image: this.state.image,
+			imageCroped: this.state.imageCroped,
+			data_nascimento: this.state.data_nascimento,
+			sexo: this.state.sexo,
+			nif: this.state.nif,
+		}
+
+		this.props.sessionStore.authUser.getIdToken()
+			.then(token => axios.put('http://localhost:9000/api/customers/updateProfile', { ...data }, {
+				headers: { 'Authorization': token }
+			}))
+			.then(userDB => this.props.sessionStore.setUserDB(userDB.data))
+			.then(response => this.props.toggle())
+			.catch(error => console.error(error));
 	}
 
 	render() {
@@ -152,7 +159,7 @@ class EditarDados extends Component {
 									/>
 									<label htmlFor="inputNIF">NIF</label>
 								</div>
-								
+
 								<div className="form-label-group">
 									<Input value={sexo} placeholder="Sexo" type="select" className="form-control" id="inputSexo"
 										onChange={event => this.setState({

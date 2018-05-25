@@ -109,7 +109,7 @@ export const doFecharCFD = function (id, cfd, designacao, precoAtual, lucro_perd
     let cfd_history = rootStore.cfdsStore.CFDs.get(cfd);
     doNovoMovimento(id, cfd_history, designacao, precoAtual, lucro_perda, percent_lucro_atual)
         .then(rootStore.cfdsStore.removeCFD(cfd))
-        .catch(error => console.log(error));
+        .catch(error => console.error(error));
 
 
     onceGetUser(id)

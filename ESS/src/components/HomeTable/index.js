@@ -71,15 +71,10 @@ class HomeTable extends Component {
 		getChartDatas("1d").then(chartDatas => {
 			this.setState({ chartDatas });
 		});
+		// const socket = socketIOClient("http://localhost:9000/");//, { query: { token: "token"} });
 
-		// fetch('http://localhost:9000/quotes-ms/Quotes').then(result => console.log(result.json()));
+		// socket.on('quote', quote => console.log(quote));
 
-		// const socket = socketIOClient("http://localhost:9000/", { query: { token: "token"} });
-
-		// socket.emit('mensagem');
-		// socket.on('message', message => {
-		// 	console.log("mensagem");
-		// })
 	}
 
 	makeRows = (rows) => {
