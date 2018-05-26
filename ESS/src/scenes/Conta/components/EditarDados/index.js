@@ -5,41 +5,34 @@ import { compose } from 'recompose';
 import axios from 'axios';
 import Avatar from 'react-avatar-edit';
 
-import { db } from '../../../../firebase';
-
-
 class EditarDados extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			image: props.sessionStore.userDB.image,
-			imageCroped: props.sessionStore.userDB.imageCroped,
-			first_name: props.sessionStore.userDB.first_name,
-			last_name: props.sessionStore.userDB.last_name,
-			username: props.sessionStore.userDB.username,
-			email: props.sessionStore.authUser.email,
-			contacto: (props.sessionStore.userDB.contacto || ""),
-			data_nascimento: (props.sessionStore.userDB.data_nascimento || ""),
-			sexo: (props.sessionStore.userDB.sexo || "Masculino"),
-			nif: (props.sessionStore.userDB.nif || ""),
+			image: props.sessionStore.user.image,
+			imageCroped: props.sessionStore.user.imageCroped,
+			first_name: props.sessionStore.user.first_name,
+			last_name: props.sessionStore.user.last_name,
+			username: props.sessionStore.user.username,
+			email: props.sessionStore.user.email,
+			contacto: (props.sessionStore.user.contacto || ""),
+			data_nascimento: (props.sessionStore.user.data_nascimento || ""),
+			sexo: (props.sessionStore.user.sexo || "Masculino"),
+			nif: (props.sessionStore.user.nif || ""),
 			error: null,
 		};
-
-		this.onImageLoad = this.onImageLoad.bind(this)
-		this.onClose = this.onClose.bind(this)
-		this.onCrop = this.onCrop.bind(this)
 	}
 
-	onClose() {
+	onClose = () => {
 		this.setState({ image: null })
 	}
 
-	onImageLoad(image) {
+	onImageLoad = (image) => {
 		this.setState({ image });
 	}
 
-	onCrop(imageCroped) {
+	onCrop = (imageCroped) => {
 		this.setState({ imageCroped })
 	}
 
@@ -56,12 +49,12 @@ class EditarDados extends Component {
 			nif: this.state.nif,
 		}
 
-		this.props.sessionStore.authUser.getIdToken()
-			.then(token => axios.put('http://localhost:9000/api/customers/updateProfile', { ...data }, {
-				headers: { 'Authorization': token }
-			}))
-			.then(userDB => this.props.sessionStore.setUserDB(userDB.data))
-			.then(response => this.props.toggle())
+		axios
+			.put('http://localhost:9000/api/customers/updateProfile', { ...data }, {
+				headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
+			})
+			.then(user => this.props.sessionStore.setUser(user.data))
+			.then(() => this.props.toggle())
 			.catch(error => console.error(error));
 	}
 

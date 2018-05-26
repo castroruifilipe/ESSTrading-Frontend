@@ -7,7 +7,6 @@ import axios from 'axios';
 
 import Footer from '../../components/Footer';
 import PasswordForget from './components/PasswordForget';
-import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 
 
@@ -46,23 +45,35 @@ class Login extends Component {
 			password: this.state.password
 		}
 		axios.post('http://localhost:9000/api/customers/signin', { ...credentials })
-			.then(response => auth.doSignInWithCustomToken(response.data))
-			.then(authUser => {
-				if (auth.emailVerified()) {
-					this.props.history.push(routes.WATCHLIST);
-				} else {
-					// ALTERAR
-					auth.doSignOut();
-					this.toggleEmail();
-				}
-			})
+			.then(response => this.props.sessionStore.setToken(response.data))
+			.then(() => this.props.history.push(routes.WATCHLIST))
 			.catch(error => {
 				if (error.response) {
 					this.setState({ "error": error.response.data.error.message })
 				} else {
 					console.error(error);
 				}
-			});
+			})
+
+
+		// axios.post('http://localhost:9000/api/customers/signin', { ...credentials })
+		// 	.then(response => auth.doSignInWithCustomToken(response.data))
+		// 	.then(authUser => {
+		// 		if (auth.emailVerified()) {
+		// 			this.props.history.push(routes.WATCHLIST);
+		// 		} else {
+		// 			// ALTERAR
+		// 			auth.doSignOut();
+		// 			this.toggleEmail();
+		// 		}
+		// 	})
+		// 	.catch(error => {
+		// 		if (error.response) {
+		// 			this.setState({ "error": error.response.data.error.message })
+		// 		} else {
+		// 			console.error(error);
+		// 		}
+		// 	});
 		event.preventDefault();
 	}
 

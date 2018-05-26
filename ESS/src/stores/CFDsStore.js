@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx';
 
-import { db, auth } from '../firebase';
 
 class CFDsStore {
     @observable CFDs = new Map();
@@ -17,7 +16,7 @@ class CFDsStore {
     }
 
     @action updateCFDs = () => {
-        db.onGetCFDs(auth.currentUser().uid, snapshot => this.setCFDs(snapshot.val()));
+        // db.onGetCFDs(auth.currentUser().uid, snapshot => this.setCFDs(snapshot.val()));
     }
 
     @action removeCFD = (cfd) => {

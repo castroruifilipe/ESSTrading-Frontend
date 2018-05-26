@@ -1,42 +1,33 @@
 import React from 'react';
 import { inject } from 'mobx-react';
+import socketIOClient from 'socket.io-client';
+import axios from 'axios';
 
-import { db } from '../firebase';
 import { iex } from '../IEXClient';
 
-
 let symbols = ['AMZN', 'AAPL', 'FB', 'GOOG', 'TSLA', 'EA', 'HPQ', 'IBM', 'MSFT', 'MSI', 'NOK', 'NVDA', 'ORCL', 'SNAP', 'TRIP'];
-let _timeout = undefined;
+
 
 const withAtivos = (Component) => {
     class WithAtivos extends React.Component {
 
         componentDidMount() {
-            symbols.forEach(symbol => {
-                db.onGetQuote(symbol, (snapshot) => this.props.ativosStore.setQuote(snapshot.val()))
-            })
+            axios
+                .get('http://localhost:9000/quotes-ms/quotes')
+                .then(response => this.props.ativosStore.setQuotes(Object.values(response.data)))
+                .catch(error => console.error(error));
+
+
+            const socket = socketIOClient("http://localhost:9000/");
+            socket.on('quote', quote => {
+                this.props.ativosStore.setQuote(quote);
+            });
             this.getLogos();
-            this.updateAtivos();
             this.props.ativosStore.setDataLoad(true);
-            _timeout = setInterval(this.updateAtivos, 3000);
         }
 
         componentWillUnmount() {
-            clearTimeout(_timeout);
-        }
-
-        updateAtivos = () => {
-            symbols.forEach(symbol => {
-                iex.stockQuote(symbol)
-                    .then(quote => {
-                        if (quote.iexAskPrice * quote.iexBidPrice !== 0) {
-                            db.doUpdateQuote(quote);
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            });
+            // clearTimeout(_timeout);
         }
 
         getLogos = () => {

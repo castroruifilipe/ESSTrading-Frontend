@@ -4,7 +4,6 @@ import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 
 import BotaoPreco from '../../components/BotaoPreco';
-import { db, auth } from '../../firebase';
 import withAuthorization from '../../higher-order_components/withAuthorization';
 import { formatterPrice, formatterNumber, formatterPercent } from '../../constants/formatters';
 import cfdEnum from '../../constants/cfdEnum';
@@ -14,18 +13,18 @@ import AccountFooter from '../../components/AccountFooter';
 class Portefolio extends Component {
 
     fecharCFD = (cfd, designacao, precoAtual, lucro_perda, percent_lucro_perda ) => {
-        db.doFecharCFD(auth.currentUser().uid, cfd, designacao, precoAtual, lucro_perda, percent_lucro_perda);
+        // db.doFecharCFD(auth.currentUser().uid, cfd, designacao, precoAtual, lucro_perda, percent_lucro_perda);
     }
 
     makeRows = (rows) => {
         this.props.cfdsStore.CFDs.forEach((cfd, key, map) => {
             let quote = this.props.ativosStore.quotes.get(cfd.ativo);
-            let precoAtual = quote.iexAskPrice === null ? 0 : quote.iexAskPrice;
+            let precoAtual = quote.askPrice === null ? 0 : quote.askPrice;
             let label = "Venda " + quote.symbol;
-            let price = "iexAskPrice";
+            let price = "askPrice";
             if (cfd.tipo === cfdEnum.COMPRAR) {
-                price = "iexBidPrice";
-                precoAtual = quote.iexBidPrice === null ? 0 : quote.iexBidPrice;
+                price = "bidPrice";
+                precoAtual = quote.bidPrice === null ? 0 : quote.bidPrice;
                 label = "Compra " + quote.symbol;
             }
 

@@ -51,15 +51,15 @@ class Conta extends Component {
 	}
 
 	render() {
-		let userDB = this.props.sessionStore.userDB;
-		if (!userDB) {
+		let user = this.props.sessionStore.user;
+		if (!user) {
 			return null;
 		}
 
-		let authUser = this.props.sessionStore.authUser;
-		if (!authUser) {
-			return null;
-		}
+		// let authUser = this.props.sessionStore.authUser;
+		// if (!authUser) {
+		// 	return null;
+		// }
 
 		return (
 			<Container id="contaContainer">
@@ -72,13 +72,13 @@ class Conta extends Component {
 					<Col md="6">
 						<Media>
 							<Media left>
-								<Media className="img-fluid rounded-circle" style={{ maxWidth: '150px' }} object src={userDB.imageCroped} />
+								<Media className="img-fluid rounded-circle" style={{ maxWidth: '150px' }} object src={user.imageCroped} />
 							</Media>
 							<Media body className="ml-5 mt-3">
 								<span className="d-block lead">
-									{userDB.first_name + " " + userDB.last_name}
+									{user.first_name + " " + user.last_name}
 								</span>
-								<small className="d-block">{userDB.username}</small>
+								<small className="d-block">{user.username}</small>
 							</Media>
 						</Media>
 					</Col>
@@ -105,23 +105,23 @@ class Conta extends Component {
 							<tbody>
 								<tr>
 									<th>Email</th>
-									<td>{authUser.email}</td>
+									<td>{user.email}</td>
 								</tr>
 								<tr>
 									<th>Contacto</th>
-									<td>{userDB.contacto}</td>
+									<td>{user.contacto}</td>
 								</tr>
 								<tr>
 									<th>Data de nascimento</th>
-									<td>{userDB.data_nascimento}</td>
+									<td>{user.data_nascimento}</td>
 								</tr>
 								<tr>
 									<th>Sexo</th>
-									<td>{userDB.sexo}</td>
+									<td>{user.sexo}</td>
 								</tr>
 								<tr>
 									<th>NIF</th>
-									<td>{userDB.nif}</td>
+									<td>{user.nif}</td>
 								</tr>
 							</tbody>
 						</Table>

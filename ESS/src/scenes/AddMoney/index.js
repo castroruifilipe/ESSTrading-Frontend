@@ -5,7 +5,6 @@ import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import { BarLoader } from 'react-spinners';
 
-import { db } from '../../firebase';
 
 class DepositarPlafond extends Component {
 
@@ -24,13 +23,13 @@ class DepositarPlafond extends Component {
     }
 
     onSubmit = () => {
-        db.doUpdateSaldo(this.props.sessionStore.authUser.uid, this.props.sessionStore.userDB.saldo + this.state.value)
-            .then(() => this.props.toggle())
-            .catch(error => console.error(error));
+        // db.doUpdateSaldo(this.props.sessionStore.authUser.uid, this.props.sessionStore.userDB.saldo + this.state.value)
+        //     .then(() => this.props.toggle())
+        //     .catch(error => console.error(error));
     }
 
     render() {
-        if (!this.props.sessionStore.userDB.saldo) {
+        if (!this.props.sessionStore.user.saldo) {
             return (
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}>
                     <BarLoader height={7} width={200} color="white" />

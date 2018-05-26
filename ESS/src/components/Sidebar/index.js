@@ -24,8 +24,6 @@ class Sidebar extends Component {
             active: false,
             hidded: false,
         };
-
-        this.toggle = this.toggle.bind(this);
     }
 
     updateDimensions() {
@@ -47,7 +45,7 @@ class Sidebar extends Component {
         window.addEventListener("resize", this.updateDimensions.bind(this));
     }
 
-    toggle() {
+    toggle = () => {
         this.setState({
             active: !this.state.active,
             hidded: !this.state.hidded
@@ -59,15 +57,15 @@ class Sidebar extends Component {
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}>
                 <BarLoader height={7} width={200} color="white" />
             </div>
-        if (this.props.sessionStore.userDB.imageCroped) {
+        if (this.props.sessionStore.user.imageCroped) {
             userMedia =
                 <Media className="mt-2 mb-3">
                     <Media left className="imgContainer">
-                        <Media className="userimg" object src={this.props.sessionStore.userDB.imageCroped} />
+                        <Media className="userimg" object src={this.props.sessionStore.user.imageCroped} />
                     </Media>
                     <Media body className="hideOnActive">
-                        <span className="d-block" style={{ margin: '10px 0px 4px 0px' }}>{this.props.sessionStore.userDB.first_name + " " + this.props.sessionStore.userDB.last_name}</span>
-                        <small className="d-block">{this.props.sessionStore.userDB.username}</small>
+                        <span className="d-block" style={{ margin: '10px 0px 4px 0px' }}>{this.props.sessionStore.user.first_name + " " + this.props.sessionStore.user.last_name}</span>
+                        <small className="d-block">{this.props.sessionStore.user.username}</small>
                         <NavLink to={routes.CONTA}><small><u>O meu perfil</u></small></NavLink>
                     </Media>
                 </Media >
@@ -94,12 +92,12 @@ class Sidebar extends Component {
                             <i><HistoryIcon /> </i>Histórico
                         </NavLink>
                     </li>
-                    <li style={{cursor:'pointer'}}>
+                    <li style={{ cursor: 'pointer' }}>
                         <a className="link" onClick={this.props.toggleDepositar}>
                             <i><AddMoneyIcon /> </i>Depositar plafond
                         </a>
                     </li>
-                    <li style={{cursor:'pointer'}}>
+                    <li style={{ cursor: 'pointer' }}>
                         <a className="link" onClick={this.props.toggleLevantar}>
                             <i><CreditCardIcon /> </i>Levantar plafond
                         </a>

@@ -5,7 +5,6 @@ import { compose } from 'recompose';
 import SwapIcon from 'react-icons/lib/md/swap-horiz';
 import NumericInput from 'react-numeric-input';
 
-import { db, auth } from '../../../../firebase';
 import cfdEnum from '../../../../constants/cfdEnum';
 import { formatterPrice, formatterPercent, formatterNumber } from '../../../../constants/formatters';
 import unidadeEnum from '../../../../constants/unidadeEnum';
@@ -64,14 +63,14 @@ class AbrirCFD extends Component {
 
     abrirCFD = () => {
         this.updateValues();
-        if (this.props.sessionStore.userDB.saldo < this.montante) {
+        if (this.props.sessionStore.user.saldo < this.montante) {
             this.setState({
                 error: "O seu saldo é insuficiente para abrir este CFD."
             });
         } else {
-            db.doAbrirCFD(auth.currentUser().uid, this.state.tipoCFD, this.props.ativo, this.unidades, this.montante, this.preco)
-                .then(() => this.props.toggle())
-                .catch(error => console.error(error));
+            // db.doAbrirCFD(auth.currentUser().uid, this.state.tipoCFD, this.props.ativo, this.unidades, this.montante, this.preco)
+            //     .then(() => this.props.toggle())
+            //     .catch(error => console.error(error));
         }
     }
 
@@ -87,7 +86,7 @@ class AbrirCFD extends Component {
                     <Button onClick={this.onSwitchChange}>VENDER</Button>
                 </ButtonGroup>;
             designacao = 'COMPRAR';
-            this.preco = quote.iexAskPrice === null ? 0 :  quote.iexAskPrice;
+            this.preco = quote.askPrice === null ? 0 :  quote.askPrice;
         } else {
             buttonGroup =
                 <ButtonGroup className="btn-toggle">
@@ -95,7 +94,7 @@ class AbrirCFD extends Component {
                     <Button onClick={this.onSwitchChange} className="btn-default" color="primary" active>VENDER</Button>
                 </ButtonGroup>;
             designacao = 'VENDER';
-            this.preco = quote.iexBidPrice === null ? 0 : quote.iexBidPrice;
+            this.preco = quote.bidPrice === null ? 0 : quote.bidPrice;
         }
 
         let value = this.montante;

@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx';
 
-import { db, auth } from '../firebase';
 
 class HistoryStore {
     @observable movs = new Map();
@@ -17,7 +16,7 @@ class HistoryStore {
     }
 
     @action updateMovs = () => {
-        db.onGetHistory(auth.currentUser().uid, snapshot => this.setMovs(snapshot.val()));
+        // db.onGetHistory(auth.currentUser().uid, snapshot => this.setMovs(snapshot.val()));
     }
 
 }

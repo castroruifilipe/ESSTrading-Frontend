@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { auth, db } from '../../firebase';
 import { withRouter } from 'react-router-dom';
 import { Row, Col, Container, Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
 import axios from 'axios';

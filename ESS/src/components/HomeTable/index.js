@@ -5,7 +5,6 @@ import { BarLoader } from 'react-spinners';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import ChartistGraph from 'react-chartist';
-import socketIOClient from 'socket.io-client';
 
 
 import cfdEnum from '../../constants/cfdEnum';
@@ -16,7 +15,6 @@ import AbrirCFD from '../../scenes/Watchlist/components/AbrirCFD';
 import { chartOptions } from '../../constants/chartOptions';
 import { formatterPrice, formatterPercent } from '../../constants/formatters';
 import './style.css';
-import { auth } from 'firebase';
 
 let ativoSelected = undefined;
 
@@ -31,8 +29,6 @@ class HomeTable extends Component {
 			chartDatas: undefined,
 			variacaoAtual: '1d',
 		};
-
-		this.toggle = this.toggle.bind(this);
 	}
 
 	toggle = () => {
@@ -71,12 +67,6 @@ class HomeTable extends Component {
 		getChartDatas("1d").then(chartDatas => {
 			this.setState({ chartDatas });
 		});
-
-		
-		// const socket = socketIOClient("http://localhost:9000/");//, { query: { token: "token"} });
-
-		// socket.on('quote', quote => console.log(quote));
-
 	}
 
 	makeRows = (rows) => {
@@ -115,11 +105,11 @@ class HomeTable extends Component {
 					</td>
 
 					<td key={symbol + "2"} className="text-center" style={{ width: '22.5%', verticalAlign: 'middle' }}>
-						<BotaoPreco onClickRow={this.onClickRow} label="V" price="iexBidPrice" symbol={symbol} tipoCFD={cfdEnum.VENDER} />
+						<BotaoPreco onClickRow={this.onClickRow} label="V" price="bidPrice" symbol={symbol} tipoCFD={cfdEnum.VENDER} />
 					</td>
 
 					<td key={symbol + "3"} className="text-center" style={{ width: '22.5%', verticalAlign: 'middle' }}>
-						<BotaoPreco onClickRow={this.onClickRow} label="C" price="iexAskPrice" symbol={symbol} tipoCFD={cfdEnum.COMPRAR} />
+						<BotaoPreco onClickRow={this.onClickRow} label="C" price="askPrice" symbol={symbol} tipoCFD={cfdEnum.COMPRAR} />
 					</td>
 				</tr>
 			);

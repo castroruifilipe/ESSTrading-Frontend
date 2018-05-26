@@ -5,7 +5,6 @@ import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import { BarLoader } from 'react-spinners';
 
-import { db } from '../../firebase';
 import { formatterPrice } from '../../constants/formatters';
 
 
@@ -26,13 +25,13 @@ class LevantarPlafond extends Component {
     }
 
     onSubmit = () => {
-        db.doUpdateSaldo(this.props.sessionStore.authUser.uid, this.props.sessionStore.userDB.saldo - this.state.value)
-            .then(() => this.props.toggle())
-            .catch(error => console.error(error));
+        // db.doUpdateSaldo(this.props.sessionStore.authUser.uid, this.props.sessionStore.userDB.saldo - this.state.value)
+        //     .then(() => this.props.toggle())
+        //     .catch(error => console.error(error));
     }
 
     render() {
-        if (!this.props.sessionStore.userDB.saldo) {
+        if (!this.props.sessionStore.user.saldo) {
             return (
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}>
                     <BarLoader height={7} width={200} color="white" />
@@ -40,7 +39,7 @@ class LevantarPlafond extends Component {
             );
         }
 
-        let aLevantar = this.props.sessionStore.userDB.saldo - this.state.value;
+        let aLevantar = this.props.sessionStore.user.saldo - this.state.value;
         let mens = undefined;
         if (aLevantar > 0) {
             mens =
@@ -50,7 +49,7 @@ class LevantarPlafond extends Component {
         } else if (aLevantar <= 0) {
             mens =
                 <span>
-                    Poderá levantar no máximo {formatterPrice.format(this.props.sessionStore.userDB.saldo)}
+                    Poderá levantar no máximo {formatterPrice.format(this.props.sessionStore.user.saldo)}
                 </span>
         }
         return (
@@ -65,7 +64,7 @@ class LevantarPlafond extends Component {
                     <Row className="mb-4">
                         <Col sm={{ size: 6, offset: 3 }}>
                             <NumericInput mobile className="form-control"
-                                min={0} max={this.props.sessionStore.userDB.saldo} precision={2}
+                                min={0} max={this.props.sessionStore.user.saldo} precision={2}
                                 value={this.state.value}
                                 onChange={this.onChange} />
                         </Col>

@@ -3,23 +3,20 @@ import { withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 
-import { firebase } from '../firebase';
 import * as routes from '../constants/routes';
 
 const withAuthorization = (authCondition) => (Component) => {
-    
+
     class WithAuthorization extends React.Component {
 
         componentDidMount() {
-            firebase.auth.onAuthStateChanged(authUser => {
-                if (!authCondition(authUser)) {
-                    this.props.history.push(routes.LOGIN);
-                }
-            });
+            if (!this.props.sessionStore.token) {
+                this.props.history.push(routes.LOGIN);
+            }
         }
 
         render() {
-            return this.props.sessionStore.authUser ? <Component {...this.props} /> : null;
+            return this.props.sessionStore.user ? <Component {...this.props} /> : null;
         }
     }
 

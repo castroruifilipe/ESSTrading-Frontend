@@ -16,15 +16,15 @@ class AccountFooter extends Component {
     }
 
     render() {
-        let saldo = this.props.sessionStore.userDB.saldo || 0;
+        let saldo = this.props.sessionStore.user.saldo || 0;
         let investido = 0, plAcumulado = 0;
 
         this.props.cfdsStore.CFDs.forEach((cfd, key, map) => {
             let quote = this.props.ativosStore.quotes.get(cfd.ativo);
             if (quote) {
-                let precoAtual = quote.iexAskPrice === null ? 0 : quote.iexAskPrice;
+                let precoAtual = quote.askPrice === null ? 0 : quote.askPrice;
                 if (cfd.tipo === cfdEnum.COMPRAR) {
-                    precoAtual = quote.iexBidPrice === null ? 0 : quote.iexBidPrice;
+                    precoAtual = quote.bidPrice === null ? 0 : quote.bidPrice;
                 }
 
                 investido += cfd.montante;
