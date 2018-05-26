@@ -22,7 +22,7 @@ class SessionStore {
             this.updateUser();
         } else {
             sessionStorage.removeItem('jwtToken');
-            this.user = {};
+            this.setUser({});
         }
     }
 
@@ -30,9 +30,15 @@ class SessionStore {
         this.user = user;
     }
 
+    @action setSaldo = saldo => {
+        this.user.saldo = saldo;
+    }
+
     @action updateUser = () => {
         axios
-            .get('http://localhost:9000/api/customers/getProfile', { headers: { 'Authorization': 'Bearer ' + this.token } })
+            .get('http://localhost:9000/api/customers/getProfile', {
+                headers: { 'Authorization': 'Bearer ' + this.token }
+            })
             .then(response => this.setUser(response.data))
             .catch(error => console.error(error));
     }

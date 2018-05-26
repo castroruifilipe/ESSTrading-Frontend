@@ -6,12 +6,13 @@ const withAuthentication = (Component) => {
     class WithAuthentication extends React.Component {
 
         componentWillMount() {
-            const { sessionStore } = this.props;
+            const { sessionStore, cfdsStore } = this.props;
             let token = sessionStorage.getItem('jwtToken');
             if (!token) {
                 sessionStore.setToken(null);
             } else {
                 sessionStore.setToken(token);
+                cfdsStore.updateCFDs(token);
             }
         }
 
@@ -20,7 +21,7 @@ const withAuthentication = (Component) => {
         }
     }
 
-    return inject('sessionStore')(WithAuthentication);
+    return inject('sessionStore', 'cfdsStore')(WithAuthentication);
 }
 
 export default withAuthentication;

@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import SwapIcon from 'react-icons/lib/md/swap-horiz';
 import NumericInput from 'react-numeric-input';
+import axios from 'axios';
 
 import cfdEnum from '../../../../constants/cfdEnum';
 import { formatterPrice, formatterPercent, formatterNumber } from '../../../../constants/formatters';
@@ -69,9 +70,27 @@ class AbrirCFD extends Component {
                 error: "O seu saldo é insuficiente para abrir este CFD."
             });
         } else {
-            // db.doAbrirCFD(auth.currentUser().uid, this.state.tipoCFD, this.props.ativo, this.unidades, this.montante, this.preco)
-            //     .then(() => this.props.toggle())
-            //     .catch(error => console.error(error));
+            const data = {
+                ativo: this.props.ativo,
+                montante: this.montante,
+                tipo: this.state.tipoCFD,
+            }
+            axios
+                .post('http://localhost:9000/api/cfds/abrirCFD', { ...data }, {
+                    headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
+                })
+                .then(response => {
+                    this.props.cfdsStore.putCFD(response.data.cfd);
+                    this.props.sessionStore.setSaldo(response.data.saldo);
+                    this.props.toggle();
+                })
+                .catch(error => {
+                    if (error.response) {
+                        this.setState({ "error": error.response.data.error.message })
+                    } else {
+                        console.error(error);
+                    }
+                });
         }
     }
 
@@ -172,6 +191,6 @@ class AbrirCFD extends Component {
 }
 
 export default compose(
-    inject('ativosStore', 'sessionStore'),
+    inject('ativosStore', 'sessionStore', 'cfdsStore'),
     observer
 )(AbrirCFD);

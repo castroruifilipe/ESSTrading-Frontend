@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Media, Button, Badge } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
+import axios from 'axios';
 
 import BotaoPreco from '../../components/BotaoPreco';
 import withAuthorization from '../../higher-order_components/withAuthorization';
@@ -12,28 +13,37 @@ import AccountFooter from '../../components/AccountFooter';
 
 class Portefolio extends Component {
 
-    fecharCFD = (cfd, designacao, precoAtual, lucro_perda, percent_lucro_perda ) => {
-        // db.doFecharCFD(auth.currentUser().uid, cfd, designacao, precoAtual, lucro_perda, percent_lucro_perda);
+    fecharCFD = (id) => {
+        axios
+            .post('http://localhost:9000/api/cfds/fecharCFD', { cfd: id }, {
+                headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
+            })
+            .then(response => {
+                this.props.cfdsStore.removeCFD(id);
+                this.props.historyStore.putMov(response.data.movimento);
+                this.props.sessionStore.setSaldo(response.data.saldo);
+            })
+            .catch(error => console.error(error));
     }
 
     makeRows = (rows) => {
-        this.props.cfdsStore.CFDs.forEach((cfd, key, map) => {
+        this.props.cfdsStore.CFDs.forEach((cfd, id, map) => {
             let quote = this.props.ativosStore.quotes.get(cfd.ativo);
-            let precoAtual = quote.askPrice === null ? 0 : quote.askPrice;
+            let precoAtual = quote.askPrice || 0;
             let label = "Venda " + quote.symbol;
             let price = "askPrice";
             if (cfd.tipo === cfdEnum.COMPRAR) {
                 price = "bidPrice";
-                precoAtual = quote.bidPrice === null ? 0 : quote.bidPrice;
+                precoAtual = quote.bidPrice || 0;
                 label = "Compra " + quote.symbol;
             }
 
-            let lucro_perda = (precoAtual - cfd.valorAbertura)*cfd.unidades;
+            let lucro_perda = (precoAtual - cfd.valorAbertura) * cfd.unidades;
             let percent_lucro_perda = (precoAtual === 0) ? 0 : ((precoAtual - cfd.valorAbertura) / precoAtual);
 
             rows.push(
-                <tr key={key}>
-                    <td key={key + "0"} style={{ width: '12,5%', verticalAlign: 'middle' }}>
+                <tr key={id}>
+                    <td key={id + "0"} style={{ width: '12,5%', verticalAlign: 'middle' }}>
                         <Media>
                             <Media left className="imgContainer">
                                 <Media className="logo" object src={this.props.ativosStore.logos.get(cfd.ativo)} />
@@ -45,46 +55,44 @@ class Portefolio extends Component {
                         </Media>
                     </td>
 
-                    <td key={key + "1"} style={{ width: '12,5%', verticalAlign: 'middle' }} className="text-center">
+                    <td key={id + "1"} style={{ width: '12,5%', verticalAlign: 'middle' }} className="text-center">
                         {formatterNumber.format(cfd.unidades)}
                     </td>
 
-                    <td key={key + "2"} style={{ width: '12,5%', verticalAlign: 'middle' }} className="text-center">
+                    <td key={id + "2"} style={{ width: '12,5%', verticalAlign: 'middle' }} className="text-center">
                         {formatterPrice.format(cfd.valorAbertura)}
                     </td>
 
-                    <td key={key + "3"} style={{ width: '12,5%', verticalAlign: 'middle' }} className="text-center">
+                    <td key={id + "3"} style={{ width: '12,5%', verticalAlign: 'middle' }} className="text-center">
                         {formatterPrice.format(cfd.montante)}
                     </td>
 
-                    <td key={key + "4"} className="text-center" style={{ width: '12,5%', verticalAlign: 'middle' }}>
-                        <BotaoPreco label="P" price={price} symbol={quote.symbol} cursor="default"/>
+                    <td key={id + "4"} className="text-center" style={{ width: '12,5%', verticalAlign: 'middle' }}>
+                        <BotaoPreco label="P" price={price} symbol={quote.symbol} cursor="default" />
                     </td>
 
-                    <td key={key + "5"} className="text-center" style={{ width: '12,5%', verticalAlign: 'middle' }}>
+                    <td key={id + "5"} className="text-center" style={{ width: '12,5%', verticalAlign: 'middle' }}>
                         <Button color="light" className="btnprice" style={{ width: '100%', borderColor: '#e6e6e6', cursor: 'default' }}>
                             <Badge color="primary" className="price">L/P</Badge>
                             {formatterPrice.format(lucro_perda)}
                         </Button>
                     </td>
 
-                    <td key={key + "6"} className="text-center" style={{ width: '12,5%', verticalAlign: 'middle' }}>
-                        <Button color="light" className="btnprice" style={{ width: '100%',borderColor: '#e6e6e6', cursor: 'default' }}>
+                    <td key={id + "6"} className="text-center" style={{ width: '12,5%', verticalAlign: 'middle' }}>
+                        <Button color="light" className="btnprice" style={{ width: '100%', borderColor: '#e6e6e6', cursor: 'default' }}>
                             <Badge color="primary" className="price">L/P</Badge>
                             {formatterPercent.format(percent_lucro_perda)}
                         </Button>
                     </td>
 
-                    <td key={key + "7"} className="text-center" style={{ width: '12,5%', verticalAlign: 'middle' }}>
-                        <Button color="danger" onClick={(e) => { this.fecharCFD(key, label, precoAtual, lucro_perda, percent_lucro_perda, e) }}>
+                    <td key={id + "7"} className="text-center" style={{ width: '12,5%', verticalAlign: 'middle' }}>
+                        <Button color="danger" onClick={(e) => { this.fecharCFD(id, e) }}>
                             <b>X</b>
                         </Button>
                     </td>
                 </tr>
             )
-        }
-        );
-
+        });
     }
 
     render() {
@@ -123,13 +131,11 @@ class Portefolio extends Component {
             </div>
         );
     }
-
 }
 
 const authCondition = (authUser) => !!authUser;
-
 export default compose(
     withAuthorization(authCondition),
-    inject('cfdsStore', 'ativosStore'),
+    inject('cfdsStore', 'ativosStore', 'sessionStore', 'historyStore'),
     observer
 )(Portefolio);
