@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, Alert } from 'reactstrap';
-import * as firebase from 'firebase';
+import axios from 'axios';
+import { inject, observer } from 'mobx-react';
+import { compose } from 'recompose';
 
-import { auth } from '../../firebase';
 
-
-class ModalReauth extends Component {
+class ApagarConta extends Component {
 
     constructor(props) {
         super(props);
@@ -16,16 +16,18 @@ class ModalReauth extends Component {
     }
 
     doOperation = () => {
-        let credential = firebase.auth.EmailAuthProvider.credential(auth.currentUser().email, this.state.pass)
-        auth.doReauthenticateWithCredential(credential)
-            .then(() => {
-                this.props.operation();
+        axios
+            .delete('http://localhost:9000/api/customers/deleteProfile', {
+                headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
             })
+            .then(() => this.props.sessionStore.setToken(null))
             .catch(error => {
-                this.setState({
-                    'error': error
-                })
-            })
+                if (error.response) {
+                    this.setState({ "error": error.response.data.error.message })
+                } else {
+                    console.error(error);
+                }
+            });
     }
 
     render() {
@@ -60,10 +62,11 @@ class ModalReauth extends Component {
                     <Button outline color="secondary" onClick={this.props.toggle}>Cancelar</Button>
                 </ModalFooter>
             </Modal>
-
-
         );
     }
 }
 
-export default ModalReauth;
+export default compose(
+    inject('sessionStore'),
+    observer
+)(ApagarConta);

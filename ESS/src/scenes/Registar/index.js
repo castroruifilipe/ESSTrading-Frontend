@@ -6,25 +6,23 @@ import axios from 'axios';
 import Footer from '../../components/Footer';
 import * as routes from '../../constants/routes';
 
-const INITIAL_STATE = {
-	modal: false,
-	first_name: '',
-	last_name: '',
-	username: '',
-	email: '',
-	password_one: '',
-	password_two: '',
-	contacto: '',
-	error: null,
-};
 
 class Registar extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { ...INITIAL_STATE };
+		this.state = {
+			modal: false,
+			first_name: '',
+			last_name: '',
+			username: '',
+			email: '',
+			password_one: '',
+			password_two: '',
+			contacto: '',
+			error: null,
+		};
 	}
-
 
 	toggle = () => {
 		this.setState({
@@ -55,25 +53,6 @@ class Registar extends Component {
 				}
 			});
 		event.preventDefault();
-
-
-		// auth.doCreateUserWithEmailAndPassword(email, password_one)
-		// 	.then(authUser => {
-		// 		db.doCreateUser(authUser.uid, username, first_name, last_name, contacto)
-		// 			.then(() => {
-		// 				auth.sendEmailVerification()
-		// 					.then(() => this.toggle())
-		// 					.catch(error => console.error(error));
-		// 				auth.doSignOut();
-		// 			})
-		// 			.catch(error => console.error(error));
-		// 	})
-		// 	.catch(error => {
-		// 		this.setState({
-		// 			'error': error
-		// 		});
-		// 	});
-
 	}
 
 	render() {
@@ -169,7 +148,7 @@ class Registar extends Component {
 							<Modal isOpen={this.state.modal} toggle={this.toggle}>
 								<ModalHeader toggle={this.toggle}>Email de confirmação</ModalHeader>
 								<ModalBody>
-									Foi enviado um email de confirmação para {this.state.email}. Verifique a sua caixa de correio.
+									A sua conta foi registada com sucesso e já pode iniciar sessão. Bem-vindo!
           						</ModalBody>
 								<ModalFooter>
 									<Button color="primary" onClick={this.onButtonClickModal}>OK</Button>

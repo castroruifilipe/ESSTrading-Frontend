@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col, Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input } from 'reactstrap';
-
-import { auth } from '../../../../firebase';
-import * as firebase from 'firebase';
+import axios from 'axios';
+import { inject, observer } from 'mobx-react';
+import { compose } from 'recompose';
 
 
 class AlterarPassword extends Component {
@@ -18,17 +18,22 @@ class AlterarPassword extends Component {
 	}
 
 	onSubmit = () => {
-		let credential = firebase.auth.EmailAuthProvider.credential(auth.currentUser().email, this.state.passOld)
-        auth.doReauthenticateWithCredential(credential)
-            .then(() => {
-				auth.doPasswordUpdate(this.state.pass1);
-				this.props.toggle();
-            })
-            .catch(error => {
-                this.setState({
-                    'error': error
-                })
-            })
+		let data = {
+			oldPassword: this.state.passOld,
+			newPassword: this.state.pass1
+		}
+		axios
+			.put('http://localhost:9000/api/customers/changePassword', data, {
+				headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
+			})
+			.then(() => this.props.toggle())
+			.catch(error => {
+				if (error.response) {
+					this.setState({ "error": error.response.data.error.message })
+				} else {
+					console.error(error);
+				}
+			});
 	}
 
 	render() {
@@ -49,7 +54,6 @@ class AlterarPassword extends Component {
 				<ModalHeader toggle={this.props.toggle}>Alterar password</ModalHeader>
 				<ModalBody className="center-block">
 					<Row className="ml-4 mr-4">
-
 						<Col>
 							<Form className="form-sign">
 								<div className="form-label-group">
@@ -80,7 +84,7 @@ class AlterarPassword extends Component {
 								</div>
 							</Form>
 							<small>A password deverá ter no mínimo 6 caracteres.</small>
-							{this.state.error && <Alert color="danger" className="mt-5">{this.state.error.message}</Alert>}
+							{this.state.error && <Alert color="danger" className="mt-5">{this.state.error}</Alert>}
 						</Col>
 					</Row>
 				</ModalBody>
@@ -89,10 +93,11 @@ class AlterarPassword extends Component {
 					<Button outline color="secondary" onClick={this.props.toggle}>Cancelar</Button>
 				</ModalFooter>
 			</Modal>
-
-
 		);
 	}
 }
 
-export default AlterarPassword;
+export default compose(
+	inject('sessionStore'),
+	observer
+)(AlterarPassword);

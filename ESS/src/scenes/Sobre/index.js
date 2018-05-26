@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-
 import { Row, Col, Container } from 'reactstrap';
+
 import Footer from '../../components/Footer';
 import './style.css';
 
@@ -20,7 +20,9 @@ const BootstrapLogo = require("../../images/bootstrap.jpg");
 const FireBaseLogo = require("../../images/firebase.png");
 const ReactLogo = require("../../images/react.jpg");
 
+
 class Sobre extends Component {
+
 	render() {
 		return (
 			<Container fluid style={{ paddingRight: '0', paddingLeft: '0' }}>
@@ -40,29 +42,29 @@ class Sobre extends Component {
 							</Row>
 							<Row className="no-gutters">
 								<div className="col-lg-6 text-white showcase-img" style={imageUrl(sobreUrl)}></div>
-								<div className="col-lg-6 my-auto showcase-text" style={{padding:'70px 70px'}}>
+								<div className="col-lg-6 my-auto showcase-text" style={{ padding: '70px 70px' }}>
 									<h2>Tecnologias</h2>
 									<p className="lead"> HTML, CSS, Javascript, React, Bootstrap e Firebase.</p>
 									<Row>
 										<Col className="py-3">
-											<img src={HTML} alt="HTML5" style={{width:'100%'}}/>
+											<img src={HTML} alt="HTML5" style={{ width: '100%' }} />
 										</Col>
 										<Col className="py-3">
-											<img src={CSS} alt="CSS3" style={{width:'100%'}}/>
+											<img src={CSS} alt="CSS3" style={{ width: '100%' }} />
 										</Col>
 										<Col className="py-3">
-											<img src={JS} alt="JS" style={{width:'100%'}}/>
+											<img src={JS} alt="JS" style={{ width: '100%' }} />
 										</Col>
 									</Row>
 									<Row>
 										<Col className="py-3">
-											<img src={BootstrapLogo} alt="Bootstrap" style={{width:'100%'}}/>
+											<img src={BootstrapLogo} alt="Bootstrap" style={{ width: '100%' }} />
 										</Col>
 										<Col className="py-3">
-											<img src={ReactLogo} alt="React" style={{width:'100%'}}/>
+											<img src={ReactLogo} alt="React" style={{ width: '100%' }} />
 										</Col>
-										<Col md={{offset:1}} className="py-3">
-											<img src={FireBaseLogo} alt="Firebase" style={{maxWidth:'173px', maxHeight:'150px'}}/>
+										<Col md={{ offset: 1 }} className="py-3">
+											<img src={FireBaseLogo} alt="Firebase" style={{ maxWidth: '173px', maxHeight: '150px' }} />
 										</Col>
 									</Row>
 
@@ -103,11 +105,10 @@ class Sobre extends Component {
 						</section>
 					</div>
 				</div>
-					<Footer />
+				<Footer />
 			</Container>
 		);
 	}
-
 }
 
 export default Sobre;

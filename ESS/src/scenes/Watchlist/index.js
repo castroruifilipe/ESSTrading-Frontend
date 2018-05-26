@@ -16,7 +16,6 @@ class Watchlist extends Component {
             </div>
         );
     }
-
 }
 
 const authCondition = (authUser) => !!authUser;

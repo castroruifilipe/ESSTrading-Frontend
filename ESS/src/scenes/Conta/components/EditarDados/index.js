@@ -5,6 +5,7 @@ import { compose } from 'recompose';
 import axios from 'axios';
 import Avatar from 'react-avatar-edit';
 
+
 class EditarDados extends Component {
 
 	constructor(props) {
@@ -48,7 +49,6 @@ class EditarDados extends Component {
 			sexo: this.state.sexo,
 			nif: this.state.nif,
 		}
-
 		axios
 			.put('http://localhost:9000/api/customers/updateProfile', { ...data }, {
 				headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
@@ -171,8 +171,6 @@ class EditarDados extends Component {
 					<Button outline color="secondary" onClick={this.props.toggle}>Cancelar</Button>
 				</ModalFooter>
 			</Modal>
-
-
 		);
 	}
 }

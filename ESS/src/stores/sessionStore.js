@@ -21,6 +21,7 @@ class SessionStore {
             sessionStorage.setItem('jwtToken', token)
             this.updateUser();
         } else {
+            sessionStorage.removeItem('jwtToken');
             this.user = {};
         }
     }

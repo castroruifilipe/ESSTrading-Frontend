@@ -4,6 +4,7 @@ import NumericInput from 'react-numeric-input';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import { BarLoader } from 'react-spinners';
+import axios from 'axios';
 
 import { formatterPrice } from '../../constants/formatters';
 
@@ -12,7 +13,6 @@ class LevantarPlafond extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             value: 0,
         };
@@ -25,9 +25,18 @@ class LevantarPlafond extends Component {
     }
 
     onSubmit = () => {
-        // db.doUpdateSaldo(this.props.sessionStore.authUser.uid, this.props.sessionStore.userDB.saldo - this.state.value)
-        //     .then(() => this.props.toggle())
-        //     .catch(error => console.error(error));
+        const data = {
+            valor: this.state.value
+        }
+        axios
+            .put('http://localhost:9000/api/customers/levantarPlafond', { ...data }, {
+                headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
+            })
+            .then(user => {
+                this.props.sessionStore.setUser(user.data);
+                this.props.toggle();
+            })
+            .catch(error => console.error(error));
     }
 
     render() {

@@ -4,13 +4,13 @@ import NumericInput from 'react-numeric-input';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
 import { BarLoader } from 'react-spinners';
+import axios from 'axios';
 
 
 class DepositarPlafond extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             value: 0,
         };
@@ -23,9 +23,18 @@ class DepositarPlafond extends Component {
     }
 
     onSubmit = () => {
-        // db.doUpdateSaldo(this.props.sessionStore.authUser.uid, this.props.sessionStore.userDB.saldo + this.state.value)
-        //     .then(() => this.props.toggle())
-        //     .catch(error => console.error(error));
+        const data = {
+            valor: this.state.value
+        }
+        axios
+            .put('http://localhost:9000/api/customers/depositarPlafond', { ...data }, {
+                headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
+            })
+            .then(user => {
+                this.props.sessionStore.setUser(user.data);
+                this.props.toggle();
+            })
+            .catch(error => console.error(error));
     }
 
     render() {
@@ -57,7 +66,7 @@ class DepositarPlafond extends Component {
                 </ModalBody>
                 <ModalFooter>
                     <Button outline color="secondary" onClick={this.props.toggle}>Cancelar</Button>
-                    <Button color="primary"  onClick={this.onSubmit}>Depositar</Button>
+                    <Button color="primary" onClick={this.onSubmit}>Depositar</Button>
                 </ModalFooter>
             </Modal>
         );

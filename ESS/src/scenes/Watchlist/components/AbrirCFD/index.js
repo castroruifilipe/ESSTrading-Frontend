@@ -9,6 +9,7 @@ import cfdEnum from '../../../../constants/cfdEnum';
 import { formatterPrice, formatterPercent, formatterNumber } from '../../../../constants/formatters';
 import unidadeEnum from '../../../../constants/unidadeEnum';
 
+
 class AbrirCFD extends Component {
 
     constructor(props) {
@@ -43,7 +44,7 @@ class AbrirCFD extends Component {
     }
 
     updateValues = () => {
-        if (this.preco === 0 || !this.preco ) {
+        if (this.preco === 0 || !this.preco) {
             this.unidades = this.montante = 0;
         } else {
             if (this.state.unidade === unidadeEnum.MONTANTE) {
@@ -86,7 +87,7 @@ class AbrirCFD extends Component {
                     <Button onClick={this.onSwitchChange}>VENDER</Button>
                 </ButtonGroup>;
             designacao = 'COMPRAR';
-            this.preco = quote.askPrice === null ? 0 :  quote.askPrice;
+            this.preco = quote.askPrice === null ? 0 : quote.askPrice;
         } else {
             buttonGroup =
                 <ButtonGroup className="btn-toggle">
@@ -153,8 +154,8 @@ class AbrirCFD extends Component {
                         </Row>
 
                         <Row>
-                            <Col md={{size:5,offset:3}} className="text-center pt-2">
-                                <p>{this.state.unidade===unidadeEnum.MONTANTE ? formatterNumber.format(this.unidades)+" unidades" : formatterPrice.format(this.montante) }</p>
+                            <Col md={{ size: 5, offset: 3 }} className="text-center pt-2">
+                                <p>{this.state.unidade === unidadeEnum.MONTANTE ? formatterNumber.format(this.unidades) + " unidades" : formatterPrice.format(this.montante)}</p>
                             </Col>
                         </Row>
                     </div>

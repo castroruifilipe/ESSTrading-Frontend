@@ -6,10 +6,8 @@ import PencilIcon from 'react-icons/lib/fa/edit';
 import EraserIcon from 'react-icons/lib/fa/eraser';
 
 import EditarDados from './components/EditarDados';
-import ModalReauth from '../../components/ModalReauth';
+import ApagarConta from './components/ApagarConta';
 import AlterarPassword from './components/AlterarPassword';
-import { auth } from '../../firebase';
-import * as routes from '../../constants/routes';
 import './style.css';
 
 
@@ -18,21 +16,21 @@ class Conta extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			modal: false,
-			modalReauth: false,
+			modalEditarDados: false,
+			modalApagarConta: false,
 			modalPass: false,
 		};
 	}
 
-	toggle = () => {
+	toggleEditarDados = () => {
 		this.setState({
-			modal: !this.state.modal,
+			modalEditarDados: !this.state.modalEditarDados,
 		});
 	}
 
-	toggleReauth = () => {
+	toggleApagarConta = () => {
 		this.setState({
-			modalReauth: !this.state.modalReauth,
+			modalApagarConta: !this.state.modalApagarConta,
 		});
 	}
 
@@ -41,25 +39,12 @@ class Conta extends Component {
 			modalPass: !this.state.modalPass,
 		});
 	}
-	
-	operation = () => {
-		auth.doRemoveAccount()
-			.then(() => {
-				this.props.history.push(routes.HOME);
-			})
-			.catch(error => console.error(error))
-	}
 
 	render() {
 		let user = this.props.sessionStore.user;
 		if (!user) {
 			return null;
 		}
-
-		// let authUser = this.props.sessionStore.authUser;
-		// if (!authUser) {
-		// 	return null;
-		// }
 
 		return (
 			<Container id="contaContainer">
@@ -83,19 +68,18 @@ class Conta extends Component {
 						</Media>
 					</Col>
 					<Col md="1">
-						
-							<button type="button" className="btn btn-primary mb-2" style={{width: '180px'}} onClick={this.toggle}>
-								<PencilIcon className="mr-1" />
-								Editar Dados
-                			</button>
-							<button type="button" className="btn btn-primary mb-2" style={{width: '180px'}} onClick={this.togglePass}>
-								<PencilIcon className="mr-1" />
-								Alterar Password
-                			</button>
-							<button type="button" className="btn btn-danger" style={{width: '180px'}} onClick={this.toggleReauth}>
-								<EraserIcon className="mr-1" />
-								Apagar Conta
-              				</button>
+						<button type="button" className="btn btn-primary mb-2" style={{ width: '180px' }} onClick={this.toggleEditarDados}>
+							<PencilIcon className="mr-1" />
+							Editar Dados
+                		</button>
+						<button type="button" className="btn btn-primary mb-2" style={{ width: '180px' }} onClick={this.togglePass}>
+							<PencilIcon className="mr-1" />
+							Alterar Password
+                		</button>
+						<button type="button" className="btn btn-danger" style={{ width: '180px' }} onClick={this.toggleApagarConta}>
+							<EraserIcon className="mr-1" />
+							Apagar Conta
+              			</button>
 					</Col>
 				</Row>
 
@@ -128,10 +112,8 @@ class Conta extends Component {
 					</Col>
 				</Row >
 
-				<EditarDados modal={this.state.modal} toggle={this.toggle} />
-
-				<ModalReauth modal={this.state.modalReauth} toggle={this.toggleReauth} operation={this.operation} />
-
+				<EditarDados modal={this.state.modalEditarDados} toggle={this.toggleEditarDados} />
+				<ApagarConta modal={this.state.modalApagarConta} toggle={this.toggleApagarConta} />
 				<AlterarPassword modal={this.state.modalPass} toggle={this.togglePass} />
 			</Container >
 		);

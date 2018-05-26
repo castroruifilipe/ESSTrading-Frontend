@@ -7,7 +7,7 @@ import Portefolio from '../scenes/Portefolio';
 import Geral from '../scenes/Geral';
 import Conta from '../scenes/Conta';
 import LevantarPlafond from '../scenes/LevantarPlafond';
-import DepositarPlafond from '../scenes/AddMoney';
+import DepositarPlafond from '../scenes/DepositarPlafond';
 import Sidebar from './Sidebar';
 import Historico from '../scenes/Historico';
 import * as routes from '../constants/routes';

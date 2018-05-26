@@ -1,9 +1,9 @@
-#contaContainer{
+#contaContainer {
     padding-left: 80px !important;
 }
 
 @media (max-width: 1000px) {
-    #contaContainer{
+    #contaContainer {
         padding-left: 70px !important;
     }
 }
