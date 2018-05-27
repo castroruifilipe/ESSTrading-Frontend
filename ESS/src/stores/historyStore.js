@@ -1,8 +1,9 @@
 import { observable, action } from 'mobx';
+import axios from 'axios';
 
 
 class HistoryStore {
-    
+
     @observable movs = new Map();
 
 
@@ -14,20 +15,20 @@ class HistoryStore {
         this.movs.set(mov.id, mov);
     }
 
-
-
-
-    @action setMovs = Movs => {
-        for (let key in Movs) {
-            let mov = Movs[key];
-            this.movs.set(key, mov);
-        }
+    @action updateMovs = (token) => {
+        axios
+            .get('http://localhost:9000/api/movimentos/getMovs', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            })
+            .then(response => this.setMovs(response.data))
+            .catch(error => console.error(error));
     }
 
-    @action updateMovs = () => {
-        // db.onGetHistory(auth.currentUser().uid, snapshot => this.setMovs(snapshot.val()));
+    @action setMovs = movs => {
+        movs.forEach(mov => {
+            this.movs.set(mov.id, mov);
+        });
     }
-
 }
 
 export default HistoryStore;

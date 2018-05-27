@@ -21,7 +21,8 @@ class Portefolio extends Component {
             .then(response => {
                 this.props.cfdsStore.removeCFD(id);
                 this.props.historyStore.putMov(response.data.movimento);
-                this.props.sessionStore.setSaldo(response.data.saldo);
+                console.log(response);
+                this.props.sessionStore.setSaldo(response.data.novoSaldo);
             })
             .catch(error => console.error(error));
     }
@@ -29,12 +30,15 @@ class Portefolio extends Component {
     makeRows = (rows) => {
         this.props.cfdsStore.CFDs.forEach((cfd, id, map) => {
             let quote = this.props.ativosStore.quotes.get(cfd.ativo);
-            let precoAtual = quote.askPrice || 0;
+            if (!quote) {
+                return;
+            }
+            let precoAtual = quote.askPrice;
             let label = "Venda " + quote.symbol;
             let price = "askPrice";
             if (cfd.tipo === cfdEnum.COMPRAR) {
                 price = "bidPrice";
-                precoAtual = quote.bidPrice || 0;
+                precoAtual = quote.bidPrice;
                 label = "Compra " + quote.symbol;
             }
 

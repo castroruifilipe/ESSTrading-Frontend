@@ -81,7 +81,7 @@ class AbrirCFD extends Component {
                 })
                 .then(response => {
                     this.props.cfdsStore.putCFD(response.data.cfd);
-                    this.props.sessionStore.setSaldo(response.data.saldo);
+                    this.props.sessionStore.setSaldo(response.data.novoSaldo);
                     this.props.toggle();
                 })
                 .catch(error => {

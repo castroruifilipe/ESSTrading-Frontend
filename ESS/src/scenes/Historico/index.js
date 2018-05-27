@@ -10,11 +10,6 @@ import withAuthorization from '../../higher-order_components/withAuthorization';
 
 class Historico extends Component {
 
-    componentDidMount() {
-        this.props.historyStore.updateMovs();
-    }
-
-
     makeRows = (rows) => {
         this.props.historyStore.movs.forEach((mov, key, map) => {
             rows.push(
