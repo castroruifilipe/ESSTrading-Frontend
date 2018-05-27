@@ -12,6 +12,9 @@ import './style.css';
 class AccountFooter extends Component {
 
     render() {
+        if (!this.props.sessionStore.user.saldo) {
+            return null;
+        }
         let saldo = this.props.sessionStore.user.saldo;
         let investido = 0, plAcumulado = 0;
 

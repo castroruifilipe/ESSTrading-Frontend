@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, Alert } from 'reactstrap';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { compose } from 'recompose';
+
+import * as routes from '../../../../constants/routes';
 
 
 class ApagarConta extends Component {
@@ -16,11 +19,18 @@ class ApagarConta extends Component {
     }
 
     doOperation = () => {
+        const data = {
+            password: this.state.pass,
+        }
         axios
-            .delete('http://localhost:9000/api/customers/deleteProfile', {
+            .post('http://localhost:9000/api/customers/deleteProfile', { ...data }, {
                 headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
             })
-            .then(() => this.props.sessionStore.setToken(null))
+            .then(() => {
+                console.log("AQUI");
+                this.props.sessionStore.setToken(null)
+            })
+            .then(() => this.props.history.push(routes.LOGIN))
             .catch(error => {
                 if (error.response) {
                     this.setState({ "error": error.response.data.error.message })
@@ -53,7 +63,7 @@ class ApagarConta extends Component {
                                     <label htmlFor="inputPass">Password</label>
                                 </div>
                             </Form>
-                            {this.state.error && <Alert color="danger" className="mt-5">{this.state.error.message}</Alert>}
+                            {this.state.error && <Alert color="danger" className="mt-5">{this.state.error}</Alert>}
                         </Col>
                     </Row>
                 </ModalBody>
@@ -67,6 +77,7 @@ class ApagarConta extends Component {
 }
 
 export default compose(
+    withRouter,
     inject('sessionStore'),
     observer
 )(ApagarConta);

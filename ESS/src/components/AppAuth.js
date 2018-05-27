@@ -4,7 +4,6 @@ import { Container } from 'reactstrap';
 
 import Watchlist from '../scenes/Watchlist';
 import Portefolio from '../scenes/Portefolio';
-import Geral from '../scenes/Geral';
 import Conta from '../scenes/Conta';
 import LevantarPlafond from '../scenes/LevantarPlafond';
 import DepositarPlafond from '../scenes/DepositarPlafond';
@@ -50,7 +49,6 @@ class AppAuth extends Component {
 						<Route exact path={routes.WATCHLIST} component={Watchlist} />
 						<Route exact path={routes.PORTEFOLIO} component={Portefolio} />
 						<Route exact path={routes.HISTORICO} component={Historico} />
-						<Route exact path={routes.GERAL} component={Geral} />
 						<Route exact path={routes.CONTA} component={Conta} />
 					</Switch>
 				</Container>

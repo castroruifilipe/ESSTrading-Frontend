@@ -103,26 +103,12 @@ class Sidebar extends Component {
                         </a>
                     </li>
                     <li>
-                        <a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <NavLink to={routes.CONTA} className="link">
                             <i><SettingsIcon /> </i>Definições
-                        </a>
-                        <ul className="collapse list-unstyled" id="settingsSubmenu">
-                            <li>
-                                <NavLink to={routes.GERAL} className="link">
-                                    Geral
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={routes.CONTA} className="link">
-                                    Conta
-                                </NavLink>
-                            </li>
-                        </ul>
+                        </NavLink>
                     </li>
-
                 </ul>
             </nav>
-
         );
     }
 }
