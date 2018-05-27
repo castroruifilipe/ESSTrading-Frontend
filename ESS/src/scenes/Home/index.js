@@ -35,6 +35,12 @@ class Home extends Component {
 										REGISTAR
 									</Button>
 								</Link>
+
+
+								<small style={{display: 'block', marginTop: '40px'}}>
+									É programador? A ESS disponbiliza uma API pública e gratuita para o acesso aos
+									principais ativos financeiros. <u><a href="https://esstrading.readthedocs.io/">Saiba mais aqui.</a></u>
+								</small>
 							</div>
 						</section>
 					</Col>
