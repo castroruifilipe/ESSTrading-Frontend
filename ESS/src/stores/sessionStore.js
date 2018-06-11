@@ -36,7 +36,7 @@ class SessionStore {
 
     @action updateUser = () => {
         axios
-            .get('http://localhost:9000/api/customers/getProfile', {
+            .get('http://essbackend.blurryface.pt/api/customers/getProfile', {
                 headers: { 'Authorization': 'Bearer ' + this.token }
             })
             .then(response => this.setUser(response.data))
@@ -59,7 +59,7 @@ class SessionStore {
 
     @action updateUserDB = () =>
         this.authUser.getIdToken()
-            .then(token => axios.get('http://localhost:9000/api/customers/getProfile', {
+            .then(token => axios.get('http://essbackend.blurryface.pt/api/customers/getProfile', {
                 headers: { 'Authorization': token }
             }))
             .then(user => {

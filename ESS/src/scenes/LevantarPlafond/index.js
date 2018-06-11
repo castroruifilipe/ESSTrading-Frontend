@@ -29,7 +29,7 @@ class LevantarPlafond extends Component {
             valor: this.state.value
         }
         axios
-            .put('http://localhost:9000/api/customers/levantarPlafond', { ...data }, {
+            .put('http://essbackend.blurryface.pt/api/customers/levantarPlafond', { ...data }, {
                 headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
             })
             .then(user => {

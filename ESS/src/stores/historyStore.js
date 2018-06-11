@@ -17,7 +17,7 @@ class HistoryStore {
 
     @action updateMovs = (token) => {
         axios
-            .get('http://localhost:9000/api/movimentos/getMovs', {
+            .get('http://essbackend.blurryface.pt/api/movimentos/getMovs', {
                 headers: { 'Authorization': 'Bearer ' + token }
             })
             .then(response => this.setMovs(response.data))

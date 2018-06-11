@@ -25,7 +25,7 @@ class Login extends Component {
 			email: this.state.email,
 			password: this.state.password
 		}
-		axios.post('http://localhost:9000/api/customers/signin', { ...credentials })
+		axios.post('http://essbackend.blurryface.pt/api/customers/signin', { ...credentials })
 			.then(response => this.props.sessionStore.setToken(response.data))
 			.then(() => this.props.history.push(routes.WATCHLIST))
 			.catch(error => {

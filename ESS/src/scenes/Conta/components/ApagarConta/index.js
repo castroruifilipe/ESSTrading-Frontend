@@ -23,7 +23,7 @@ class ApagarConta extends Component {
             password: this.state.pass,
         }
         axios
-            .post('http://localhost:9000/api/customers/deleteProfile', { ...data }, {
+            .post('http://essbackend.blurryface.pt/api/customers/deleteProfile', { ...data }, {
                 headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
             })
             .then(() => {

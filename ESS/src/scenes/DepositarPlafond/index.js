@@ -27,7 +27,7 @@ class DepositarPlafond extends Component {
             valor: this.state.value
         }
         axios
-            .put('http://localhost:9000/api/customers/depositarPlafond', { ...data }, {
+            .put('http://essbackend.blurryface.pt/api/customers/depositarPlafond', { ...data }, {
                 headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
             })
             .then(user => {

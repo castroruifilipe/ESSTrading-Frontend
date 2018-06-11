@@ -17,7 +17,7 @@ class CFDsStore {
 
     @action updateCFDs = (token) => {
         axios
-            .get('http://localhost:9000/api/cfds/getCFDs', {
+            .get('http://essbackend.blurryface.pt/api/cfds/getCFDs', {
                 headers: { 'Authorization': 'Bearer ' + token }
             })
             .then(response => this.setCFDs(response.data))

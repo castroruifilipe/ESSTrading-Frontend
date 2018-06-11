@@ -13,12 +13,12 @@ const withAtivos = (Component) => {
 
         componentDidMount() {
             axios
-                .get('http://localhost:9000/quotes-ms/quotes')
+                .get('http://essbackend.blurryface.pt/quotes-ms/quotes')
                 .then(response => this.props.ativosStore.setQuotes(Object.values(response.data)))
                 .catch(error => console.error(error));
 
 
-            const socket = socketIOClient("http://localhost:9000/");
+            const socket = socketIOClient("http://essbackend.blurryface.pt/");
             socket.on('quote', quote => {
                 this.props.ativosStore.setQuote(quote);
             });

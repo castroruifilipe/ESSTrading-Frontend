@@ -15,7 +15,7 @@ class Portefolio extends Component {
 
     fecharCFD = (id) => {
         axios
-            .post('http://localhost:9000/api/cfds/fecharCFD', { cfd: id }, {
+            .post('http://essbackend.blurryface.pt/api/cfds/fecharCFD', { cfd: id }, {
                 headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
             })
             .then(response => {

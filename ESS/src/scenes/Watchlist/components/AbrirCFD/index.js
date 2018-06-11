@@ -76,7 +76,7 @@ class AbrirCFD extends Component {
                 tipo: this.state.tipoCFD,
             }
             axios
-                .post('http://localhost:9000/api/cfds/abrirCFD', { ...data }, {
+                .post('http://essbackend.blurryface.pt/api/cfds/abrirCFD', { ...data }, {
                     headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
                 })
                 .then(response => {

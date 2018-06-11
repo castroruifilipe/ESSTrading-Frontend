@@ -23,7 +23,7 @@ class AlterarPassword extends Component {
 			newPassword: this.state.pass1
 		}
 		axios
-			.put('http://localhost:9000/api/customers/changePassword', data, {
+			.put('http://essbackend.blurryface.pt/api/customers/changePassword', data, {
 				headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
 			})
 			.then(() => this.props.toggle())

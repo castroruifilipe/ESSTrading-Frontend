@@ -43,7 +43,7 @@ class Registar extends Component {
 			password: this.state.password_one,
 			contacto: this.state.contacto,
 		}
-		axios.post('http://localhost:9000/api/customers/signup', { ...data })
+		axios.post('http://essbackend.blurryface.pt/api/customers/signup', { ...data })
 			.then(response => this.toggle())
 			.catch(error => {
 				if (error.response) {
