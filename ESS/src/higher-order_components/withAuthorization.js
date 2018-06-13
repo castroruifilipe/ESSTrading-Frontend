@@ -1,32 +1,30 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
+import { compose } from 'recompose';
 
-import AuthUserContext from '../contexts/AuthUserContext';
-import { firebase } from '../firebase';
 import * as routes from '../constants/routes';
 
 const withAuthorization = (authCondition) => (Component) => {
-    
+
     class WithAuthorization extends React.Component {
 
         componentDidMount() {
-            firebase.auth.onAuthStateChanged(authUser => {
-                if (!authCondition(authUser)) {
-                    this.props.history.push(routes.LOGIN);
-                }
-            });
+            if (!this.props.sessionStore.token) {
+                this.props.history.push(routes.LOGIN);
+            }
         }
 
         render() {
-            return (
-                <AuthUserContext.Consumer>
-                    { authUser => authUser ? <Component  {...this.props}/> : null }
-                </AuthUserContext.Consumer>
-            );
+            return this.props.sessionStore.user ? <Component {...this.props} /> : null;
         }
     }
 
-    return withRouter(WithAuthorization);
+    return compose(
+        withRouter,
+        inject('sessionStore'),
+        observer
+    )(WithAuthorization);
 }
 
 export default withAuthorization;

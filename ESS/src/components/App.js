@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Row, Col } from 'reactstrap';
+import { Row } from 'reactstrap';
 
 import { firebase } from '../firebase';
 import withAuthentication from '../higher-order_components/withAuthentication';
 import NavBar from './NavBar';
-import Footer from './Footer';
 import Home from '../scenes/Home';
 import Login from '../scenes/Login';
 import Registar from '../scenes/Registar';
 import Sobre from '../scenes/Sobre';
 import AppAuth from './AppAuth';
 import * as routes from '../constants/routes';
+import './style.css';
 
 class App extends Component {
 
@@ -50,25 +50,15 @@ class App extends Component {
 					<Row>
 						<NavBar />
 					</Row>
-					<Row style={{ minHeight: '80vh' }}>
-						<Col>
-							<div>
-								<Switch>
-									{homeRoute}
-									<Route exact path={routes.LOGIN} component={Login} />
-									<Route exact path={routes.REGISTAR} component={Registar} />
-									<Route exact path={routes.SOBRE} component={Sobre} />
-									<Route path={routes.AUTH} component={AppAuth} />
-								</Switch>
-							</div>
-						</Col>
-					</Row>
-					<Row>
-						<Footer />
-					</Row>
-
+					<Switch>
+						{homeRoute}
+						<Route exact path={routes.LOGIN} component={Login} />
+						<Route exact path={routes.REGISTAR} component={Registar} />
+						<Route exact path={routes.SOBRE} component={Sobre} />
+						<Route path={routes.AUTH} component={AppAuth} />
+					</Switch>
 				</div>
-			</Router>
+			</Router >
 
 		);
 	}

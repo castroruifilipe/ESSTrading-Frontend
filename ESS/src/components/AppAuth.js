@@ -3,12 +3,12 @@ import { Route, Redirect, Switch } from 'react-router-dom'
 import { Container } from 'reactstrap';
 
 import Watchlist from '../scenes/Watchlist';
-import AbrirCFD from '../scenes/Watchlist/components/AbrirCFD';
 import Portefolio from '../scenes/Portefolio';
-import Geral from '../scenes/Geral';
 import Conta from '../scenes/Conta';
 import LevantarPlafond from '../scenes/LevantarPlafond';
+import DepositarPlafond from '../scenes/DepositarPlafond';
 import Sidebar from './Sidebar';
+import Historico from '../scenes/Historico';
 import * as routes from '../constants/routes';
 
 
@@ -18,35 +18,43 @@ class AppAuth extends Component {
 		super(props);
 
 		this.state = {
-			modal: false,
+			modalDepositar: false,
+			modalLevantar: false,
 		};
 
-		this.toggle = this.toggle.bind(this);
+		this.toggleDepositar = this.toggleDepositar.bind(this);
+		this.toggleLevantar = this.toggleLevantar.bind(this);
 	}
 
-	toggle() {
+	toggleDepositar() {
 		this.setState({
-			modal: !this.state.modal
+			modalDepositar: !this.state.modalDepositar
+		});
+	}
+
+	toggleLevantar() {
+		this.setState({
+			modalLevantar: !this.state.modalLevantar
 		});
 	}
 
 	render() {
 		return (
 			<div className="wrapper2">
-				<Sidebar toggle={this.toggle} />
+				<Sidebar toggleLevantar={this.toggleLevantar} toggleDepositar={this.toggleDepositar} />
 
-				<Container fluid id="content">
+				<Container fluid id="content" className="pageContent">
 					<Redirect to={routes.WATCHLIST} />
 					<Switch>
 						<Route exact path={routes.WATCHLIST} component={Watchlist} />
-						<Route exact path={routes.ABRIR_CFD} component={AbrirCFD} />
 						<Route exact path={routes.PORTEFOLIO} component={Portefolio} />
-						<Route exact path={routes.GERAL} component={Geral} />
+						<Route exact path={routes.HISTORICO} component={Historico} />
 						<Route exact path={routes.CONTA} component={Conta} />
 					</Switch>
 				</Container>
 
-				<LevantarPlafond modal={this.state.modal} toggle={this.toggle} />
+				<LevantarPlafond modal={this.state.modalLevantar} toggle={this.toggleLevantar} />
+				<DepositarPlafond modal={this.state.modalDepositar} toggle={this.toggleDepositar} />
 			</div>
 
 		);

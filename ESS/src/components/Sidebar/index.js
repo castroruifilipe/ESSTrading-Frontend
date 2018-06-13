@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Media } from 'reactstrap';
-import HideIcon from 'react-icons/lib/fa/angle-left';
-import ShowIcon from 'react-icons/lib/fa/angle-right';
 import EyeIcon from 'react-icons/lib/md/remove-red-eye';
 import BookIcon from 'react-icons/lib/fa/book';
 import HistoryIcon from 'react-icons/lib/md/history';
+import AddMoneyIcon from 'react-icons/lib/md/attach-money';
 import CreditCardIcon from 'react-icons/lib/md/credit-card';
 import SettingsIcon from 'react-icons/lib/md/settings';
+import { inject, observer } from 'mobx-react';
+import { compose } from 'recompose';
+import { BarLoader } from 'react-spinners';
 
-import { db, auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 import './style.css';
 
@@ -22,10 +23,7 @@ class Sidebar extends Component {
         this.state = {
             active: false,
             hidded: false,
-            user: undefined,
         };
-
-        this.toggle = this.toggle.bind(this);
     }
 
     updateDimensions() {
@@ -43,17 +41,11 @@ class Sidebar extends Component {
     }
 
     componentDidMount() {
-        db.onceGetUser(auth.currentUser().uid)
-            .then((snapshot => {
-                this.setState({
-                    user: snapshot.val(),
-                });
-            }));
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions.bind(this));
     }
 
-    toggle() {
+    toggle = () => {
         this.setState({
             active: !this.state.active,
             hidded: !this.state.hidded
@@ -61,86 +53,67 @@ class Sidebar extends Component {
     }
 
     render() {
+        let userMedia =
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '40px' }}>
+                <BarLoader height={7} width={200} color="white" />
+            </div>
+        if (this.props.sessionStore.user.imageCroped) {
+            userMedia =
+                <Media className="mt-2 mb-3">
+                    <Media left className="imgContainer">
+                        <Media className="userimg" object src={this.props.sessionStore.user.imageCroped} />
+                    </Media>
+                    <Media body className="hideOnActive">
+                        <span className="d-block" style={{ margin: '10px 0px 4px 0px' }}>{this.props.sessionStore.user.first_name + " " + this.props.sessionStore.user.last_name}</span>
+                        <small className="d-block">{this.props.sessionStore.user.username}</small>
+                        <NavLink to={routes.CONTA}><small><u>O meu perfil</u></small></NavLink>
+                    </Media>
+                </Media >
+        }
+
         return (
             <nav id="sidebar" className={this.state.active ? "active" : ""}>
-                <div className="sidebar-header">
-                    {this.state.user ? (
-                        <Media>
-                            <Media left className="imgContainer">
-                                <Media className="userimg" object src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/User-icon.png" />
-                            </Media>
-                            <Media body className="hideOnActive">
-                                <span className="d-block" style={{ margin: '10px 0px 4px 0px' }}>{this.state.user.first_name + " " + this.state.user.last_name}</span>
-                                <small className="d-block">{this.state.user.username}</small>
-                            </Media>
-                        </Media>
-                    ) :
-                        null
-                    }
-                </div>
-
+                <div className="sidebar-header" style={{ height: '90px' }}>
+                    {userMedia}
+                </div >
                 <ul className="list-unstyled components">
                     <li >
-                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                        <NavLink to={routes.WATCHLIST} className="link">
                             <i><EyeIcon /> </i>Watchlist
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={routes.PORTEFOLIO} activeClassName="active" className="link">
+                        <NavLink to={routes.PORTEFOLIO} className="link">
                             <i><BookIcon /> </i>Portefólio
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
+                        <NavLink to={routes.HISTORICO} className="link">
                             <i><HistoryIcon /> </i>Histórico
                         </NavLink>
                     </li>
-                    <li>
-                        <a className="link" onClick={this.props.toggle}>
+                    <li style={{ cursor: 'pointer' }}>
+                        <a className="link" onClick={this.props.toggleDepositar}>
+                            <i><AddMoneyIcon /> </i>Depositar plafond
+                        </a>
+                    </li>
+                    <li style={{ cursor: 'pointer' }}>
+                        <a className="link" onClick={this.props.toggleLevantar}>
                             <i><CreditCardIcon /> </i>Levantar plafond
                         </a>
                     </li>
                     <li>
-                        <a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <NavLink to={routes.CONTA} className="link">
                             <i><SettingsIcon /> </i>Definições
-                        </a>
-                        <ul className="collapse list-unstyled" id="settingsSubmenu">
-                            <li>
-                                <NavLink to={routes.GERAL} activeClassName="active" className="link">
-                                    Geral
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={routes.CONTA} activeClassName="active" className="link">
-                                    Conta
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to={routes.WATCHLIST} activeClassName="active" className="link">
-                                    Notificações
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
-
-                <ul className="list-unstyled CTAs">
-                    <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" className="download">Download source</a></li>
-                    <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" className="article">Back to article</a></li>
-                </ul>
-
-                <ul className="list-unstyled">
-                    <li onClick={this.toggle}>
-                        {this.state.active ?
-                            <a> <ShowIcon /> </a> :
-                            <a> <HideIcon /> <small>Esconder</small> </a>}
+                        </NavLink>
                     </li>
                 </ul>
             </nav>
-
         );
     }
 }
 
-export default Sidebar;
+export default compose(
+    inject('sessionStore'),
+    observer,
+)(Sidebar);
