@@ -26,10 +26,6 @@ const withAtivos = (Component) => {
             this.props.ativosStore.setDataLoad(true);
         }
 
-        componentWillUnmount() {
-            // clearTimeout(_timeout);
-        }
-
         getLogos = () => {
             symbols.forEach(symbol => {
                 iex.stockLogo(symbol)

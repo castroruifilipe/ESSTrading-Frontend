@@ -7,10 +7,6 @@ class SessionStore {
     @observable user = {};
 
 
-    @observable authUser = null;
-    @observable userDB = {};
-
-
     constructor(rootStore) {
         this.rootStore = rootStore;
     }
@@ -43,29 +39,6 @@ class SessionStore {
             .catch(error => console.error(error));
     }
 
-
-
-
-    @action setAuthUser = authUser => {
-        this.authUser = authUser;
-        if (authUser) {
-            this.updateUserDB();
-        }
-    }
-
-    @action setUserDB = userDB => {
-        this.userDB = userDB;
-    }
-
-    @action updateUserDB = () =>
-        this.authUser.getIdToken()
-            .then(token => axios.get('http://essbackend.blurryface.pt/api/customers/getProfile', {
-                headers: { 'Authorization': token }
-            }))
-            .then(user => {
-                this.setUserDB(user.data)
-            })
-            .catch(error => console.error(error));
 }
 
 export default SessionStore;

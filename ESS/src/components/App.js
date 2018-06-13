@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Row } from 'reactstrap';
+import { inject, observer } from 'mobx-react';
+import { compose } from 'recompose';
 
-import { firebase } from '../firebase';
 import withAuthentication from '../higher-order_components/withAuthentication';
 import NavBar from './NavBar';
 import Home from '../scenes/Home';
@@ -23,24 +24,9 @@ class App extends Component {
 	}
 
 
-	componentDidMount() {
-		firebase.auth.onAuthStateChanged(authUser => {
-			if (!authUser) {
-				this.setState({ authenticated: false });
-			} else {
-				this.setState({ authenticated: true });
-			}
-		});
-	}
-
-
 	render() {
-		if (this.state.authenticated === undefined) return null;
-
-		let homeRoute = undefined;
-		if (this.state.authenticated === false) {
-			homeRoute = <Route exact path={routes.HOME} component={Home} />;
-		} else {
+		let homeRoute = <Route exact path={routes.HOME} component={Home} />;;
+		if (this.props.sessionStore.token) {
 			homeRoute = <Route exact path={routes.HOME} component={AppAuth} />;
 		}
 
@@ -64,4 +50,8 @@ class App extends Component {
 	}
 }
 
-export default withAuthentication(App);
+export default compose(
+    withAuthentication,
+    inject('sessionStore'),
+    observer
+)(App);
