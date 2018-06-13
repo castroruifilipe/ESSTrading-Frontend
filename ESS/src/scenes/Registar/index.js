@@ -47,9 +47,9 @@ class Registar extends Component {
 			.then(response => this.toggle())
 			.catch(error => {
 				if (error.response) {
-					this.setState({ "error": error.response.data.error.message })
+					this.setState({ "error": "Erro no registo"})
 				} else {
-					console.error(error);
+					console.error(error.response);
 				}
 			});
 		event.preventDefault();
@@ -143,7 +143,7 @@ class Registar extends Component {
 							<Button color="primary" disabled={isInvalid} type="submit" block={true} size="lg">Registar</Button>
 
 							<small>A password deverá ter no mínimo 6 caracteres.</small>
-							{error && <Alert color="danger" className="mt-5">{error.message}</Alert>}
+							{error && <Alert color="danger" className="mt-5">{error}</Alert>}
 
 							<Modal isOpen={this.state.modal} toggle={this.toggle}>
 								<ModalHeader toggle={this.toggle}>Sucesso no registo</ModalHeader>
