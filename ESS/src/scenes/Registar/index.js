@@ -146,7 +146,7 @@ class Registar extends Component {
 							{error && <Alert color="danger" className="mt-5">{error.message}</Alert>}
 
 							<Modal isOpen={this.state.modal} toggle={this.toggle}>
-								<ModalHeader toggle={this.toggle}>Email de confirmação</ModalHeader>
+								<ModalHeader toggle={this.toggle}>Sucesso no registo</ModalHeader>
 								<ModalBody>
 									A sua conta foi registada com sucesso e já pode iniciar sessão. Bem-vindo!
           						</ModalBody>

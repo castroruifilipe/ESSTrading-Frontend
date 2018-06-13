@@ -50,7 +50,7 @@ class EditarDados extends Component {
 			nif: this.state.nif,
 		}
 		axios
-			.put('http://essbackend.blurryface.pt/customers/updateProfile', { ...data }, {
+			.put('http://essbackend.blurryface.pt/api/customers/updateProfile', { ...data }, {
 				headers: { 'Authorization': 'Bearer ' + this.props.sessionStore.token }
 			})
 			.then(user => this.props.sessionStore.setUser(user.data))
